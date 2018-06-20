@@ -1,0 +1,23 @@
+<nav class="navbar navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img src="../../../assets/logo-white.png" height="100%">
+      </a>
+    </div>
+    <div class='collapse navbar-collapse'>
+      <ul class="nav navbar-nav">
+        <li><a href="/home">Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" [hidden]="verified">
+        <li><a href="/login"><span class="glyphicon glyphicon-user"></span> REGISTER/LOGIN</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" [hidden]="!verified">
+          <li><a href="/buy"><span class="glyphicon glyphicon-shopping-cart"></span>  <strong> {{coins}}</strong> Coins</a></li>
+          <li><a href="/create"><span class="glyphicon glyphicon-plus"></span> CREATE A BRACKET</a></li>
+          <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
+        </ul>
+    </div>
+  </div>
+</nav>

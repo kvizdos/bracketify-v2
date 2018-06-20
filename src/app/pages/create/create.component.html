@@ -1,0 +1,35 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center shell">
+ <div class="row padding">
+     <div class="col-sm-1"></div>
+     <div class="col-sm-5">
+         <h1>Bracket Name</h1>
+         <input #name placeholder="My awesome Bracket"/>
+         <h1>Bracket Description</h1>
+         <p>*Maximum 300 characters</p>
+         <textarea #description placeholder="blah bliddy bloo bla blah" maxlength="300" rows="10"></textarea>
+         <h1>Bracket Livestream Link</h1>
+         <input #live placeholder="service.extension/yourchannel"/>
+     </div>
+     <div class="col-sm-5">
+        <h1>Game/Subject</h1>
+        <input #game placeholder="Rocket League"/>
+         <h1>Bracket Addons</h1>
+         <p>*Click the name to see more information</p>
+         <div class="row">
+            <div class="col-sm-5"><h2>Custom URL</h2></div>
+            <div class="col-sm-5"><h2>Custom Theme</h2></div>
+            <div class="col-sm-5"><h2>Promote Bracket</h2></div>
+            <div class="col-sm-5"><h2>Team Pictures</h2></div>
+            <div class="col-sm-5"><h2>Embed Bracket</h2></div>
+            <div class="col-sm-5"><h2>Coin Boosters</h2></div>
+         </div>
+         <br>
+        <button (click)="createBracket({name: name.value, description: description.value, live: live.value, game: game.value, addons: []})" [hidden]="clicked">Create</button>
+        <button disabled class="clicked" [hidden]="!clicked">Creating..</button>
+ 
+    </div>
+     <div class="col-sm-1"></div>
+
+ </div>
+</div>

@@ -1,0 +1,41 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center shell">
+  <div class="row">
+        <div class="alert alert-success" [hidden]="status!='done'">
+          <p>{{statusMsg}}</p>
+        </div>
+
+        <div class="alert alert-danger" [hidden]="status!='fail'">
+            <p>{{statusMsg}}</p>
+          </div>
+  </div>
+  <div class="row logincomponent">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3 text-center">
+      <h1>Login</h1>
+      <input #username placeholder="Username / Email" id="username">
+      <br>
+      <input #password placeholder="Password" type="password" id="password">
+      <br>
+      <label><input type="checkbox" value="" #rememberMe checked="checked"> Remember Me</label>
+      <br>
+      <button (click)="loginUser({username:username.value,password:password.value,remember:rememberMe.checked})" [hidden]="loginClicked">Login</button>
+      <button class="clicked" disabled [hidden]="!loginClicked || hideLoggingIn">Logging In..</button>
+      <button class="success" disabled [hidden]="!loggedIn">Logged In</button>
+    </div>
+    <div class="col-sm-3 text-center divider">
+      <h1>Register</h1>
+      <input #newEmail placeholder="Email">
+      <br>
+      <input #newUsername placeholder="Username">
+      <br>
+      <input #newPassword placeholder="Password" type="password">
+      <br>
+      <button (click)="registerUser({email:newEmail.value,username:newUsername.value,password:newPassword.value})" [hidden]="registerClicked">Register</button>
+      <button class="clicked" disabled [hidden]="!registerClicked || hideRegistering">Registering..</button>
+      <button class="success" disabled [hidden]="!registered">Registered</button>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+
+</div>

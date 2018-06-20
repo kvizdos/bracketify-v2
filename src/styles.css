@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "Product Sans";
+    src: url("assets/fonts/psr.ttf");
+    font-weight: normal;
+}
+@font-face {
+    font-family: "Product Sans";
+    src: url("assets/fonts/psb.ttf");
+    font-weight: bold;   
+}
+
+* {
+    font-family: "Product Sans";
+    font-weight: normal;
+}

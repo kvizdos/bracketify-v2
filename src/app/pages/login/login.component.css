@@ -1,0 +1,77 @@
+.logincomponent {
+    color: #26B6EC;
+    position: relative;
+  top: 70%;
+  transform: translateY(70%);
+  overflow-x: hidden;
+
+
+}
+
+.logincomponent h1 {
+    font-weight: bold;
+
+}
+
+.logincomponent .divider {
+    border-left: 2px solid #26B6EC;
+    height: 100%;
+
+}
+
+.logincomponent input:not([type='checkbox']) {
+    font-size: 16pt;
+    padding: 10px;
+    margin: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #26B6EC;
+    border-radius: 10px;
+    width: 75%;
+
+}
+
+.logincomponent button {
+    color: white;
+    font-size: 16pt;
+    text-align: center;
+    padding: 10px;
+    background-color: #26B6EC;
+    border: 0;
+    border-radius: 10px;
+    width: 75%;
+
+}
+
+.logincomponent .clicked {
+    background-color: rgb(131, 200, 224);
+  
+}
+
+.logincomponent .success {
+    background-color: rgb(49, 235, 49);
+}
+
+.logincomponent .checkbox {
+    float: left;
+}
+
+.row .alert {
+    overflow-x: hidden;
+}
+
+.alert p {
+    padding: 5px;
+    font-size: 15pt;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .logincomponent {
+        color: #26B6EC;
+        position: relative;
+        top: 0%;
+        transform: translateY(0%);
+    
+    }
+
+}

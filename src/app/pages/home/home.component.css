@@ -4,6 +4,7 @@
     background-color: #64C6EB;
     overflow-x: hidden;
     border-radius: 0;
+    margin-bottom: 0;
 }
 
 .fancyButton {
@@ -27,3 +28,4 @@
     border-radius: 10px;
     width: 100%;
 }
+

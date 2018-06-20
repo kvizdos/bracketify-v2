@@ -1,0 +1,15 @@
+.navbar-custom {
+    background-color: #26B6EC;
+    margin-bottom: 0;
+    border-radius: 0;
+    overflow-x: hidden;
+
+}
+
+.navbar-custom a {
+    color: white;
+}
+
+.navbar-custom a:hover {
+    background-color: #26B6EC;
+}

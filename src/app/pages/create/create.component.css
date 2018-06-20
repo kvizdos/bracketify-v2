@@ -1,0 +1,53 @@
+.padding {
+    padding: 10px;
+}
+h1 {
+    color: #26B6EC;
+    font-size: 32pt;
+    font-weight: bold;
+}
+
+h2 {
+    color: #26B6EC;
+    font-size: 28pt;
+    line-height: 15px;
+}
+
+h2:hover {
+    color: #64C6EB;
+    cursor: pointer;
+}
+
+hr {
+    border: 1px solid #64C6EB;
+}
+
+input,textarea {
+    width: 100%;
+    border: 2px solid #26B6EC;
+    border-radius: 10px;
+    font-size: 16pt;
+    padding: 10px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    text-align: center;
+    padding: 10px;
+    background-color: #26B6EC;
+    font-size: 28pt;
+    border: 0;
+    border-radius: 10px;
+    width: 100%;
+    color: 100%;
+    font-weight: bold;
+    color: white;
+}
+
+.clicked {
+    background-color: rgb(131, 200, 224);
+  
+}
