@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { config } from "../../../assets/config.js"
+import { config } from "../../../../assets/config.js"
 import { JsonPipe } from '@angular/common';
 
 @Component({
