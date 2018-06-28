@@ -7,11 +7,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CreateComponent } from './pages/create/create.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+
+import { WatchComponent } from './pages/bracket/watch/watch.component';
 
 import { NavComponent } from './modules/navbar/nav.component';
 import { FooterComponent } from './modules/footer/footer.component';
 
 import { AuthGuardService } from './auth/auth-guard.service';
+import { BracketGuardService } from './auth/bracket-guard.service';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -33,6 +37,16 @@ const routes: Routes = [
     path: 'create',
     component: CreateComponent,
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'watch/:id',
+    component: WatchComponent,
+    canActivate: [BracketGuardService]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 
@@ -43,7 +57,9 @@ const routes: Routes = [
     NavComponent,
     FooterComponent,
     LoginComponent,
-    CreateComponent
+    CreateComponent,
+    WatchComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +69,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [NavComponent, AuthGuardService],
+  providers: [NavComponent, AuthGuardService, BracketGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

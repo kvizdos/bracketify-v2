@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { config } from "../../../assets/config.js"
 import { JsonPipe } from '@angular/common';
 
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'create',
   templateUrl: './create.component.html',
@@ -29,7 +31,9 @@ export class CreateComponent {
     let bracket = this.getCreateBracket({name: value['name'], description: value['description'], live: value['live'], game: value['game'], owner: owner, addons: value['addons']}).then((response) => {
       console.log(response);
       if(response['createStatus'] == "complete") {
-        window.location.href = "/bracket/" + response['id'];
+        console.log(response['id'] + " <-- here")
+        this.router.navigate(['/watch/' + response['id']]);
+
         this.clicked = true;
       } else {
         this.clicked = false;
@@ -37,7 +41,7 @@ export class CreateComponent {
     });
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
     //if(localStorage.getItem("sessionid") == null) {
     //  window.location.href = "/login"
     //}

@@ -1,77 +1,163 @@
-.logincomponent {
-    color: #26B6EC;
-    position: relative;
-  top: 70%;
-  transform: translateY(70%);
-  overflow-x: hidden;
 
+.row {
+    height: calc(100vh - 52px);
+    width: calc(100vw + 15px);
+}
+.col-sm-2 {
+    padding: 0;
+    margin: 0;
+}
+#sidebar {
+    height: 100%;
+    background-color: #64C6EB;
+    color: white;
+}
+
+#sidebar .bottom {
+    position: absolute;
+    bottom: 39px;
+    left:0;
+    height: 50px;
+    padding: 0;
+    width: 100%;
+    font-size: 18pt;
+}
+
+#sidebar button {
+    margin: 0;
+    border: 0;
+    padding: 5.25px;
+    width: 100%;
+    font-weight: bold;
+    color: white;
+}
+
+#sidebar button.tweet {
+    background-color: #259ECB;
+}
+#sidebar button.live {
+    background-color: #D53535;
+}
+hr {
+    border: 1px solid #26B6EC;
+}
+
+#sidebar h2 {
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    padding: 10px;
+
+}
+li {
+    font-size: 16pt;
+    line-height: 10px;
+}
+
+.bracket {
+    height: calc(100vh - 52px); 
+    margin: 0;
+    padding: 0;
+}
+
+#actionbar {
+    padding: 10px;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    height: 89px;
+    background-color: #26B6EC;
+    overflow-x: hidden;
 
 }
 
-.logincomponent h1 {
+#actionbar ul {
+    position: relative;
+    top: 8px;
+}
+
+#actionbar li {
+    float: left;
+    vertical-align: baseline;
     font-weight: bold;
 
 }
 
-.logincomponent .divider {
-    border-left: 2px solid #26B6EC;
-    height: 100%;
+#actionbar .name {
+    font-size: 24pt;
+    text-align: left;
+    line-height: 1px;
 
 }
 
-.logincomponent input:not([type='checkbox']) {
-    font-size: 16pt;
-    padding: 10px;
-    margin: 5px;
-    margin-bottom: 10px;
-    border: 2px solid #26B6EC;
-    border-radius: 10px;
-    width: 75%;
 
-}
-
-.logincomponent button {
+#actionbar .viewmore {
+    line-height: 0px;
+    position: absolute;
+    bottom: -20px;
     color: white;
-    font-size: 16pt;
-    text-align: center;
-    padding: 10px;
-    background-color: #26B6EC;
-    border: 0;
-    border-radius: 10px;
-    width: 75%;
+    font-size: 12pt;
+}
+
+#actionbar .viewmore button {
+    height: 25px;
+    border: 2px solid white;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 5px;
+}
+
+#actionbar .viewmore button:hover {
+    color: rgb(218, 245, 255);
+    border-color: rgb(218, 245, 255);
+}
+
+#actionbar .right {
+    position: absolute;
+    right: 20px;
+    top: 2px;
+    overflow: hidden;
+    height: 70px;
+}
+
+#actionbar table {
+    overflow: hidden;
+}
+
+#actionbar .right table {
+    font-size: 18pt;
+}
+
+.darker {
+    color: rgb(136, 223, 255);
+    text-align: right;
+    font-size: 18pt;
+    padding-right: 8px;
+}
+
+.like {
+    font-weight: bold;
+    text-align: left;
+    font-size: 18pt;
 
 }
 
-.logincomponent .clicked {
-    background-color: rgb(131, 200, 224);
-  
+.like:hover {
+    cursor: pointer;
+    color: rgb(37, 40, 211);
 }
 
-.logincomponent .success {
-    background-color: rgb(49, 235, 49);
+::-webkit-scrollbar { 
+    display: none; 
 }
-
-.logincomponent .checkbox {
-    float: left;
-}
-
-.row .alert {
+#actioncontent {
+    color: white;
     overflow-x: hidden;
-}
-
-.alert p {
-    padding: 5px;
-    font-size: 15pt;
-}
-
-@media only screen and (max-width: 700px) {
-
-    .logincomponent {
-        color: #26B6EC;
-        position: relative;
-        top: 0%;
-        transform: translateY(0%);
-    
-    }
 
 }

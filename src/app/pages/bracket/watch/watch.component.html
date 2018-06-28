@@ -1,41 +1,50 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center shell">
-  <div class="row">
-        <div class="alert alert-success" [hidden]="status!='done'">
-          <p>{{statusMsg}}</p>
-        </div>
+<div class="row">
+    <div class="col-md-2" id="sidebar">
+        <h2>Teams</h2>
+        <ul>
+          <li *ngFor="let team of teams;">
+              {{team}}
+              <hr>
+          </li>
 
-        <div class="alert alert-danger" [hidden]="status!='fail'">
-            <p>{{statusMsg}}</p>
+        </ul>
+        <div class="bottom">
+            <button class="tweet"><i class="fa fa-twitter"></i> Tweet</button><br>
+            <button class="live"><span class="glyphicon glyphicon-facetime-video"></span> Live</button>
+          </div>        
+    </div> 
+    <div class="col-md-10 bracket">
+      <div id="actionbar">
+        <ul>
+          <li class="name">{{name}}</li><br>
+          <li class="viewmore"><button>view more</button></li>
+        </ul>
+        <ul class="right">
+          <table>
+            <tr>
+              <td class="text-right darker">{{ratings.likes.length}} -</td>
+              <td class="text-left like" (click)="addRating({rating: 'like'})">LIKE</td>
+            </tr>
+            <tr>
+                <td class="text-right darker">{{ratings.dislikes.length}} -</td>
+                <td class="text-left like" (click)="addRating({rating: 'dislike'})">DISLIKE</td>
+              </tr>
+          </table>
+          
+        </ul>
+        <br>
+        <div id="actioncontent">
+          <div class="part">
+            <h2>Bracket Description</h2>
+            <p>{{description}}</p>
           </div>
-  </div>
-  <div class="row logincomponent">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-3 text-center">
-      <h1>Login</h1>
-      <input #username placeholder="Username / Email" id="username">
-      <br>
-      <input #password placeholder="Password" type="password" id="password">
-      <br>
-      <label><input type="checkbox" value="" #rememberMe checked="checked"> Remember Me</label>
-      <br>
-      <button (click)="loginUser({username:username.value,password:password.value,remember:rememberMe.checked})" [hidden]="loginClicked">Login</button>
-      <button class="clicked" disabled [hidden]="!loginClicked || hideLoggingIn">Logging In..</button>
-      <button class="success" disabled [hidden]="!loggedIn">Logged In</button>
+          <div class="part">
+            <h2>Bracket Bets</h2>
+            <p>{{description}}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-3 text-center divider">
-      <h1>Register</h1>
-      <input #newEmail placeholder="Email">
-      <br>
-      <input #newUsername placeholder="Username">
-      <br>
-      <input #newPassword placeholder="Password" type="password">
-      <br>
-      <button (click)="registerUser({email:newEmail.value,username:newUsername.value,password:newPassword.value})" [hidden]="registerClicked">Register</button>
-      <button class="clicked" disabled [hidden]="!registerClicked || hideRegistering">Registering..</button>
-      <button class="success" disabled [hidden]="!registered">Registered</button>
-    </div>
-    <div class="col-sm-3"></div>
-  </div>
-
+    
 </div>

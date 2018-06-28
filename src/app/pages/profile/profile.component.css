@@ -1,0 +1,106 @@
+.bracketContainer {
+    float: left;
+}
+
+.bracketDisplay {
+    margin: 10px;
+    float: left;
+    background-color: #26B6EC;
+    color: white;
+}
+
+.bracketDisplay a {
+    color: white;
+}
+
+.bracketDisplay h3 {
+    padding: 10px;
+    text-align: center;
+}
+
+.bracketDisplay button {
+    width: 100%;
+    margin: 0;
+    font-size: 18pt;
+    background-color: #64C6EB;
+    border: 0;
+}
+
+.bracketDisplay button:hover {
+    background-color: rgb(75, 201, 247);
+}
+
+a {
+    font-size: 14pt;
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+
+}
+
+span.list-group-item:hover {
+    background-color: #64C6EB;
+
+}
+
+#userSection img {
+    width: 100%;
+    margin-top: 30px;
+}
+
+#userSection p.name {
+    text-align: center;
+    font-size: 24pt;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #26B6EC;
+    color: white;
+    margin-bottom: 0;
+}
+
+#userSection button {
+    width: 100%;
+    background-color: #64C6EB;
+    color: white;
+    font-size: 15pt;
+    text-align: center;
+    border: 0;
+    padding: 10px;
+
+}
+
+#adSection {
+    margin-top: 15px;
+    background-color: rgb(253, 145, 21);
+    border: 5px solid rgb(252, 138, 8);
+    font-size: 16pt;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#adSection p {
+    padding: 10px;
+}
+
+#deleteAccount {
+    background-color: rgb(243, 38, 11);
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border: 0;
+    width: 100%;
+}
+
+#deleteProcessing {
+    background-color: rgb(253, 114, 95);
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border: 0;
+    width: 100%;
+    cursor: not-allowed;
+}

@@ -8,6 +8,8 @@
 
 .navbar-custom a {
     color: white;
+    overflow-x: hidden;
+
 }
 
 .navbar-custom a:hover {

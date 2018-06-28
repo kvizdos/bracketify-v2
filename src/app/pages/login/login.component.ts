@@ -55,7 +55,7 @@ export class LoginComponent {
         localStorage.setItem("username", value['username']);
 
         localStorage.setItem("sessionid", response['sessionid']);
-        window.location.href = "/home";
+        window.location.href = "/profile";
       } else {
         this.status = "fail";
         this.loginClicked = false;
