@@ -1,0 +1,7 @@
+<div *ngIf="visible" class="modal">
+  <ng-content></ng-content>
+  <button *ngIf="closable" (click)="close()" aria-label="Close" class="modal__close-btn">
+      Close
+  </button>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>

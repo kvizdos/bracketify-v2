@@ -1,0 +1,17 @@
+.preload {
+    margin-top: 30px;
+    color: #26B6EC;
+}
+
+.preload h1 {
+    text-align: center;
+    font-size: 60pt;
+    font-weight: bold;
+}
+
+.preload p {
+    font-size: 16pt;
+    text-align: center;
+    margin-top: 15px;
+    font-style: italic;
+}

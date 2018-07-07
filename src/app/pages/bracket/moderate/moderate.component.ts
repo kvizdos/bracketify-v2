@@ -9,9 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
-  selector: 'watch',
-  templateUrl: './watch.component.html',
-  styleUrls: ['./watch.component.css'],
+  selector: 'mod',
+  templateUrl: './moderate.component.html',
+  styleUrls: ['./moderate.component.css'],
   animations: [
     trigger(
       'slideUp', [
@@ -21,8 +21,8 @@ import { trigger, style, animate, transition } from '@angular/animations';
     )
   ]
 })
-export class WatchComponent {
-  title = 'Bracketify Watch';
+export class ModComponent {
+  title = 'Bracketify Moderate';
 
   name = "Loading..";
   description = "Loading..";

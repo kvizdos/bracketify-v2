@@ -5,7 +5,7 @@ import { config } from "../../assets/config.js"
 import { ActivatedRoute, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
-export class BracketGuardService implements CanActivate {
+export class BracketModGuardService implements CanActivate {
   async verifyBracket(value: string) {
     var dat;
     var url = "http://" + config.urls.current + "/bracketinfo"

@@ -1,5 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container-fluid">
+<preload *ngIf="!loaded">Loading..</preload>
+<div class="container-fluid" *ngIf="loaded">
   <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-2">

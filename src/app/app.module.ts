@@ -10,12 +10,16 @@ import { CreateComponent } from './pages/create/create.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { WatchComponent } from './pages/bracket/watch/watch.component';
+import { ModComponent } from './pages/bracket/moderate/moderate.component';
 
 import { NavComponent } from './modules/navbar/nav.component';
 import { FooterComponent } from './modules/footer/footer.component';
+import { ModalComponent } from './modules/modal/modal.component';
+import { PreloadComponent } from './modules/preload/preload.component';
 
 import { AuthGuardService } from './auth/auth-guard.service';
 import { BracketGuardService } from './auth/bracket-guard.service';
+import { BracketModGuardService } from './auth/bracket-mod-guard.service';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -44,6 +48,11 @@ const routes: Routes = [
     canActivate: [BracketGuardService]
   },
   {
+    path: 'moderate/:id',
+    component: ModComponent,
+    canActivate: [BracketGuardService]
+  },
+  {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuardService]
@@ -59,7 +68,10 @@ const routes: Routes = [
     LoginComponent,
     CreateComponent,
     WatchComponent,
-    ProfileComponent
+    ModComponent,
+    ProfileComponent,
+    ModalComponent,
+    PreloadComponent
   ],
   imports: [
     BrowserModule,
