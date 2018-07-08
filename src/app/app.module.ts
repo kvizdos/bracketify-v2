@@ -83,7 +83,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [NavComponent, AuthGuardService, BracketGuardService, BracketModGuardService],
+  providers: [NavComponent, AuthGuardService, BracketGuardService, BracketModGuardService, BracketComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

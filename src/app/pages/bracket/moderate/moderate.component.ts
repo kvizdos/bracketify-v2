@@ -2,11 +2,16 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { config } from "../../../../assets/config.js"
+import { BracketComponent } from "../bracket/bracket.component"
+
 import { JsonPipe } from '@angular/common';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { trigger, style, animate, transition } from '@angular/animations';
+
+import { Subscriber } from 'rxjs';
+
 declare var jquery:any;
 declare var $ :any;
 @Component({
@@ -327,16 +332,16 @@ export class ModComponent {
           }
         } else {
           this.isAddingTeam = false;
-
           this.teams.push({name: team, description: "Click to change me!"});
+          this.teams = this.teams.slice();
         }
       });
     } else {
       alert("You need to enter a team name!")
     }
   }
-
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  
+  constructor(private http: HttpClient, private route: ActivatedRoute, private bInfo: BracketComponent) {
     let id;
     let yote = this.route.params.subscribe(paramsId => {
       id = paramsId.id;
@@ -354,6 +359,6 @@ export class ModComponent {
 
       this.loaded = true;
     });
-  }
 
+  }
 }

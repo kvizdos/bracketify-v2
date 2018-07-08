@@ -33,6 +33,16 @@
     margin-bottom: 50px;
 }
 
+.winnerSelect {
+    text-align: right;
+    float: right;
+}
+
+.pError {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
 
 @media only screen and (max-width: 720px) {
     .wrapper {

@@ -1,9 +1,12 @@
 <div class="wrapper">
   <div class="bracket">
-    <ul class="brackets" *ngFor="let column of grid; let amt = index" [id]="amt">
-      <li class="bracketPos" *ngFor="let row of column; let i = index" [id]="i">
-        {{teams[i].name}}
-      </li>
-    </ul>
+      <ul [hidden]="showError" class="brackets" *ngFor="let column of grid; let amt = index" [id]="amt">
+        <li class="bracketPos" *ngFor="let row of column; let i = index" [id]="concat(amt, i)">
+          {{teamPositions[amt][i]}}
+          <span class="glyphicon glyphicon-arrow-right winnerSelect" *ngIf="(teamPositions[amt][i] !== undefined) && amt !== grid.length - 1"></span>
+
+        </li>
+
+      </ul>
   </div>
 </div>
