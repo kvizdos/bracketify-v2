@@ -31,8 +31,11 @@ export class WatchComponent {
   live = "Loading..";
   owner = "Loading..";
   teams: any = [{"loading": "Loading team descriptions.."}];
+  tweet = "";
+  tweetLink = "";
   loaded = false;
-
+  isLive = false;
+  showLive = false;
   rateStatus;
 
   async getBracketInfo(value: string) {
@@ -101,6 +104,10 @@ export class WatchComponent {
       this.game = response['info']['game'];
       this.ratings = response['info']['ratings'];
       this.live = response['info']['live'];
+      this.isLive = this.live.length > 0 ? true : false;
+      this.showLive = false;
+      this.tweet = response['info']['tweet'];
+      this.tweetLink = "https://twitter.com/intent/tweet?text=" + this.tweet + " " + window.location + " - @bracketify" + "&related=kvizdos";
       this.owner = response['info']['owner'];
       this.teams = response['info']['teams'];
 

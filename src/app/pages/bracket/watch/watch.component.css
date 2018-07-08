@@ -11,7 +11,19 @@
     height: 100%;
     background-color: #64C6EB;
     color: white;
+    margin: 0;
+    padding: 0;
 }
+
+#sidebar ul {
+    margin: 10px;
+}
+
+#sidebar #livestream {
+    position: relative;
+    top: 50px;
+}
+
 
 #sidebar .bottom {
     position: absolute;
@@ -21,6 +33,12 @@
     padding: 0;
     width: 100%;
     font-size: 18pt;
+}
+
+#sidebar .livestream {
+    position: absolute;
+    bottom: 100px;
+    height: 100px;
 }
 
 #sidebar button {
@@ -37,6 +55,9 @@
 }
 #sidebar button.live {
     background-color: #D53535;
+}
+#sidebar button.notlive {
+    background-color: rgb(221, 86, 86);
 }
 hr {
     border: 1px solid #26B6EC;

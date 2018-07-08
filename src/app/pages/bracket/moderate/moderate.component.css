@@ -36,6 +36,8 @@
     background-color: #259ECB;
 }
 #sidebar button.live {
+    overflow: hidden;
+    white-space: nowrap;
     background-color: #D53535;
 }
 hr {
@@ -79,7 +81,8 @@ li {
 
 }
 .top {
-    position: absolute;
+    position: absolute !important;
+    top: calc(-100vh + 52px + 39px);
     position: inherit !important; 
     height: 100% !important;
 }
@@ -168,7 +171,7 @@ li {
     padding-left: 5px;
     padding-right: 15px;
     width: 100%;
-    height: calc(100vh - 52px); 
+    height: calc(200vh - 52px); 
     background-color: white;
     color: black;
 }
@@ -191,4 +194,57 @@ li {
     vertical-align: initial !important;
     font-weight: initial !important;
 
+}
+
+.teamInput {
+    text-align: center;
+    color: black;
+    padding-top: 0;
+
+}
+#teamList {
+    height: calc(100vh * .35);
+    overflow: scroll;
+}
+.teamInput input {
+    padding: 5px;
+    border: 3px solid #26B6EC;
+    border-radius: 10px;
+}
+
+.teamInput input.disabled {
+    cursor: not-allowed;
+}
+
+.teamInput p {
+    font-style: italic;
+    color: rgb(21, 139, 182);
+    padding-top: 5px;
+    padding-bottom: 0;
+}
+
+button.resetToken {
+    border: 0;
+    background-color: rgb(241, 54, 21);
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+}
+
+button.resetToken.clicked {
+    border: 0;
+    background-color: rgb(231, 110, 88);
+    color: white;
+    font-weight: bold;
+    cursor: not-allowed;
+    padding: 10px;
+}
+
+#modifyBtn {
+    cursor: pointer;
+}
+
+
+.bracketArea {
+    margin-top: 40px;
 }

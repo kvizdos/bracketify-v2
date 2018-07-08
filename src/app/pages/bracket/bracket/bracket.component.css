@@ -1,0 +1,47 @@
+.wrapper {
+    overflow: scroll;
+    height: calc(100vh - 39px - 104px);
+    padding-bottom: 20px;
+}
+.bracket {
+    display : flex;
+  align-items : center;
+  width: 100%;
+  padding-right: 10px;
+
+
+}
+.brackets {
+    width: 100%;
+    color: white;
+    float: left;
+}
+
+.brackets ul {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.brackets li {
+    background-color: #26B6EC;
+    border-bottom: 4px solid #64C6EB;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.brackets li:nth-child(2n+2):not(:last-child) {
+    margin-bottom: 50px;
+}
+
+
+@media only screen and (max-width: 720px) {
+    .wrapper {
+        overflow: scroll;
+    }
+
+    .bracket {
+        width: 200vh;
+        overflow: hidden;
+
+    }
+}

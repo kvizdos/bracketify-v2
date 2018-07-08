@@ -125,30 +125,31 @@ export class ProfileComponent {
     this.name = localStorage.getItem("username");
     let ids = [];
     let bracketsearch = this.getUserInfo(this.name).then((response) => {
-      ids = [response['brackets']]
+      ids = response['brackets']
 
       console.log("Hash: " + response["emailhash"]);
 
       this.gravatar = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.gravatar.com/avatar/" + response['emailhash'] + "?d=identicon");
       console.log(response['emailhash']);
-      console.log(ids[0]);  
+      console.log(ids);  
       let i;
       
-      if(ids[0].length !== 0) {
-        for (i = 0; i < ids[0].length; i++) {
-          console.log(ids[0][i]);
-          let cId = ids[0][i];
-          let tbrackets = this.getBracketInfo(ids[0][i]).then((response) => {
-            console.log(response);
-            this.brackets.push({name: response['info']['name'], description: response['info']['description'], link: "/watch/" + cId, id: cId});
-            console.log(this.brackets);
-            this.loaded = true;
-          });
-        };
-      } else {
-        this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
-        this.loaded = true;
-      }
+        if(ids !== undefined && ids.length !== 0) {
+          for (i = 0; i < ids.length; i++) {
+            console.log(ids[i]);
+            let cId = ids[i];
+            let tbrackets = this.getBracketInfo(ids[i]).then((response) => {
+              console.log(response);
+              this.brackets.push({name: response['info']['name'], description: response['info']['description'], link: "/moderate/" + cId, id: cId});
+              console.log(this.brackets);
+              this.loaded = true;
+            });
+          };
+        } else {
+          this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
+          this.loaded = true;
+        }
+      
     });
   }
 

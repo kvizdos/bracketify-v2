@@ -1,6 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <preload *ngIf="!loaded">Loading..</preload>
 <div class="row" *ngIf="loaded">
+
     <div class="col-md-2" id="sidebar">
         <h2>Teams</h2>
         <ul>
@@ -10,12 +11,20 @@
           </li>
 
         </ul>
+
         <div class="bottom">
-            <button class="tweet"><i class="fa fa-twitter"></i> Tweet</button><br>
-            <button class="live"><span class="glyphicon glyphicon-facetime-video"></span> Live</button>
+
+            <a [href]="tweetLink"><button class="tweet"><i class="fa fa-twitter"></i> Tweet</button></a><br>
+            <button class="live" [hidden]="!isLive" (click)="showLive = true"><span class="glyphicon glyphicon-facetime-video"></span> Show livestream</button>
+            <button class="notlive" [hidden]="isLive" onclick="alert('This bracket does not have a livestream.')"><span class="glyphicon glyphicon-facetime-video"></span> Not Live</button>
           </div>        
     </div> 
     <div class="col-md-10 bracket">
+
+      <div class="bracketArea">
+        
+      </div>
+
       <div id="actionbar" *ngIf="!viewMore">
         <ul>
           <li class="name">{{name}} <span class="darker">- {{game}}</span></li><br>

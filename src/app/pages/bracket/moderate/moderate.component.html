@@ -3,19 +3,36 @@
 <div class="row" *ngIf="loaded">
     <div class="col-md-2" id="sidebar">
         <h2>Teams</h2>
-        <ul>
-          <li *ngFor="let team of teams;">
+        <div class="teamInput">
+            <input #newTeam placeholder="Bracketeers" (keyup.enter)="addTeam(newTeam.value)" [hidden]="isAddingTeam" />
+            <input value="Adding team..." class="disabled" disabled [hidden]="!isAddingTeam"/>
+
+            <p>Hit 'enter'/'return' to add the team</p>
+
+        </div>
+
+        <ul id="teamList">
+          <li *ngFor="let team of teams; let i = index" (click)="removeTeam(team.name)">
               {{team.name}}
               <hr>
           </li>
 
         </ul>
+        <div style="text-align: center;">
+          <p style="color: rgb(206, 27, 27); text-align: center; font-size: 14pt;">Click the team name to delete.</p>
+          <p style="color: white; font-style: italic;">Make sure to set the team descriptions in the 'View more' section!</p>
+        </div>
         <div class="bottom">
-            <button class="tweet"><i class="fa fa-twitter"></i> Tweet</button><br>
-            <button class="live"><span class="glyphicon glyphicon-facetime-video"></span> Live</button>
+            <button class="tweet" (click)="modify('tweet')"><i class="fa fa-twitter"></i> Set Tweet</button><br>
+            <button class="live" (click)="setLive('live')"><span class="glyphicon glyphicon-facetime-video"></span> Set Live Link</button>
           </div>        
     </div> 
     <div class="col-md-10 bracket">
+
+      <div class="bracketArea">
+        <bracket></bracket>
+      </div>
+
       <div id="actionbar" *ngIf="!viewMore">
         <ul>
           <li class="name">{{name}} <span class="darker">- {{game}}</span></li><br>
@@ -62,17 +79,29 @@
         <div class="actioncontent">
           <div class="content">
             <h2>Description:</h2>
-            <p>{{description}}</p>
-            <p><strong>Game/Subject: </strong>{{game}}</p>
+            <i>300 Character MAX</i>
+            <p>{{description}} <span (click)="modify('description')"id="modifyBtn" class="glyphicon glyphicon-pencil"></span></p>
+            <p><strong>Bracket Name: </strong>{{name}} <span (click)="modify('name')"id="modifyBtn" class="glyphicon glyphicon-pencil" [hidden]="beingEdited"></span></p>
+            <p><strong>Game/Subject: </strong>{{game}} <span (click)="modify('game')"id="modifyBtn" class="glyphicon glyphicon-pencil" [hidden]="beingEdited"></span></p>
             <br>
             <h2>Team Descriptions:</h2>
             <ul>
-              <li *ngFor="let team of teams;">
-                  <strong>{{team.name}}:</strong> {{team.description}}
+              <li *ngFor="let team of teams; let i = index;">
+                  <strong>{{team.name}} <span (click)="modify('teamname', team.name)"id="modifyBtn" class="glyphicon glyphicon-pencil" [hidden]="beingEdited"></span>:</strong> {{team.description}} <span (click)="modify('teamdescription', {team: team.name, description: team.description})"id="modifyBtn" class="glyphicon glyphicon-pencil" [hidden]="beingEdited"></span>
                   <hr>
               </li>
             </ul>
             <hr>
+            <h2>Danger Zone / Advanced</h2>
+            <p>Think someone has breached your bracket? Reset the token, it is the safest thing to do. (It is recommended to reset these right before you start the tournament)</p>
+            <p style="color: red;">NEVER EVER SHARE YOUR MOD ID / BRACKET ID WITH ANYBODY - STAFF WILL NEVER NEED THIS. DONT SHARE IT.</p>
+            <i>*The token is not the bracket ID in the URL, so you won't need to change any URLs you've posted - it is just a non-normal-user visible string that keeps the bracket secure, though if an admins computer was compromised or the admin shared the code, it could be spread and possibly used (to add/remove teams, change descriptions, etc (CANT DELETE THE BRACKET WITH THIS)) if the person is tech savvy enough</i>
+            <br><br>
+            <button class="resetToken" (click)="resetToken()" [hidden]="resetClicked"><i class="glyphicon glyphicon-refresh" style="padding-right: 5px;"></i> Reset Token</button>
+            <button class="resetToken clicked" disabled [hidden]="!resetClicked"><i class="glyphicon glyphicon-refresh"></i> Reset Token</button>
+            <br><br>
+            <p style="font-style: italic; color: rgb(182, 182, 182);">Trying to delete the bracket? This is only done by the owner on their profile page.</p>
+          
           </div>
         </div>
       </div>

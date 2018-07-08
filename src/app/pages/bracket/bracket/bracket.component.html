@@ -1,0 +1,9 @@
+<div class="wrapper">
+  <div class="bracket">
+    <ul class="brackets" *ngFor="let column of grid; let amt = index" [id]="amt">
+      <li class="bracketPos" *ngFor="let row of column; let i = index" [id]="i">
+        {{teams[i].name}}
+      </li>
+    </ul>
+  </div>
+</div>

@@ -13,6 +13,13 @@ export class BracketModGuardService implements CanActivate {
     return ret
   }
 
+  async verifyToken(value: object) {
+    var dat;
+    var url = "http://" + config.urls.current + "/gettoken"
+    let ret = await this.http.get(url + "/?id=" + value['id'] + "&user=" + value['user'] + "&session=" + localStorage.getItem("sessionid")).toPromise();
+    return ret
+  }
+
   constructor(public router: Router, private http: HttpClient, private route: ActivatedRoute) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         let self = this;
@@ -23,13 +30,40 @@ export class BracketModGuardService implements CanActivate {
                 window.location.href = "/home";
                 return false
             } else {
-              response['info']['admins'].push(localStorage.getItem('username'));
-              console.log(response);
-              if(response['info']['admins'].indexOf(localStorage.getItem('username')) >= 0) {
-                window.location.href = "/moderate/" + id;
+              if(response['info']['owner'] == localStorage.getItem('username')) response['info']['admins'].push(localStorage.getItem('username'));
+
+              console.log(response['info']['admins'].indexOf(localStorage.getItem('username')));
+              if(response['info']['admins'].indexOf(localStorage.getItem('username')) == -1) {
+                alert("You aren't an admin! Going to the watch page..");
+                window.location.href = "/watch/" + id;
                 return false;
+              } else {
+                let verify = this.verifyToken({id: id, user: localStorage.getItem("username"), sessionid: localStorage.getItem("sessionid")}).then((response) => {
+                  if(response['retStatus'] == "complete") {
+                    console.log(response);
+                    localStorage.setItem("modid", response['token']);
+                    return true;
+                  } else {
+                    console.log(response);
+                    switch(response['retStatus']) {
+                      case "invalidUser":
+                        localStorage.clear();
+                        window.location.href = "/watch/" + id;
+                        break;
+                      case "invalidSession":
+                        localStorage.clear();
+                        window.location.href = "/watch/" + id;
+                        break;
+                      case "invalidBracket":
+                        window.location.href = "/home"
+                        break;
+                    }
+                    return false;
+
+                  }
+                 });
               }
-              return true;
+              
             }
         });
 

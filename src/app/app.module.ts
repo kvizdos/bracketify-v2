@@ -11,6 +11,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 
 import { WatchComponent } from './pages/bracket/watch/watch.component';
 import { ModComponent } from './pages/bracket/moderate/moderate.component';
+import { BracketComponent } from './pages/bracket/bracket/bracket.component';
 
 import { NavComponent } from './modules/navbar/nav.component';
 import { FooterComponent } from './modules/footer/footer.component';
@@ -50,7 +51,7 @@ const routes: Routes = [
   {
     path: 'moderate/:id',
     component: ModComponent,
-    canActivate: [BracketGuardService]
+    canActivate: [BracketModGuardService, AuthGuardService]
   },
   {
     path: 'profile',
@@ -71,7 +72,8 @@ const routes: Routes = [
     ModComponent,
     ProfileComponent,
     ModalComponent,
-    PreloadComponent
+    PreloadComponent,
+    BracketComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +83,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [NavComponent, AuthGuardService, BracketGuardService],
+  providers: [NavComponent, AuthGuardService, BracketGuardService, BracketModGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

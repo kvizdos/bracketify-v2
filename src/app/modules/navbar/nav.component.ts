@@ -22,6 +22,9 @@ export class NavComponent {
 
   constructor(private http: HttpClient) {
     if(localStorage.getItem("sessionid") !== null) {
+      this.verified = true;
+      this.username = localStorage.getItem('username').toUpperCase();
+      this.coins = "X";
       let verify = this.verifySession().then((response) => {
         console.log(response['verified']);
 
