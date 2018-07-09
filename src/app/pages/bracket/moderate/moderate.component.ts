@@ -332,7 +332,7 @@ export class ModComponent {
           }
         } else {
           this.isAddingTeam = false;
-          this.teams.push({name: team, description: "Click to change me!"});
+          this.teams.push({name: team, description: "Click to change me!", pos: 1});
           this.teams = this.teams.slice();
         }
       });

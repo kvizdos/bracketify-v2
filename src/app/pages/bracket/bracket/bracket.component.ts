@@ -56,7 +56,8 @@ export class BracketComponent implements OnChanges, OnInit {
     let teamCount = teams.length;
 
       let modifiedCount = teamCount * 2;
-    
+      this.grid = [];
+
       while(true) {
 
       
@@ -74,23 +75,23 @@ export class BracketComponent implements OnChanges, OnInit {
               let tmpRow = "";
               for (let i = 0; i < tmpRows; i++) {
                 tmpRow += "R"
+                console.log(tmpRows + " - " + tmpRow);
               }
               this.grid.push(tmpRow.split(""));
-  
+              console.log(this.grid);
               modifiedCount /= 2;
-            
-            } else if(modifiedCount == 3)  {
-              
+              console.log("MC: " + modifiedCount);
+
+            } else if(modifiedCount > 1) {
                 modifiedCount += 1;
-              
-            } else {
-  
+
+            }else {
               for(let i = 0; i < this.grid.length; i++) {
                 console.log(this.grid[i]);
               }
 //              this.teamPositions = [];
               this.teamPositions = [];
-              console.log(teams);
+              console.log(this.teamPositions);
               for(let i = 0; i < teams.length; i++) {
                 console.log("WORKING ON... " + teams[i]['name']);
                 for(let x = 0; x < teams[i]['pos']; x++) {
@@ -115,11 +116,8 @@ export class BracketComponent implements OnChanges, OnInit {
     console.log("Detected")
     for (let propName in changes) {  
       let change = changes[propName];
-      console.log(change.currentValue[change.currentValue.length - 1]);
+      console.log(change.currentValue);
       this.teams = change.currentValue;
-      this.updateBracket = true;
-      console.log(this.teams);
-      console.log(this.updateBracket);
       this.setBracket(this.teams);
 
     }
