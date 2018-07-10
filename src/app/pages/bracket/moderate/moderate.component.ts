@@ -39,6 +39,7 @@ export class ModComponent {
   teams: any = [{"loading": "Loading team descriptions.."}];
   loaded = false;
   tweet = "";
+  admins = [];
 
   rateStatus;
 
@@ -73,7 +74,7 @@ export class ModComponent {
     });
 
     var url = "http://" + config.urls.current + "/updatebracket"
-    let ret = await this.http.get(url + "/?id=" + id + "&data=" + JSON.stringify(data) + "&type=" + type + "&modid=" + localStorage.getItem("modid")).toPromise();
+    let ret = await this.http.get(url + "/?id=" + id + "&data=" + JSON.stringify(data) + "&type=" + type + "&modid=" + localStorage.getItem("modid") + "&user=" + localStorage.getItem("username")).toPromise();
     return ret
   }
 
@@ -92,9 +93,7 @@ export class ModComponent {
         } else if (newDescription === null) {} else {
           let oldDesc = this.description;
           this.description = newDescription;
-          console.log("here");
           let change = this.getUpdateBracket({description: newDescription}, "description").then((response) => {
-            console.log("hyere");
             if(response['updateStatus'] == "complete") {
               alert("Description changed!");
             } else {
@@ -205,7 +204,6 @@ export class ModComponent {
         }
         let teamDescPos = teamDescNames.indexOf(updateTeam);
         this.teams[teamDescPos]['descEditing'] = true;
-        console.log(this.teams[teamDescPos]);
 
         let newdesc = prompt("What would you like the new description to be?", description).replace(">", "").replace("<", "").replace("/", "");
         if(description == newdesc) {
@@ -233,6 +231,71 @@ export class ModComponent {
               }
             }
           });
+        }
+        break;
+      case "addadmin":
+        let admin = prompt("What is the username of the admin you would like to invite? (Must be a valid Bracketify user)");
+        if(admin.length > 0) {
+          if(this.admins.indexOf(admin) == -1) {
+            this.admins.push(admin);
+            let newAdminPos = this.admins.indexOf(admin);
+          }
+
+          this.getUpdateBracket({admin: admin}, "addadmin").then((response) => {
+            if(response['updateStatus'] !== "complete") {
+              this.admins.splice(this.admins.indexOf(admin));
+              switch(response['code']) {
+                case "invalidUser":
+                  alert("The username length is invalid.");
+                  break;
+                case "alreadyAdmin":
+                  alert("That person is already an admin!");
+                  break;
+                case "userNotFound":
+                  alert("That is not a valid Bracketify user.");
+                  break;
+                case "invalidBracket":
+                  alert("This bracket is invalid. Reloading page.");
+                  location.reload();
+                  break;
+              }
+            } else {
+              alert("Admin added.");
+            }
+          });
+        } else {
+          alert("Invalid username length.");
+        }
+        break;
+      case "removeadmin":
+        let removeadmin = extra['removeadmin'];
+        let removeAdminPos = this.admins.indexOf(removeadmin);
+        this.admins.splice(removeAdminPos, 1);
+        if(removeadmin.length > 0) {
+          this.getUpdateBracket({admin: removeadmin}, "removeadmin").then((response) => {
+            if(response['updateStatus'] !== "complete") {
+              this.admins.splice(removeAdminPos, 0, removeadmin);
+              switch(response['code']) {
+                case "invalidUser":
+                  alert("The username length is invalid.");
+                  break;
+                case "notAdmin":
+                  alert("That person is not an admin!");
+                  break;
+                case "userNotFound":
+                  alert("That is not a valid Bracketify user.");
+                  break;
+                case "invalidBracket":
+                  alert("This bracket is invalid. Reloading page.");
+                  location.reload();
+                  break;
+              }
+            } else {
+              alert("Admin removed.");
+            }
+          });
+        } else {
+          alert("Invalid username length.");
         }
         break;
     }
@@ -295,6 +358,7 @@ export class ModComponent {
           } else {
             alert("Removed " + team);
             this.teams.splice(teamPos, 1);
+            this.teams = this.teams.slice(); 
           }
         });
       } else {
@@ -332,8 +396,9 @@ export class ModComponent {
           }
         } else {
           this.isAddingTeam = false;
-          this.teams.push({name: team, description: "Click to change me!", pos: 1});
+          this.teams.push({name: team, description: "This is a basic description!", positions: [{col: 0, pos: this.teams.length + 1}]});
           this.teams = this.teams.slice();
+          console.log("NEW TEAM LIST: " + this.teams[this.teams.length - 1]['positions']);
         }
       });
     } else {
@@ -356,7 +421,7 @@ export class ModComponent {
       this.tweet = response['info']['tweet'];
       this.owner = response['info']['owner'];
       this.teams = response['info']['teams'];
-
+      this.admins = response['info']['admins'];
       this.loaded = true;
     });
 

@@ -30,6 +30,11 @@ export class BracketComponent implements OnChanges, OnInit {
   grid = [];
   updateBracket = false;
   showBrack = false;
+  isAdmin = false;
+
+  isBeingEdited = false;
+
+  Math = Math;
   
   async getBracketInfo(value: string) {
     var dat;
@@ -48,10 +53,48 @@ export class BracketComponent implements OnChanges, OnInit {
 
   }
 
+  async getUpdateBracket(data: object, type: string) {
+    let id;
+    let tempid = this.route.params.subscribe(paramsId => {
+      id = paramsId.id;
+    });
+
+    var url = "http://" + config.urls.current + "/updatebracket"
+    let ret = await this.http.get(url + "/?id=" + id + "&data=" + JSON.stringify(data) + "&type=" + type + "&modid=" + localStorage.getItem("modid") + "&user=" + localStorage.getItem("username")).toPromise();
+    return ret
+  }
+
+  setWinner(column: any, pos: any, team: string) {
+    this.isBeingEdited = true;
+
+    let newCol = column + 1;
+    let newPos = Math.ceil(pos / 2) - 1;
+
+    console.log(newCol + " - " + newPos);
+    this.teamPositions[newCol][newPos] = team;
+    
+    this.getUpdateBracket({team: team}, "setwinner").then((response) => {
+      this.isBeingEdited = false;
+
+      console.log(response);
+    });
+  }
+
+  removeWinner(column: any, pos: any, team: string) {
+    this.isBeingEdited = true;
+    this.teamPositions[column][pos] = undefined;
+    console.log(this.teamPositions);
+    this.getUpdateBracket({team: team}, "removewinner").then((response) => {
+      this.isBeingEdited = false;
+
+      console.log(response);
+    });
+  }
+
   setBracket(teams: any[]) {
     this.teamPositions = [];
     this.showBrack = false;
-    console.log(teams);
+
     this.teams = teams;
     let teamCount = teams.length;
 
@@ -59,49 +102,49 @@ export class BracketComponent implements OnChanges, OnInit {
       this.grid = [];
 
       while(true) {
-
       
-          console.log("here");
-          console.log("Is it divisible? " + teams.length % 2)
-          if(teams.length % 2 !== 0) {
-            console.log("Errors!");
-
-            break;
+          if(modifiedCount % 2 !== 0 && modifiedCount != 1) {
+            modifiedCount += 1;
           } else {
-            console.log("No errors!");
             if(modifiedCount % 2 === 0) {
-              console.log(modifiedCount / 2);
               let tmpRows = Math.ceil(modifiedCount / 2);
               let tmpRow = "";
               for (let i = 0; i < tmpRows; i++) {
                 tmpRow += "R"
-                console.log(tmpRows + " - " + tmpRow);
               }
               this.grid.push(tmpRow.split(""));
-              console.log(this.grid);
-              modifiedCount /= 2;
-              console.log("MC: " + modifiedCount);
-
+              modifiedCount = Math.ceil(modifiedCount / 2);
             } else if(modifiedCount > 1) {
                 modifiedCount += 1;
+            } else {
+              this.teamPositions;
 
-            }else {
               for(let i = 0; i < this.grid.length; i++) {
-                console.log(this.grid[i]);
+                this.teamPositions.push([]);
               }
+
 //              this.teamPositions = [];
-              this.teamPositions = [];
-              console.log(this.teamPositions);
               for(let i = 0; i < teams.length; i++) {
-                console.log("WORKING ON... " + teams[i]['name']);
-                for(let x = 0; x < teams[i]['pos']; x++) {
-                  console.log("Pos: " + x);
-                  console.log(this.teams[x]);
-                  this.teamPositions.push([]);
-                  this.teamPositions[x].push(teams[i]['name'])
-                }
+                let positions = this.teams[i]['positions'];
+               for(let position = 0; position < positions.length; position++) {
+                  for (let i = 0; i < positions[position]['pos'] + 1; i++) {
+                    this.teamPositions.push([]);
+                    if(positions[position]['pos'] != this.teamPositions[i].length) {
+                    }
+                  }
+                 console.log(position + " of " + teams[i]['name'])
+                 console.log(teams[i]['name'] + " - " + positions[position]['col'] + " - " + (positions[position]['pos'] - 1));
+                 this.teamPositions[positions[position]['col']][positions[position]['pos'] - 1] = teams[i]['name'];
+               }
               }
+
+ 
+              if(teams[teams.length - 1]['name'] == "") {
+                teams.pop();
+              }
+
               this.showBrack = true;  
+
               console.log(this.teamPositions);
               break;
             }
@@ -111,7 +154,8 @@ export class BracketComponent implements OnChanges, OnInit {
       }
   }
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  }
   ngOnChanges(changes: SimpleChanges) {
     console.log("Detected")
     for (let propName in changes) {  

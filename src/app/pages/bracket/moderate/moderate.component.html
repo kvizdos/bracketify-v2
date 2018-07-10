@@ -92,6 +92,20 @@
               </li>
             </ul>
             <hr>
+            <div style="display: inline;">
+              <h2>Admins:  <span (click)="modify('addadmin')"id="modifyBtn" class="glyphicon glyphicon-plus"></span> </h2>
+            </div>
+            <br>
+            <ul [hidden]="admins.length != 0">
+              <li><strong>No admins! Click the "Plus" to add one!</strong></li>
+            </ul>
+            <ul [hidden]="admins.length == 0">
+              <li *ngFor="let admin of admins; let i = index;">
+                  <strong>{{admin}} <span (click)="modify('removeadmin', {removeadmin: admin})"id="modifyBtn" class="glyphicon glyphicon-remove" [hidden]="beingEdited"></span></strong>
+                  <hr>
+              </li>
+            </ul>
+            <hr>
             <h2>Danger Zone / Advanced</h2>
             <p>Think someone has breached your bracket? Reset the token, it is the safest thing to do. (It is recommended to reset these right before you start the tournament)</p>
             <p style="color: red;">NEVER EVER SHARE YOUR MOD ID / BRACKET ID WITH ANYBODY - STAFF WILL NEVER NEED THIS. DONT SHARE IT.</p>
