@@ -25,25 +25,22 @@ export class LoginComponent {
 
   mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  async registerNewUser(value: string) {
+  async registerNewUser(value: object) {
     var dat;
     var url = "http://" + config.urls.current + "/register"
     let ret = await this.http.get(url + "/?username=" + value['username'] + "&password=" + value['password'] + "&email=" + value['email']).toPromise();
     return ret
   }
 
-  async loginNewUser(value: string) {
+  async loginNewUser(value: object) {
     var url = "http://" + config.urls.current + "/login/" + "?username="+value['username']+"&password="+value['password'];
 
     let ret = await this.http.get(url).toPromise();
     return ret;
   }
 
-  loginUser(value: string) {
-    if(value == typeof "string") {
-      value = JSON.parse(value);
-
-    }
+  loginUser(value: object) {
+    //value = JSON.parse(value);
     this.loginClicked = true;
     let ret = this.loginNewUser(value).then((response) => {
       console.log(response);
@@ -75,7 +72,7 @@ export class LoginComponent {
 
   }
 
-  registerUser(value: string) {
+  registerUser(value: object) {
     this.registerClicked = true;
     let ret = this.registerNewUser(value).then((response) => {
         console.log(response['registerStatus']);
@@ -113,7 +110,7 @@ export class LoginComponent {
 
   constructor(private http: HttpClient) {
     if((localStorage.getItem('username') && localStorage.getItem('password')) !== null) {
-      this.loginUser(JSON.stringify({username:localStorage.getItem("username"),password:localStorage.getItem("password"),remember:true}))
+      this.loginUser({username:localStorage.getItem("username"),password:localStorage.getItem("password"),remember:true})
     }
   }
 

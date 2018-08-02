@@ -116,3 +116,25 @@ span.list-group-item:hover {
     width: 100%;
     cursor: not-allowed;
 }
+
+#resetPassword {
+    margin-bottom: 10px;
+    background-color: rgb(19, 216, 166);
+    padding: 10px;
+    text-align: center;
+    color: white;   
+    border: 0;
+    width: 100%;
+}
+
+#resetPasswordProcessing {
+    margin-bottom: 10px;
+
+    background-color: rgb(57, 250, 202);
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border: 0;
+    width: 100%;
+    cursor: not-allowed;
+}

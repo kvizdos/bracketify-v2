@@ -12,9 +12,12 @@
         <a href="https://en.gravatar.com/emails/"><button>Click here to change your icon</button></a>
       </div>
 
-      <a href="/shop"><div id="adSection">
+      <a href="#"><div id="adSection">
         <p>Want to get upgrades & coins? Check out the shop for upgrades and other cool things by clicking here!</p>
       </div></a>
+      <input type="password" name="prompt" [hidden]="true" />
+      <button id="resetPassword" (click)="resetPassword()" [hidden]="resetPasswordProcessing">Click here to change your password</button>
+      <button id="resetPasswordProcessing" disabled [hidden]="!resetPasswordProcessing">Changing..</button>
 
       <button id="deleteAccount" (click)="deleteAccount()" [hidden]="deletingAccount">Click here to delete your account</button>
       <button id="deleteProcessing" disabled [hidden]="!deletingAccount">Deleting..</button>

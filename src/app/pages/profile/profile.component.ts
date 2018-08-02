@@ -66,6 +66,41 @@ export class ProfileComponent {
     return ret
   }
 
+  async fullyResetPassword(value: object) {
+    var dat;
+    var url = "http://" + config.urls.current + "/resetpassword"
+    let ret = await this.http.get(url + "?session=" + value['sessionid'] + "&user=" + value['user'] + "&newpass=" + value['newpass'] + "&oldpass=" + value['oldpass']).toPromise();
+    return ret
+  }
+
+  resetPassword() {
+    let confPassword = prompt("Please enter your current password:");
+    if(confPassword !== undefined) {
+      let newPassword = prompt("What would you like your new password to be?");
+      if(newPassword !== undefined) {
+        
+        let reset = this.fullyResetPassword({
+            sessionid: localStorage.getItem('sessionid'), 
+            user: localStorage.getItem('username'), 
+            oldpass: confPassword, 
+            newpass: newPassword
+            }).then((response) => {
+              console.log(response);
+              if(response['status'] == "complete") {
+                this.modal("norm", "Password changed!", "Your password has been changed.");
+              } else {
+                switch(response['code']) {
+                  case "wrongPass":
+                    this.modal("error", "Incorrect password!", "The initial password you entered is incorrect. Please try again.");
+                    break;
+                }
+              }
+            });
+
+      }
+    }
+  }
+
   deleteAccount() {
     this.deletingAccount = true;
 

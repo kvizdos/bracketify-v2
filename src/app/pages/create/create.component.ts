@@ -38,7 +38,7 @@ export class CreateComponent {
     return ret
   }
 
-  createBracket(value: string) {
+  createBracket(value: object) {
     if(value['date'].length < 10) {
       this.dateError = true;
     } else {

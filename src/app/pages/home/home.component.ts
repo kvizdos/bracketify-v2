@@ -53,9 +53,22 @@ export class HomeComponent {
     return target.replace(new RegExp(search, 'g'), replacement);
   };
 
+  modalType = "";
+  modalHeader = "";
+  modalContent = "";
+  showModal = false;
+  modal(type: any, header: any, content: any) {
+    this.modalType = type;
+    this.modalHeader = header;
+    this.modalContent = content;
+    this.showModal = true;  
+  }
 
   explore(type: string, term: string) {
-    window.location.href = "/explore?" + type + "=" + term;
+    type = type != undefined ? type : '';
+    term = term != undefined ? term : '';
+
+    this.modal('norm', 'Thank\'s for taking interest, but..', "Sadly, due to time constraints, we are unable to provide you with the explore page. We are working hard on getting this page published and as soon as we have it done it will be live (and the update will be sent in the weekly update email)")
   }
 
   prepSearchTerm(termString: string) {

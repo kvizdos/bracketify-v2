@@ -32,6 +32,8 @@
       <br>
       <input #newPassword placeholder="Password" type="password">
       <br>
+      <p>By signing up, you will be signed up to our Beta newsletter (Weekly-ish)</p>
+      <br>
       <button (click)="registerUser({email:newEmail.value,username:newUsername.value,password:newPassword.value})" [hidden]="registerClicked">Register</button>
       <button class="clicked" disabled [hidden]="!registerClicked || hideRegistering">Registering..</button>
       <button class="success" disabled [hidden]="!registered">Registered</button>
