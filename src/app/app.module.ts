@@ -13,6 +13,8 @@ import { WatchComponent } from './pages/bracket/watch/watch.component';
 import { ModComponent } from './pages/bracket/moderate/moderate.component';
 import { BracketComponent } from './pages/bracket/bracket/bracket.component';
 
+import { BracketService } from './pages/bracket/bracket.service';
+
 import { NavComponent } from './modules/navbar/nav.component';
 import { FooterComponent } from './modules/footer/footer.component';
 import { ModalComponent } from './modules/modal/modal.component';
@@ -21,6 +23,7 @@ import { PreloadComponent } from './modules/preload/preload.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { BracketGuardService } from './auth/bracket-guard.service';
 import { BracketModGuardService } from './auth/bracket-mod-guard.service';
+import { SafeHtmlPipe } from './auth/sanitize';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -73,7 +76,8 @@ const routes: Routes = [
     ProfileComponent,
     ModalComponent,
     PreloadComponent,
-    BracketComponent
+    BracketComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -83,7 +87,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [NavComponent, AuthGuardService, BracketGuardService, BracketModGuardService, BracketComponent],
+  providers: [NavComponent, AuthGuardService, BracketGuardService, BracketModGuardService, BracketComponent, BracketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

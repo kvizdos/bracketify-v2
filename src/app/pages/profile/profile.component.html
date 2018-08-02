@@ -1,5 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <preload *ngIf="!loaded">Loading..</preload>
+<app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
+
 <div class="container-fluid" *ngIf="loaded">
   <div class="row">
     <div class="col-sm-2"></div>
@@ -28,7 +30,7 @@
       <h2>Brackets <a href="/create"><button class="btn btn-sm btn-success"><span class="color-success glyphicon glyphicon-plus"></span></button></a></h2>
       <p style="font-style: italic">Click to view</p>
       <div class="list-group">
-        <span class="list-group-item" *ngFor="let bracket of brackets"><a href="{{bracket.link}}"><span style="font-weight: bold;">{{bracket.name}}</span> </a> - {{bracket.description}}<span style="float: right;" [hidden]="bracket.id == '#'"><button class="btn btn-sm btn-danger" (click)="deleteBracket(bracket.id)"><span class="color-success glyphicon glyphicon-minus"></span></button></span></span>
+        <span class="list-group-item" *ngFor="let bracket of brackets.slice().reverse()"><a href="{{bracket.link}}"><span style="font-weight: bold;">{{bracket.name}}</span> </a> - {{bracket.description}}<span style="float: right;" [hidden]="bracket.id == '#'"><button class="btn btn-sm btn-danger" (click)="deleteBracket(bracket.id)"><span class="color-success glyphicon glyphicon-minus"></span></button></span></span>
       </div>
     </div>
     <div class="col-sm-2"></div>

@@ -1,5 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <preload *ngIf="!loaded">Loading..</preload>
+<app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
+
 <div class="row" *ngIf="loaded">
     <div class="col-md-2" id="sidebar">
         <h2>Teams</h2>
@@ -18,6 +20,8 @@
           </li>
 
         </ul>
+        <!--<button (click)="modify('randomizeTeams')" class="scramble"><span class="glyphicon glyphicon-random"></span> Scramble</button>-->
+
         <div style="text-align: center;">
           <p style="color: rgb(206, 27, 27); text-align: center; font-size: 14pt;">Click the team name to delete.</p>
           <p style="color: white; font-style: italic;">Make sure to set the team descriptions in the 'View more' section!</p>
@@ -35,7 +39,7 @@
 
       <div id="actionbar" *ngIf="!viewMore">
         <ul>
-          <li class="name">{{name}} <span class="darker">- {{game}}</span></li><br>
+          <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
           <li class="viewmore" (click)="viewMore = true"><button>view more</button></li>
         </ul>
         <ul class="right">
@@ -57,7 +61,7 @@
       <div id="actionbar" class="top" *ngIf="viewMore">
         <div id="actionhead">
           <ul>
-            <li class="name">{{name}} <span class="darker">- {{game}}</span></li><br>
+            <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
             <li class="viewmore" (click)="viewMore = false"><button>view less</button></li>
           </ul>
           <ul class="right">
@@ -79,8 +83,8 @@
         <div class="actioncontent">
           <div class="content">
             <h2>Description:</h2>
-            <i>300 Character MAX</i>
-            <p>{{description}} <span (click)="modify('description')"id="modifyBtn" class="glyphicon glyphicon-pencil"></span></p>
+            <i>200 Character MAX</i>
+            <p class="description">{{description}} <span (click)="modify('description')"id="modifyBtn" class="glyphicon glyphicon-pencil"></span></p>
             <p><strong>Bracket Name: </strong>{{name}} <span (click)="modify('name')"id="modifyBtn" class="glyphicon glyphicon-pencil" [hidden]="beingEdited"></span></p>
             <p><strong>Game/Subject: </strong>{{game}} <span (click)="modify('game')"id="modifyBtn" class="glyphicon glyphicon-pencil" [hidden]="beingEdited"></span></p>
             <br>
@@ -92,6 +96,16 @@
               </li>
             </ul>
             <hr>
+            <h2>Advanced</h2>
+            <div style="display: inline;">
+              <h2>Date:</h2>
+              <input #newdate type="date" [value]="date"/><span *ngIf="dateEdit == true">Changing..</span><span *ngIf="dateEdit == false" class="glyphicon glyphicon-pencil" (click)='modify("date", newdate.value)'></span>
+              <h2>Visibility Settings:</h2>
+              <p>Click true/false to toggle</p>
+              <p>Publicily viewable: <span [hidden]="pubViewEdit" class="visSetting" (click)='modify("pubview")'>{{isPublic}}</span><span [hidden]="!pubViewEdit">Changing...</span></p>
+              <p>Public registration: Coming soon!<!--<span [hidden]="pubRegEdit" class="visSetting" (click)='modify("pubreg")'>{{hasPublicJoins}}</span><span [hidden]="!pubRegEdit">Changing...</span>--></p>
+
+            </div>
             <div style="display: inline;">
               <h2>Admins:  <span (click)="modify('addadmin')"id="modifyBtn" class="glyphicon glyphicon-plus"></span> </h2>
             </div>
@@ -106,7 +120,11 @@
               </li>
             </ul>
             <hr>
-            <h2>Danger Zone / Advanced</h2>
+
+            <div style="display: inline;">
+              <h2>Visibility:  <span (click)="modify('visibility')"id="modifyBtn" class="glyphicon glyphicon-eye-closed" [hidden]="!isPublic"></span><span (click)="modify('visibility')"id="modifyBtn" class="glyphicon glyphicon-eye" [hidden]="isPublic"></span> </h2>
+            </div>
+
             <p>Think someone has breached your bracket? Reset the token, it is the safest thing to do. (It is recommended to reset these right before you start the tournament)</p>
             <p style="color: red;">NEVER EVER SHARE YOUR MOD ID / BRACKET ID WITH ANYBODY - STAFF WILL NEVER NEED THIS. DONT SHARE IT.</p>
             <i>*The token is not the bracket ID in the URL, so you won't need to change any URLs you've posted - it is just a non-normal-user visible string that keeps the bracket secure, though if an admins computer was compromised or the admin shared the code, it could be spread and possibly used (to add/remove teams, change descriptions, etc (CANT DELETE THE BRACKET WITH THIS)) if the person is tech savvy enough</i>

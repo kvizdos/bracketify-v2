@@ -15,3 +15,6 @@ html, body{
     font-family: "Product Sans";
     font-weight: normal;
 }  
+*:focus {
+    outline: none;
+}

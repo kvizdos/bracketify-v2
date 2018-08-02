@@ -28,6 +28,11 @@ export class BracketGuardService implements CanActivate {
               console.log(response['info']['admins'].indexOf(localStorage.getItem('username')));
 
               console.log(response);
+
+              if(response['info']['admins'].indexOf(localStorage.getItem('username')) == -1 && response['info']['public'] == false) {
+                window.location.href = "/home";
+                return false;
+              }
               if(response['info']['admins'].indexOf(localStorage.getItem('username')) == 0) {
                 window.location.href = "/moderate/" + id;
                 return false;

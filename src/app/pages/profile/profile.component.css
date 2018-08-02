@@ -30,6 +30,18 @@
     background-color: rgb(75, 201, 247);
 }
 
+.list-group {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-group span {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 a {
     font-size: 14pt;
     color: black;

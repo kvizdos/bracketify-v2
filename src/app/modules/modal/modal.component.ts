@@ -9,6 +9,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class ModalComponent implements OnInit {
   @Input() closable = true;
   @Input() visible: boolean;
+  @Input() header: String;
+  @Input() type: String;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }

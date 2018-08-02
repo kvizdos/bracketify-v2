@@ -32,7 +32,6 @@ export class BracketModGuardService implements CanActivate {
             } else {
               if(response['info']['owner'] == localStorage.getItem('username')) response['info']['admins'].push(localStorage.getItem('username'));
 
-              console.log(response['info']['admins'].indexOf(localStorage.getItem('username')));
               if(response['info']['admins'].indexOf(localStorage.getItem('username')) == -1) {
                 alert("You aren't an admin! Going to the watch page..");
                 window.location.href = "/watch/" + id;
@@ -40,11 +39,9 @@ export class BracketModGuardService implements CanActivate {
               } else {
                 let verify = this.verifyToken({id: id, user: localStorage.getItem("username"), sessionid: localStorage.getItem("sessionid")}).then((response) => {
                   if(response['retStatus'] == "complete") {
-                    console.log(response);
                     localStorage.setItem("modid", response['token']);
                     return true;
                   } else {
-                    console.log(response);
                     switch(response['retStatus']) {
                       case "invalidUser":
                         localStorage.clear();

@@ -22,12 +22,39 @@ hr {
     border: 1px solid #64C6EB;
 }
 
-input,textarea {
+input:not([type='checkbox']),textarea {
     width: 100%;
     border: 2px solid #26B6EC;
     border-radius: 10px;
     font-size: 16pt;
     padding: 10px;
+}
+:focus {
+    outline: none;
+}
+input:focus {
+    outline: none;
+}
+input[type='checkbox'] {
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 5px;
+    border: 2px solid #26B6EC;
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+}
+input[type='checkbox']:checked {
+    background-color: #64C6EB;
+}
+.dontallow {
+    border: 2px solid rgb(137, 204, 228);
+
+}
+label {
+    font-size: 12pt;
+    font-weight: normal;
 }
 
 textarea {
@@ -51,3 +78,14 @@ button {
     background-color: rgb(131, 200, 224);
   
 }
+
+.inpError {
+    border: 2px solid rgb(223, 13, 13) !important;
+}
+
+label { display: block; margin-bottom: 8px; }
+
+.inline-field {
+    display: inline-block;
+}
+

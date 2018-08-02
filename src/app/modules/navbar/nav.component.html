@@ -10,11 +10,13 @@
         <li><a href="/home">Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" [hidden]="verified">
+          <li><a href="http://sm.therotg.com/bracketifyfeedback"><span class="glyphicon glyphicon-tasks"></span> Submit feedback</a></li>
         <li><a href="/login"><span class="glyphicon glyphicon-user"></span> REGISTER/LOGIN</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right" [hidden]="!verified">
-          <li><a href="/shop"><span class="glyphicon glyphicon-shopping-cart"></span>  <strong> {{coins}}</strong> Coins</a></li>
+          <!--<li><a href="/shop"><span class="glyphicon glyphicon-shopping-cart"></span>  <strong> {{coins}}</strong> Coins</a></li>-->
+          <li><a href="http://sm.therotg.com/bracketifyfeedback"><span class="glyphicon glyphicon-tasks"></span> Submit feedback</a></li>
           <li><a href="/create"><span class="glyphicon glyphicon-plus"></span> CREATE A BRACKET</a></li>
           <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
         </ul>

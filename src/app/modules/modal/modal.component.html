@@ -1,7 +1,14 @@
-<div *ngIf="visible" class="modal">
-  <ng-content></ng-content>
-  <button *ngIf="closable" (click)="close()" aria-label="Close" class="modal__close-btn">
-      Close
-  </button>
+<div *ngIf="(type == 'error') || (type == 'norm') || (type == 'warning')">
+  <div *ngIf="visible" class="modal-container">
+    <div [ngClass]="type == 'warning' ? 'header warning' : (type == 'error' ? 'header danger' : 'header')">
+      <h2>{{header}}</h2>
+    </div>
+    <div class="modalContent">
+        <ng-content></ng-content>
+
+    </div>
+  </div>
+  <div *ngIf="visible" class="overlay" (click)="close()"></div>
 </div>
-<div *ngIf="visible" class="overlay" (click)="close()"></div>
+  
+  

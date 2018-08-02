@@ -26,6 +26,18 @@ export class ProfileComponent {
   deletingAccount = false;
   loaded = false;
 
+  modalType = "";
+  modalHeader = "";
+  modalContent = "";
+  showModal = false;
+  modal(type: any, header: any, content: any) {
+    this.modalType = type;
+    this.modalHeader = header;
+    this.modalContent = content;
+    this.showModal = true;  
+  }
+
+
   async getUserInfo(value: string) {
     var url = "http://" + config.urls.current + "/userinfo/" + "?user="+value;
 
@@ -58,7 +70,6 @@ export class ProfileComponent {
     this.deletingAccount = true;
 
     let pw = prompt("Sorry to see you go, please confirm your password:");
-    console.log(pw);
     if(pw !== "") {
       let delAcc = this.fullyDeleteAccount({sessionid: localStorage.getItem('sessionid'), user: localStorage.getItem('username'), password: pw}).then((response) => {
         if(response['delStatus'] == "complete") {
@@ -68,10 +79,10 @@ export class ProfileComponent {
         } else {
           switch (response['code']) {
             case "invalidPass":
-              alert("Invalid password, please try again.");
+              this.modal('error', 'Hmmm,', 'You\'ve typed an incorrect password. Please try again.')
               break;
             case "wrongPass":
-              alert("This password is not correct, please try again");
+              this.modal('error', 'Hmmm,', 'Password is incorrect. Please try again.')
               break;
             case "invalidSession":
               alert("Invalid session ID. Please login.")
@@ -93,7 +104,7 @@ export class ProfileComponent {
         }
       });
     } else {
-      alert("Invalid password, please try again.");
+      this.modal('error', 'Hmmm,','Invalid password, please try again.')
       this.deletingAccount = false;
     }
   }
@@ -101,14 +112,12 @@ export class ProfileComponent {
   deleteBracket(value: object) {
     for(let i = 0; i < this.brackets.length; i++) {
       if(this.brackets[i]['id'] == value) {
-        console.log("Got here!");
         this.brackets.splice(i,1);
         if(this.brackets.length == 0) {
           this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
         }
         
         let del = this.fullyDeleteBracket({id: value, sessionid: localStorage.getItem('sessionid'), username: localStorage.getItem('username')}).then((response) => {
-          console.log(response['delStatus'] + " - " + response['code']);
           if(response['delStatus'] !== "complete") {
             this.status = "fail";
             this.statusMsg = "Something went wrong. This tends to happen if your session token is invalid/old. Please reload your page.";
@@ -127,28 +136,24 @@ export class ProfileComponent {
     let bracketsearch = this.getUserInfo(this.name).then((response) => {
       ids = response['brackets']
 
-      console.log("Hash: " + response["emailhash"]);
 
       this.gravatar = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.gravatar.com/avatar/" + response['emailhash'] + "?d=identicon");
-      console.log(response['emailhash']);
-      console.log(ids);  
       let i;
       
         if(ids !== undefined && ids.length !== 0) {
           for (i = 0; i < ids.length; i++) {
-            console.log(ids[i]);
             let cId = ids[i];
             let tbrackets = this.getBracketInfo(ids[i]).then((response) => {
-              console.log(response);
               this.brackets.push({name: response['info']['name'], description: response['info']['description'], link: "/moderate/" + cId, id: cId});
-              console.log(this.brackets);
               this.loaded = true;
             });
           };
+
         } else {
           this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
           this.loaded = true;
         }
+
       
     });
   }

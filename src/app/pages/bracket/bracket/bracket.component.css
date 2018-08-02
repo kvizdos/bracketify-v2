@@ -51,6 +51,15 @@
     font-weight: bold;
 }
 
+.highlight {
+    background-color: rgb(75, 207, 255) !important;
+    border-bottom: 4px solid #26B6EC !important;
+}
+
+.scramble {
+    background-color: #26B6EC;
+}
+
 @media only screen and (max-width: 720px) {
     .wrapper {
         overflow: scroll;

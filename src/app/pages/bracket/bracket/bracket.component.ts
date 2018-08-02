@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { trigger, style, animate, transition } from '@angular/animations';
 
+import { BracketService } from '../bracket.service';
+
 @Component({
   selector: 'bracket',
   templateUrl: './bracket.component.html',
@@ -35,6 +37,8 @@ export class BracketComponent implements OnChanges, OnInit {
   isBeingEdited = false;
 
   Math = Math;
+
+  highlightedTeams = [];
   
   async getBracketInfo(value: string) {
     var dat;
@@ -48,7 +52,6 @@ export class BracketComponent implements OnChanges, OnInit {
   }
 
   addTeam(team: string) {
-    console.log(this.teamPositions);
     this.teamPositions.push(team);
 
   }
@@ -64,30 +67,68 @@ export class BracketComponent implements OnChanges, OnInit {
     return ret
   }
 
+  highlightTeam(team: any) {
+    this.highlightedTeams = [];
+    let poss = [];
+    for(let col = 0; col < this.teamPositions.length; col++) {
+      if(this.teamPositions[col].indexOf(team) >= 0) {
+        poss.push({col: col, pos: this.teamPositions[col].indexOf(team)});
+        this.highlightedTeams.push(team)
+      }
+    }
+
+  }
+
   setWinner(column: any, pos: any, team: string) {
+    
+    let id;
+    let yote = this.route.params.subscribe(paramsId => {
+      id = paramsId.id;
+    });
+
+    this._bracketService.emit('startingbuild', {id: id});
     this.isBeingEdited = true;
 
     let newCol = column + 1;
     let newPos = Math.ceil(pos / 2) - 1;
 
-    console.log(newCol + " - " + newPos);
     this.teamPositions[newCol][newPos] = team;
-    
+    let newTeamPos = this.teamPositions;
+
+    let teamNames = [];
+    for(let i = 0; i < this.teams.length; i++) {
+      teamNames.push(this.teams[i]['name']);
+    }
+
+    this.teams[teamNames.indexOf(team)]['positions'].push({col: newCol, pos: newPos + 1});
     this.getUpdateBracket({team: team}, "setwinner").then((response) => {
       this.isBeingEdited = false;
 
-      console.log(response);
+      this._bracketService.emit("rebuildbracket", {teams: this.teams, id: id, modid: localStorage.getItem("modid")});
     });
   }
 
   removeWinner(column: any, pos: any, team: string) {
+    let id;
+    let yote = this.route.params.subscribe(paramsId => {
+      id = paramsId.id;
+    });
+
+    this._bracketService.emit('startingbuild', {id: id});
+
     this.isBeingEdited = true;
     this.teamPositions[column][pos] = undefined;
-    console.log(this.teamPositions);
+
+    let teamNames = [];
+    for(let i = 0; i < this.teams.length; i++) {
+      teamNames.push(this.teams[i]['name']);
+    }
+
+    this.teams[teamNames.indexOf(team)]['positions'].pop();
     this.getUpdateBracket({team: team}, "removewinner").then((response) => {
       this.isBeingEdited = false;
 
-      console.log(response);
+      this._bracketService.emit("rebuildbracket", {teams: this.teams, id: id, modid: localStorage.getItem("modid")});
     });
   }
 
@@ -96,8 +137,12 @@ export class BracketComponent implements OnChanges, OnInit {
     this.showBrack = false;
 
     this.teams = teams;
-    let teamCount = teams.length;
+                  
+    if(teams.length <= 0) {
+      teams.push({name: "Please create a team!", description: "No teams added. Please add one.", positions: [{col: 0, pos: 1}]})
+    }
 
+    let teamCount = teams.length;
       let modifiedCount = teamCount * 2;
       this.grid = [];
 
@@ -117,7 +162,6 @@ export class BracketComponent implements OnChanges, OnInit {
             } else if(modifiedCount > 1) {
                 modifiedCount += 1;
             } else {
-              this.teamPositions;
 
               for(let i = 0; i < this.grid.length; i++) {
                 this.teamPositions.push([]);
@@ -132,8 +176,6 @@ export class BracketComponent implements OnChanges, OnInit {
                     if(positions[position]['pos'] != this.teamPositions[i].length) {
                     }
                   }
-                 console.log(position + " of " + teams[i]['name'])
-                 console.log(teams[i]['name'] + " - " + positions[position]['col'] + " - " + (positions[position]['pos'] - 1));
                  this.teamPositions[positions[position]['col']][positions[position]['pos'] - 1] = teams[i]['name'];
                }
               }
@@ -145,7 +187,6 @@ export class BracketComponent implements OnChanges, OnInit {
 
               this.showBrack = true;  
 
-              console.log(this.teamPositions);
               break;
             }
           
@@ -154,19 +195,29 @@ export class BracketComponent implements OnChanges, OnInit {
       }
   }
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private _bracketService: BracketService) {
   }
   ngOnChanges(changes: SimpleChanges) {
-    console.log("Detected")
     for (let propName in changes) {  
       let change = changes[propName];
-      console.log(change.currentValue);
       this.teams = change.currentValue;
       this.setBracket(this.teams);
 
     }
   }
 
+  async getToken() {
+    console.log("Getting token");
+    let id;
+    let tempid = this.route.params.subscribe(paramsId => {
+      id = paramsId.id;
+    });
+
+    var url = "http://" + config.urls.current + "/gettoken"
+    let ret = await this.http.get(url + "/?id=" + id + "&user=" + localStorage.getItem("username") + "&session=" + localStorage.getItem('sessionid') + "&modid=" + localStorage.getItem("modid")).toPromise();
+    console.log(ret);
+    return ret
+  }
   ngOnInit() {
     let id;
     let yote = this.route.params.subscribe(paramsId => {
@@ -175,9 +226,38 @@ export class BracketComponent implements OnChanges, OnInit {
 
     //let gettingTeams = this.getBracketInfo(id).then((response) => {
       //this.teams = response['info']['teams'];
-    console.log(this.teams);
-    //this.setBracket(this.teams);
-    //});
+
+      
+
+    this._bracketService.on('startbuild', (data: any) => {
+      if(data['id'] == id) {
+        this.isBeingEdited = true;
+
+      }
+    });
+    this._bracketService.on('syncteams', (data: any) => {
+      if(data['id'] == id) {
+        this.teams = data['teams'];
+        
+        this.setBracket(this.teams);  
+        this.isBeingEdited = false;
+      }
+    });
+
+    this.getToken().then((response) => {
+      if(response['retStatus'] == "complete") {
+        if(response['token'] == localStorage.getItem("modid")) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      } else {
+        this.isAdmin = false;
+      }
+
+      console.log(this.isAdmin);
+    });
+
   }
 
 }

@@ -5,6 +5,7 @@
     overflow-x: hidden;
     border-radius: 0;
     margin-bottom: 0;
+    padding: 10px;
 }
 
 .fancyButton {
@@ -17,6 +18,7 @@
     padding: 10px;
     font-size: 25pt;
     font-weight: bold;
+    margin-top: 10px;
 }
 
 .fancySearch {
@@ -29,3 +31,131 @@
     width: 100%;
 }
 
+.fancySearch.nobottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+ul.searchResults {
+    list-style-type: none !important;
+    padding:5px;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+
+}
+
+.sr {
+    text-align: left;
+    background-color: #26B6EC;
+    height: 100%;
+    width: 100%;
+    
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.searchName {
+    font-size: 16pt;
+    color: white;
+    padding-top: 0;
+    padding-bottom: 0;
+    cursor: pointer;
+}
+
+.searchName .bold {
+    font-weight: bold;
+}
+
+.searchOwner {
+    font-size: 14pt;
+    color: white;
+    float: right;
+    padding-top: 0;
+    padding-bottom: 0;
+
+}
+
+.searchHr {
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.row {
+    overflow: hidden;
+
+}
+
+.headerText {
+    font-weight: 800;
+    color: #26B6EC;
+}
+
+#brackets {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+}
+
+@media (max-width: 900px) {
+    #brackets {
+        display: inline;
+    }
+}
+
+#bracket {
+    margin: 10px;
+    overflow: hidden;
+    color: white;
+
+}
+
+.bracketHeader {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    background-color: #26B6EC;
+
+    padding: 5px;
+    font-size: 18pt;
+    margin: 0;
+}
+.bracketDesc {
+    width: 100%;
+    margin: 0;
+    padding: 5px;
+    background-color: #64C6EB;
+    font-size: 15pt;
+    overflow: initial;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    line-height: 18pt;
+    flex: 1; /* additionally, equal width */
+}
+
+.bracketGame {
+    padding: 0;
+    color: #26B6EC;
+}
+
+.bracketWatch {
+    border: 0;
+    padding: 5px;
+
+    background-color: #26B6EC;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 100%;
+    font-size: 14pt;
+}
+
+.unbold {
+    font-weight: normal;
+}
+span.bold {
+    font-weight: bold !important;
+}

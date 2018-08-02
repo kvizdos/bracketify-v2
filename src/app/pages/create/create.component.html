@@ -1,19 +1,33 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
+
 <div style="text-align:center shell">
  <div class="row padding">
      <div class="col-sm-1"></div>
      <div class="col-sm-5">
          <h1>Bracket Name</h1>
-         <input #name placeholder="My awesome Bracket"/>
+         <input type="text" #name placeholder="My awesome Bracket" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
          <h1>Bracket Description</h1>
-         <p>*Maximum 300 characters</p>
-         <textarea #description placeholder="blah bliddy bloo bla blah" maxlength="300" rows="10"></textarea>
+         <p>*Maximum 200 characters</p>
+         <textarea #description placeholder="blah bliddy bloo bla blah" maxlength="200" rows="10" [ngClass]="descError == true ? 'inpError' : undefined"></textarea>
          <h1>Bracket Livestream Link</h1>
          <input #live placeholder="service.extension/yourchannel"/>
      </div>
      <div class="col-sm-5">
         <h1>Game/Subject</h1>
-        <input #game placeholder="Rocket League"/>
+        <input #game placeholder="Rocket League" [ngClass]="gameError == true ? 'inpError' : undefined"/>
+        <h1>Date</h1>
+        <input #date type="date" [ngClass]="dateError == true ? 'inpError' : undefined"/>
+        <h1>Visibility Settins</h1>
+        
+        <div class="inline-field">
+            <label for="checkbox"><input type="checkbox" id="checkbox" checked #pubView> Publicly viewable</label>
+        </div>
+        <br>
+        <div class="inline-field">
+            <label><input type="checkbox" id="checkbox" #pubReg> Public registration</label>
+        </div>
+
          <h1>Bracket Addons</h1>
          <p>*Click the name to see more information</p>
          <div class="row">
@@ -25,7 +39,8 @@
             <div class="col-sm-5"><h2>Coin Boosters</h2></div>
          </div>
          <br>
-        <button (click)="createBracket({name: name.value, description: description.value, live: live.value, game: game.value, addons: []})" [hidden]="clicked">Create</button>
+         <p>All settings can be changed at any time</p>
+        <button (click)="createBracket({date: date.value, pubView: pubView.checked, pubReg: pubReg.checked, name: name.value, description: description.value, live: live.value, game: game.value, addons: []})" [hidden]="clicked">Create</button>
         <button disabled class="clicked" [hidden]="!clicked">Creating..</button>
  
     </div>

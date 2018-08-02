@@ -7,11 +7,12 @@ import { JsonPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { trigger, style, animate, transition } from '@angular/animations';
+import { BracketService } from '../bracket.service';
 
 @Component({
   selector: 'watch',
   templateUrl: './watch.component.html',
-  styleUrls: ['./watch.component.css'],
+  styleUrls: ['../page.component.css'],
   animations: [
     trigger(
       'slideUp', [
@@ -37,6 +38,23 @@ export class WatchComponent {
   isLive = false;
   showLive = false;
   rateStatus;
+  isPublic = false;
+  hasPublicJoins = false;
+
+  date;
+
+  modalType = "";
+  modalHeader = "";
+  modalContent = "";
+  showModal = false;
+
+  modal(type: any, header: any, content: any) {
+    this.modalType = type;
+    this.modalHeader = header;
+    this.modalContent = content;
+    this.showModal = true;  
+  }
+
 
   async getBracketInfo(value: string) {
     var dat;
@@ -57,6 +75,15 @@ export class WatchComponent {
     var url = "http://" + config.urls.current + "/addrating"
     let ret = await this.http.get(url + "/?id=" + id + "&rating=" + value['rating'] + "&user=" + localStorage.getItem('username')).toPromise();
     return ret
+  }
+
+  showLivestream() {
+    if(this.isLive) {
+      this.modal('norm', this.name + "'s livestream", 'Livestreams are coming soon.');
+
+    } else {
+      this.modal('error', 'This bracket does not have a livestream.', 'Sadly, this bracket does not have a live stream!');
+    }
   }
 
   addRating(value: object) {
@@ -80,7 +107,6 @@ export class WatchComponent {
         this.rateStatus = rate;
         
       } else {
-        alert("You've already rated!");
         if(rate == "like") {
           this.ratings.likes.pop();
           console.log(this.ratings.likes.length);
@@ -92,7 +118,7 @@ export class WatchComponent {
 
   }
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private _bracketService: BracketService) {
     let id;
     let yote = this.route.params.subscribe(paramsId => {
       id = paramsId.id;
@@ -110,9 +136,28 @@ export class WatchComponent {
       this.tweetLink = "https://twitter.com/intent/tweet?text=" + this.tweet + " " + window.location + " - @bracketify" + "&related=kvizdos";
       this.owner = response['info']['owner'];
       this.teams = response['info']['teams'];
-
+      this.isPublic = response['info']['public'];
+      this.hasPublicJoins = response['info']['pubreg'];
+      this.date = response['info']['date'];
       this.loaded = true;
     });
+  }
+
+  ngOnInit() {
+    let id;
+    let yote = this.route.params.subscribe(paramsId => {
+      id = paramsId.id;
+    });
+
+    this._bracketService.on('syncteams', (data: any) => {
+      console.log("Sync request..");
+      if(data['id'] == id) {
+        console.log("Syncing teams..");
+
+        this.teams = data['teams'];
+      }
+    });
+
   }
 
 }

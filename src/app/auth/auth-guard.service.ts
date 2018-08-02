@@ -17,9 +17,7 @@ export class AuthGuardService implements CanActivate {
   canActivate(): boolean {
       if((localStorage.getItem("username") && localStorage.getItem("sessionid")) !== null) {
         let choice = this.verifySession().then((response) => {
-            console.log(response['verified']);
             if(response['verified'] == "false") {
-                console.log("Rejected here");
                 window.location.href = "/login";
                 return false
             };

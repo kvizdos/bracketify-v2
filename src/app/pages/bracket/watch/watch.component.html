@@ -1,22 +1,27 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <preload *ngIf="!loaded">Loading..</preload>
+<app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
+
 <div class="row" *ngIf="loaded">
 
     <div class="col-md-2" id="sidebar">
         <h2>Teams</h2>
-        <ul>
+        <ul id="teamList">
           <li *ngFor="let team of teams;">
               {{team.name}}
               <hr>
           </li>
-
+      <!-- TODO: Add registering!
+          <li>
+              <button class="register" *ngIf="hasPublicJoins == true">Register</button>
+          </li>
+        -->
         </ul>
 
         <div class="bottom">
 
             <a [href]="tweetLink"><button class="tweet"><i class="fa fa-twitter"></i> Tweet</button></a><br>
-            <button class="live" [hidden]="!isLive" (click)="showLive = true"><span class="glyphicon glyphicon-facetime-video"></span> Show livestream</button>
-            <button class="notlive" [hidden]="isLive" onclick="alert('This bracket does not have a livestream.')"><span class="glyphicon glyphicon-facetime-video"></span> Not Live</button>
+            <button class="live" (click)="showLivestream()"><span class="glyphicon glyphicon-facetime-video"></span> Watch live</button>
           </div>        
     </div> 
     <div class="col-md-10 bracket">
@@ -27,7 +32,7 @@
 
       <div id="actionbar" *ngIf="!viewMore">
         <ul>
-          <li class="name">{{name}} <span class="darker">- {{game}}</span></li><br>
+          <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
           <li class="viewmore" (click)="viewMore = true"><button>view more</button></li>
         </ul>
         <ul class="right">
@@ -49,7 +54,7 @@
       <div id="actionbar" class="top" *ngIf="viewMore">
         <div id="actionhead">
           <ul>
-            <li class="name">{{name}} <span class="darker">- {{game}}</span></li><br>
+            <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
             <li class="viewmore" (click)="viewMore = false"><button>view less</button></li>
           </ul>
           <ul class="right">

@@ -26,10 +26,7 @@ export class NavComponent {
       this.username = localStorage.getItem('username').toUpperCase();
       this.coins = "X";
       let verify = this.verifySession().then((response) => {
-        console.log(response['verified']);
-
         if(response['verified'] == "false") {
-          console.log(response['verified']);
           localStorage.clear();
           window.location.href = "/login";
           this.verified = false;
