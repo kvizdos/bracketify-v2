@@ -8,14 +8,14 @@ import { ActivatedRoute, Router, RouterStateSnapshot, ActivatedRouteSnapshot } f
 export class BracketModGuardService implements CanActivate {
   async verifyBracket(value: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/bracketinfo"
+    var url = config.urls.current + "/bracketinfo"
     let ret = await this.http.get(url + "/?id=" + value).toPromise();
     return ret
   }
 
   async verifyToken(value: object) {
     var dat;
-    var url = "http://" + config.urls.current + "/gettoken"
+    var url = config.urls.current + "/gettoken"
     let ret = await this.http.get(url + "/?id=" + value['id'] + "&user=" + value['user'] + "&session=" + localStorage.getItem("sessionid")).toPromise();
     return ret
   }

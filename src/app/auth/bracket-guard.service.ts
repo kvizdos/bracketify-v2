@@ -8,7 +8,7 @@ import { ActivatedRoute, Router, RouterStateSnapshot, ActivatedRouteSnapshot } f
 export class BracketGuardService implements CanActivate {
   async verifyBracket(value: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/bracketinfo"
+    var url = config.urls.current + "/bracketinfo"
     let ret = await this.http.get(url + "/?id=" + value).toPromise();
     return ret
   }

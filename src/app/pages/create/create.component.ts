@@ -33,7 +33,7 @@ export class CreateComponent {
 
   async getCreateBracket(value: object) {
     var dat;
-    var url = "http://" + config.urls.current + "/createbracket"
+    var url = config.urls.current + "/createbracket"
     let ret = await this.http.get(url + `/?name=${value['name']}&description=${value['description']}&live=${value['live']}&game=${value['game']}&owner=${value['owner']}&addons=${value['addons']}&pubreg=${value['pubreg']}&pubview=${value['pubview']}&date=${value['date']}`).toPromise();
     return ret
   }

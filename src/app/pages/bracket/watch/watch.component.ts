@@ -58,7 +58,7 @@ export class WatchComponent {
 
   async getBracketInfo(value: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/bracketinfo"
+    var url = config.urls.current + "/bracketinfo"
     let ret = await this.http.get(url + "/?id=" + value).toPromise();
     return ret
   }
@@ -72,7 +72,7 @@ export class WatchComponent {
     console.log("Here: " + id);
     console.log(value['rating']);
     var dat;
-    var url = "http://" + config.urls.current + "/addrating"
+    var url = config.urls.current + "/addrating"
     let ret = await this.http.get(url + "/?id=" + id + "&rating=" + value['rating'] + "&user=" + localStorage.getItem('username')).toPromise();
     return ret
   }

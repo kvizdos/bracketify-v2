@@ -15,7 +15,7 @@ export class NavComponent {
 
   async verifySession() {
     var dat;
-    var url = "http://" + config.urls.current + "/verifysession"
+    var url = config.urls.current + "/verifysession"
     let ret = await this.http.get(url + "/?sessionid=" + localStorage.getItem("sessionid") + "&user=" + localStorage.getItem("username")).toPromise();
     return ret
   }

@@ -66,7 +66,7 @@ export class ModComponent implements OnInit {
 
   async getBracketInfo(value: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/bracketinfo"
+    var url = config.urls.current + "/bracketinfo"
     let ret = await this.http.get(url + "/?id=" + value).toPromise();
     return ret
   }
@@ -77,7 +77,7 @@ export class ModComponent implements OnInit {
       id = paramsId.id;
     });
     var dat;
-    var url = "http://" + config.urls.current + "/addrating"
+    var url = config.urls.current + "/addrating"
     let ret = await this.http.get(url + "/?id=" + id + "&rating=" + value['rating'] + "&user=" + localStorage.getItem('username')).toPromise();
     return ret
   }
@@ -88,7 +88,7 @@ export class ModComponent implements OnInit {
       id = paramsId.id;
     });
 
-    var url = "http://" + config.urls.current + "/updatebracket"
+    var url = config.urls.current + "/updatebracket"
     let ret = await this.http.get(url + "/?id=" + id + "&data=" + JSON.stringify(data) + "&type=" + type + "&modid=" + localStorage.getItem("modid") + "&user=" + localStorage.getItem("username")).toPromise();
     return ret
   }

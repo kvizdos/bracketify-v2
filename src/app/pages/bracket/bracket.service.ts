@@ -6,7 +6,7 @@ export class BracketService {
     socket: SocketIOClient.Socket;
 
     constructor() {
-        this.socket = io.connect("http://" + config.urls.socket);
+        this.socket = io.connect(config.urls.socket);
     }
 
     on(eventName: any, callback: any) {

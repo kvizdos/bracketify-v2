@@ -42,7 +42,7 @@ export class BracketComponent implements OnChanges, OnInit {
   
   async getBracketInfo(value: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/bracketinfo"
+    var url = config.urls.current + "/bracketinfo"
     let ret = await this.http.get(url + "/?id=" + value).toPromise();
     return ret
   }
@@ -62,7 +62,7 @@ export class BracketComponent implements OnChanges, OnInit {
       id = paramsId.id;
     });
 
-    var url = "http://" + config.urls.current + "/updatebracket"
+    var url = config.urls.current + "/updatebracket"
     let ret = await this.http.get(url + "/?id=" + id + "&data=" + JSON.stringify(data) + "&type=" + type + "&modid=" + localStorage.getItem("modid") + "&user=" + localStorage.getItem("username")).toPromise();
     return ret
   }
@@ -213,7 +213,7 @@ export class BracketComponent implements OnChanges, OnInit {
       id = paramsId.id;
     });
 
-    var url = "http://" + config.urls.current + "/gettoken"
+    var url = config.urls.current + "/gettoken"
     let ret = await this.http.get(url + "/?id=" + id + "&user=" + localStorage.getItem("username") + "&session=" + localStorage.getItem('sessionid') + "&modid=" + localStorage.getItem("modid")).toPromise();
     console.log(ret);
     return ret

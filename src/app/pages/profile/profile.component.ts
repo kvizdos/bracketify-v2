@@ -39,7 +39,7 @@ export class ProfileComponent {
 
 
   async getUserInfo(value: string) {
-    var url = "http://" + config.urls.current + "/userinfo/" + "?user="+value;
+    var url = config.urls.current + "/userinfo/" + "?user="+value;
 
     let ret = await this.http.get(url).toPromise();
     return ret;
@@ -47,28 +47,28 @@ export class ProfileComponent {
 
   async getBracketInfo(value: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/bracketinfo"
+    var url = config.urls.current + "/bracketinfo"
     let ret = await this.http.get(url + "/?id=" + value).toPromise();
     return ret
   }
 
   async fullyDeleteBracket(value: object) {
     var dat;
-    var url = "http://" + config.urls.current + "/delete"
+    var url = config.urls.current + "/delete"
     let ret = await this.http.get(url + "/?id=" + value['id'] + "&session=" + value['sessionid'] + "&user=" + value['username']).toPromise();
     return ret
   }
 
   async fullyDeleteAccount(value: object) {
     var dat;
-    var url = "http://" + config.urls.current + "/deleteaccount"
+    var url = config.urls.current + "/deleteaccount"
     let ret = await this.http.get(url + "?session=" + value['sessionid'] + "&user=" + value['user'] + "&password=" + value['password']).toPromise();
     return ret
   }
 
   async fullyResetPassword(value: object) {
     var dat;
-    var url = "http://" + config.urls.current + "/resetpassword"
+    var url = config.urls.current + "/resetpassword"
     let ret = await this.http.get(url + "?session=" + value['sessionid'] + "&user=" + value['user'] + "&newpass=" + value['newpass'] + "&oldpass=" + value['oldpass']).toPromise();
     return ret
   }

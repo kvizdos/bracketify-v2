@@ -22,14 +22,14 @@ export class HomeComponent {
   
   async searchTerms(term: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/search"
+    var url = config.urls.current + "/search"
     let ret = await this.http.get(url + "/?term=" + term).toPromise();
     return ret
   }
 
   async getExplore(type: string) {
     var dat;
-    var url = "http://" + config.urls.current + "/explore"
+    var url = config.urls.current + "/explore"
     let ret = await this.http.get(url + "/?type=" + type).toPromise();
     return ret
   }

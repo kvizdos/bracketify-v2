@@ -27,13 +27,13 @@ export class LoginComponent {
 
   async registerNewUser(value: object) {
     var dat;
-    var url = "http://" + config.urls.current + "/register"
+    var url = config.urls.current + "/register"
     let ret = await this.http.get(url + "/?username=" + value['username'] + "&password=" + value['password'] + "&email=" + value['email']).toPromise();
     return ret
   }
 
   async loginNewUser(value: object) {
-    var url = "http://" + config.urls.current + "/login/" + "?username="+value['username']+"&password="+value['password'];
+    var url = config.urls.current + "/login/" + "?username="+value['username']+"&password="+value['password'];
 
     let ret = await this.http.get(url).toPromise();
     return ret;
