@@ -1,0 +1,129 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div class="container-fluid" style="text-align:center shell">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h1>Coin Shop</h1>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Amount</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">10 Coins</th>
+            <td>$10</td>
+            <td><button class="buyNow" (click)="buy('coins', 10)">Buy</button></td>
+          </tr>
+          <tr>
+            <th scope="row">25 Coins</th>
+            <td>$15</td>
+            <td><button class="buyNow" (click)="buy('coins', 25)">Buy</button></td>
+          </tr>
+          <tr>
+            <th scope="row">50 Coins</th>
+            <td>$25</td>
+            <td><button class="buyNow" (click)="buy('coins', 50)">Buy</button></td>
+          </tr>
+          <tr>
+            <th scope="row">100 Coins</th>
+            <td>$35</td>
+            <td><button class="buyNow" (click)="buy('coins', 100)">Buy</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <h1>Memberships (Coming soon!)</h1>
+        <p>*CpH = Coins per hour</p>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Badge</th>
+                <th scope="col">Ad Free</th>
+                <th scope="col">Max Brackets</th>
+                <th scope="col">CpH</th>
+                <th scope="col">Email Updates</th>
+                <th scope="col">Statistics</th>
+                <th scope="col">Coins % Off</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Free</th>
+                <td>#</td>
+                <td>No</td>
+                <td>10</td>
+                <td>1</td>
+                <td>No</td>
+                <td>No</td>
+                <td>0%</td>
+                <td><a href="/login"><button class="buyNow">Free</button></a></td>
+              </tr>
+              <tr>
+                <th scope="row">Supporter</th>
+                <td>#</td>
+                <td>Yes</td>
+                <td>50</td>
+                <td>5</td>
+                <td>Yes</td>
+                <td>Yes*</td>
+                <td>25%</td>
+                <td><button class="buyNow">$4.99/mo</button></td>
+              </tr>
+              <tr>
+                <th scope="row">Broadcaster</th>
+                <td>#</td>
+                <td>Yes</td>
+                <td>Unlimited</td>
+                <td>N/A</td>
+                <td>Yes</td>
+                <td>Yes*</td>
+                <td>100% (Unlimited)</td>
+                <td><button class="buyNow">$49.99/mo</button></td>
+              </tr>
+              <tr>
+                <th scope="row">Partner</th>
+                <td>#</td>
+                <td>Yes</td>
+                <td>Unlimited</td>
+                <td>N/A</td>
+                <td>Yes</td>
+                <td>Yes*</td>
+                <td>100% (Unlimited)</td>
+                <td><button class="buyNow">Contact</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h1>FAQ</h1>
+        <p style="font-size: 16pt; font-weight: 800">Why are there *'s on the Statistics Yes's?</p>
+        <p style="font-size: 14pt">
+          The differences are:<br>
+          Supporter includes: current viewer count, average watch time, total amount of viewers<br>
+          Broadcaster + Partner includes: All of supporter, hot times (when most people were watching), graph of viewership 
+        </p>
+        <br>
+
+        <p style="font-size: 16pt; font-weight: 800">What is the difference between Broadcaster and Partner?</p>
+        <p style="font-size: 14pt">Good question! Broadcaster is a flat $49.99 a month, while if you become a partner you will need to agree to our Partnership Terms which will be discussed and then sent to you after we finalize terms. Note: Partnerships are not 100% free (nor legally binding (though if you breach our agreement and don't provide a valid reason after 2x offenses, you may be terminated)), though based on agreed terms will usually be at least 50% off Broadcaster pricing)</p>
+        <br>
+
+        <p style="font-size: 16pt; font-weight: 800">Are there returns?</p>
+        <p style="font-size: 14pt">In general, there are no returns (though you can cancel your membership at any time and still pay for the current month). The 'but' is if the charge was unauthorized. If you have a case of unauthorized transactions, please immediately contact <strong>billing@bracketify.com</strong> and we will resolve the issue.</p>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+</div>

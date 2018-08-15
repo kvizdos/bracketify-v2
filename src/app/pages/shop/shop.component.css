@@ -1,0 +1,16 @@
+h1 {
+    font-weight: 800;
+    color: #26B6EC;
+    width: auto;
+}
+table {
+    font-size: 16pt;
+}
+.buyNow {
+    background-color: #26B6EC;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 0;
+    border-radius: 5px;
+}

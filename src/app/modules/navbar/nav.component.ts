@@ -9,7 +9,7 @@ import { config } from "../../../assets/config.js"
 })
 export class NavComponent {
 
-  verified;
+  verified = false;
   username;
   coins;
 
@@ -24,7 +24,7 @@ export class NavComponent {
     if(localStorage.getItem("sessionid") !== null) {
       this.verified = true;
       this.username = localStorage.getItem('username').toUpperCase();
-      this.coins = "X";
+      this.coins = localStorage.getItem('coins').toUpperCase();
       let verify = this.verifySession().then((response) => {
         if(response['verified'] == "false") {
           localStorage.clear();

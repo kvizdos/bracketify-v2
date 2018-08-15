@@ -8,6 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CreateComponent } from './pages/create/create.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ShopComponent } from './pages/shop/shop.component';
 
 import { WatchComponent } from './pages/bracket/watch/watch.component';
 import { ModComponent } from './pages/bracket/moderate/moderate.component';
@@ -47,6 +48,10 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'shop',
+    component: ShopComponent
+  },
+  {
     path: 'watch/:id',
     component: WatchComponent,
     canActivate: [BracketGuardService]
@@ -77,6 +82,7 @@ const routes: Routes = [
     ModalComponent,
     PreloadComponent,
     BracketComponent,
+    ShopComponent,
     SafeHtmlPipe
   ],
   imports: [
