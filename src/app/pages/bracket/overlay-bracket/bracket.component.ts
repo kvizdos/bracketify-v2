@@ -14,7 +14,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { BracketService } from '../bracket.service';
 
 @Component({
-  selector: 'bracket',
+  selector: 'overlaybracket',
   templateUrl: './bracket.component.html',
   styleUrls: ['./bracket.component.css'],
   animations: [
@@ -26,7 +26,7 @@ import { BracketService } from '../bracket.service';
     )
   ]
 })
-export class BracketComponent implements OnChanges, OnInit {
+export class OverlayBracketComponent implements OnChanges, OnInit {
   @Input("teams") teams: any[];
   teamPositions = [];
   grid = [];

@@ -1,0 +1,15 @@
+h1 {
+    color: #26B6EC;
+    text-align: center;
+    font-weight: 800;
+}
+
+p {
+    text-align: center;
+    font-size: 18pt;
+}
+
+p.tip {
+    font-style: italic;
+    font-size: 16pt;
+}

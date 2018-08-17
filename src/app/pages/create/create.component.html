@@ -12,13 +12,13 @@
          <textarea #description placeholder="blah bliddy bloo bla blah" maxlength="200" rows="10" [ngClass]="descError == true ? 'inpError' : undefined"></textarea>
          <h1>Bracket Livestream Link</h1>
          <input #live placeholder="service.extension/yourchannel"/>
+         <h1>Game/Subject</h1>
+         <input #game placeholder="Rocket League" [ngClass]="gameError == true ? 'inpError' : undefined"/>
      </div>
      <div class="col-sm-5">
-        <h1>Game/Subject</h1>
-        <input #game placeholder="Rocket League" [ngClass]="gameError == true ? 'inpError' : undefined"/>
         <h1>Date</h1>
         <input #date type="date" [ngClass]="dateError == true ? 'inpError' : undefined"/>
-        <h1>Visibility Settins</h1>
+        <h1>Visibility Settings</h1>
         
         <div class="inline-field">
             <label for="checkbox"><input type="checkbox" id="checkbox" checked #pubView> Publicly viewable</label>
@@ -28,15 +28,62 @@
             <label><input type="checkbox" id="checkbox" #pubReg> Public registration</label>
         </div>
 
-         <h1>Bracket Addons</h1>
+         <h1>Bracket Addons (Coming soon!)</h1>
          <p>*Click the name to see more information</p>
-         <div class="row">
-            <div class="col-sm-5"><h2>Custom URL</h2></div>
-            <div class="col-sm-5"><h2>Custom Theme</h2></div>
-            <div class="col-sm-5"><h2>Promote Bracket</h2></div>
-            <div class="col-sm-5"><h2>Team Pictures</h2></div>
-            <div class="col-sm-5"><h2>Embed Bracket</h2></div>
-            <div class="col-sm-5"><h2>Coin Boosters</h2></div>
+         <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Addon</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <th scope="row">Embed Bracket</th>
+                    <td>5 Coins</td>
+                    <td><input type="checkbox" id="checkbox" #addonEmbedBracket /></td>
+                    </tr>
+
+                    <tr>
+                    <th scope="row">Team Pictures</th>
+                    <td>10 Coins</td>
+                    <td><input type="checkbox" id="checkbox" #addonTeamPics /></td>
+                    </tr>
+
+                    <tr>
+                    <th scope="row">Custom URL</th>
+                    <td>10 Coins</td>
+                    <td><input type="checkbox" id="checkbox" #addonCustomURL /></td>
+                    </tr>
+
+                    <tr>
+                    <th scope="row">Custom Theme</th>
+                    <td>25 Coins</td>
+                    <td><input type="checkbox" id="checkbox" #addonCustomTheme /></td>
+                    </tr>
+
+                    <tr [hidden]="coinBoosterChecked == true">
+                    <th scope="row">Coin Boosters (25% increase/hr)</th>
+                    <td>30 Coins</td>
+                    <td><input type="checkbox" id="checkbox" #addonCoinBooster25 /></td>
+                    </tr>
+
+                    <tr>
+                    <th scope="row">Promote Bracket (First results - 1 week)</th>
+                    <td>100 Coins</td>
+                    <td><input type="checkbox" id="checkbox" #addonPromoteResults /></td>
+                    </tr>
+
+                    <tr>
+                    <th scope="row">Promote Bracket (Header image - 1 week)</th>
+                    <td>250 Coins</td>
+                    <td><input type="checkbox" id="checkbox" #addonCustomTheme /></td>
+                    </tr>
+
+                </tbody>
+            </table>    
          </div>
          <br>
          <p>All settings can be changed at any time</p>

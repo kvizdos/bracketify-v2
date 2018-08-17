@@ -1,0 +1,54 @@
+<div class="wrapper">
+  <div class="bracket">
+      <ul [hidden]="showError" class="brackets" *ngFor="let column of grid; let amt = index" [id]="amt">
+        <!--class="bracketPos"-->
+        <li [ngClass]="(highlightedTeams.indexOf(teamPositions[amt][i]) >= 0) ? 'highlight bracketPos' : 'bracketPos'" *ngFor="let row of column; let i = index" [id]="concat(amt, i)" (mouseenter)="highlightTeam(teamPositions[amt][i])">
+          <!--teamPositions[amt + 1][Math.ceil(i / 2) - 1] !== teamPositions[amt][i] &&-->
+          <span (click)="removeWinner(amt, i, teamPositions[amt][i])" 
+            [hidden]="!isAdmin" 
+            class="glyphicon glyphicon-arrow-left removeWinnerSelect" 
+            *ngIf="(
+              isAdmin == true &&
+              isBeingEdited == false &&
+              amt != 0 &&
+              teamPositions[amt][i] !== ('' || undefined) &&
+              (
+                (
+                  (
+                    amt == grid.length - 1
+                  )
+                  ||
+                  (
+                    teamPositions[amt + 1][Math.floor(i / 2)]
+                  ) == ('' || undefined)
+                ) 
+              )
+            )"
+      ></span>
+          
+          {{teamPositions[amt][i]}}
+          &nbsp;
+          
+          <span (click)="setWinner(amt, i+1, teamPositions[amt][i])" 
+                [hidden]="!isAdmin" 
+                class="glyphicon glyphicon-arrow-right winnerSelect" 
+                *ngIf="(
+                  isAdmin == true &&
+                  isBeingEdited == false &&
+                  amt != grid.length - 1 &&
+                  teamPositions[amt][i] !== ('' || undefined) &&
+                  (
+                    (
+                      (
+                        teamPositions[amt + 1][Math.floor(i / 2)]
+                      ) == ('' || undefined)
+                    ) 
+                  )
+                )"
+          ></span>
+
+        </li>
+
+      </ul>
+  </div>
+</div>

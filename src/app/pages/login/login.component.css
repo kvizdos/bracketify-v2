@@ -1,8 +1,9 @@
 .logincomponent {
     color: #26B6EC;
     position: relative;
-  top: 70%;
-  transform: translateY(70%);
+    margin-top: 50px;
+  /*top: 70%;
+  transform: translateY(70%);*/
   overflow-x: hidden;
 
 

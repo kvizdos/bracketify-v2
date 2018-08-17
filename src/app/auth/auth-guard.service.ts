@@ -17,13 +17,17 @@ export class AuthGuardService implements CanActivate {
   canActivate(): boolean {
       if((localStorage.getItem("username") && localStorage.getItem("sessionid")) !== null) {
         let choice = this.verifySession().then((response) => {
+          console.log(response);
             if(response['verified'] == "false") {
-                window.location.href = "/login";
-                return false
+                window.location.href = "/login?callback=" + window.location.pathname.substring(1);
+              return false
+            } else if(response['email'] == "false") {
+              window.location.href = "/verifyemail";
+              return false;
             };
         });
       } else {
-            window.location.href = "/login";
+            window.location.href = "/login?callback=" + window.location.pathname.substring(1);
           return false;
       }
     

@@ -1,4 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
 
 <div style="text-align:center shell">
   <div class="row">
@@ -32,9 +33,11 @@
       <br>
       <input #newPassword placeholder="Password" type="password">
       <br>
+      <input #newConfirmPassword placeholder="Repeat Password" type="password">
+      <br>
       <p>By signing up, you will be signed up to our Beta newsletter (Weekly-ish)</p>
       <br>
-      <button (click)="registerUser({email:newEmail.value,username:newUsername.value,password:newPassword.value})" [hidden]="registerClicked">Register</button>
+      <button (click)="registerUser({email:newEmail.value,username:newUsername.value,password:newPassword.value, confPassword:newConfirmPassword.value})" [hidden]="registerClicked">Register</button>
       <button class="clicked" disabled [hidden]="!registerClicked || hideRegistering">Registering..</button>
       <button class="success" disabled [hidden]="!registered">Registered</button>
     </div>

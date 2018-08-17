@@ -39,6 +39,7 @@ export class CreateComponent {
   }
 
   createBracket(value: object) {
+    console.log(value['pubView']);
     if(value['date'].length < 10) {
       this.dateError = true;
     } else {
@@ -69,13 +70,9 @@ export class CreateComponent {
     } else {
       
       this.clicked = true;
-      console.log("got here");
       let owner = localStorage.getItem('username');
-      console.log(owner);
       let bracket = this.getCreateBracket({date: value['date'], name: value['name'], description: value['description'], live: value['live'], game: value['game'], owner: owner, addons: value['addons'], pubreg: value['pubReg'], pubview: value['pubView']}).then((response) => {
-        console.log(response);
         if(response['createStatus'] == "complete") {
-          console.log(response['id'] + " <-- here")
           this.router.navigate(['/watch/' + response['id']]);
 
           this.clicked = true;
