@@ -19,7 +19,7 @@ before_script:
  - sudo dpkg -i google-chrome*.deb
 
 script: 
-  - ng build --base-href https://kvizdos.github.io/bracketify-v2/
+  - ng build --base-href https://bracketify.com/
 
 deploy:
   provider: pages
