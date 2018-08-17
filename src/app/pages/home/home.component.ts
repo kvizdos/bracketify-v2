@@ -64,9 +64,9 @@ export class HomeComponent {
     this.showModal = true;  
   }
 
-  explore(type: string, term: string) {
-    type = type != undefined ? type : '';
-    term = term != undefined ? term : '';
+  explore() {
+    //type = type != undefined ? type : '';
+    //term = term != undefined ? term : '';
 
     this.modal('norm', 'Thank\'s for taking interest, but..', "Sadly, due to time constraints, we are unable to provide you with the explore page. We are working hard on getting this page published and as soon as we have it done it will be live (and the update will be sent in the weekly update email)")
   }

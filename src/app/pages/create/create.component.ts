@@ -24,6 +24,7 @@ export class CreateComponent {
   modalHeader = "";
   modalContent = "";
   showModal = false;
+  coinBoosterChecked = false;
   modal(type: any, header: any, content: any) {
     this.modalType = type;
     this.modalHeader = header;

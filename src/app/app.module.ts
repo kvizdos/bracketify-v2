@@ -35,6 +35,7 @@ import { SafeHtmlPipe } from './auth/sanitize';
 import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
+  
   {
     path: '',
     redirectTo: '/home',
@@ -82,6 +83,9 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   }
 ];
+
+RouterModule.forRoot(routes, {useHash: false});
+
 
 @NgModule({
   declarations: [

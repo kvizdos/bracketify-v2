@@ -8,11 +8,11 @@
     <div class='collapse navbar-collapse'>
       <ul class="nav navbar-nav navbar-right">
           <li><a href="http://sm.therotg.com/bracketifyfeedback"><span class="glyphicon glyphicon-tasks"></span> Submit feedback</a></li>
-          <li><a href="/shop"><span class="glyphicon glyphicon-shopping-cart"></span> Shop</a></li>
-          <li *ngIf="verified == false"><a href="/login"><span class="glyphicon glyphicon-user"></span> REGISTER/LOGIN</a></li>
-          <li *ngIf="verified == true"><a href="/shop"><span class="glyphicon glyphicon-shopping-cart"></span>  <strong> {{coins}}</strong> Coins</a></li>
-          <li *ngIf="verified == true"><a href="/create"><span class="glyphicon glyphicon-plus"></span> CREATE A BRACKET</a></li>
-          <li *ngIf="verified == true"><a href="/profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
+          <li><a href="./shop"><span class="glyphicon glyphicon-shopping-cart"></span> Shop</a></li>
+          <li *ngIf="verified == false"><a href="./login"><span class="glyphicon glyphicon-user"></span> REGISTER/LOGIN</a></li>
+          <li *ngIf="verified == true"><a href="./shop"><span class="glyphicon glyphicon-shopping-cart"></span>  <strong> {{coins}}</strong> Coins</a></li>
+          <li *ngIf="verified == true"><a href="./create"><span class="glyphicon glyphicon-plus"></span> CREATE A BRACKET</a></li>
+          <li *ngIf="verified == true"><a href="./profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
       </ul>
 
     </div>
