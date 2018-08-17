@@ -9,6 +9,7 @@ branches:
   - master
 
 before_script:
+ - echo $GITHUB_TOKEN
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0
  - sh -e /etc/init.d/xvfb start
@@ -24,6 +25,6 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-  local_dir: dist
+  local_dir: dist/bracketify
   on:
     branch: master
