@@ -19,6 +19,8 @@ export class HomeComponent {
 
   search: any;
 
+  version = config.version;
+
   
   async searchTerms(term: string) {
     var dat;

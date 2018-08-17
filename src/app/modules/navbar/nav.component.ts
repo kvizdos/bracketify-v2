@@ -8,6 +8,7 @@ import { config } from "../../../assets/config.js"
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
+  version = config.version;
 
   verified = false;
   username;
