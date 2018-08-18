@@ -3,18 +3,18 @@ import { HttpClient } from '@angular/common/http';
 
 import { config } from "../../../assets/config.js"
 @Component({
-  selector: 'navbar',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  selector: 'new-navbar',
+  templateUrl: './newnav.component.html',
+  styleUrls: ['./newnav.component.css']
 })
-export class NavComponent {
+export class NewNavComponent {
   version = config.version;
 
   verified = false;
   username;
   coins;
 
-  show = true;
+  show = false;
 
   async verifySession() {
     var dat;
@@ -24,9 +24,7 @@ export class NavComponent {
   }
 
   constructor(private http: HttpClient) {
-
-    //if(window.location.pathname == "/home") this.show = false;
-
+    //if(window.location.pathname == "/home") this.show = true;
     if(localStorage.getItem("sessionid") !== null) {
       this.verified = true;
       this.username = localStorage.getItem('username').toUpperCase();

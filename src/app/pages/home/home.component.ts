@@ -19,6 +19,8 @@ export class HomeComponent {
 
   search: any;
 
+  show = true;
+
   version = config.version;
 
   
@@ -141,7 +143,7 @@ export class HomeComponent {
   }
 
   constructor(private http: HttpClient,private sanitizer: DomSanitizer) {
-
+    
     this.retExplore();
   }
 }

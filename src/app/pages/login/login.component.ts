@@ -147,8 +147,13 @@ export class LoginComponent {
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     if(this.getUrlParameter('callback') !== undefined && this.getUrlParameter('callback')[0] === 'callback') {
       this.callback = this.getUrlParameter('callback')[1]
-      console.log(this.callback);
+
+      if(this.callback == "logout") {
+        localStorage.clear();
+        window.location.href = "./home";
+      }
     }
+    
 
     if((localStorage.getItem('username') && localStorage.getItem('password')) !== null) {
       this.loginUser({username:localStorage.getItem("username"),password:localStorage.getItem("password"),remember:true})

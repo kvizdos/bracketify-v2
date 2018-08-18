@@ -1,4 +1,4 @@
-<nav class="navbar navbar-custom">
+<nav class="navbar navbar-custom" [hidden]="!show">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/home">
@@ -13,7 +13,8 @@
           <li *ngIf="verified == false"><a href="./login"><span class="glyphicon glyphicon-user"></span> REGISTER/LOGIN</a></li>
           <li *ngIf="verified == true"><a href="./shop"><span class="glyphicon glyphicon-shopping-cart"></span>  <strong> {{coins}}</strong> Coins</a></li>
           <li *ngIf="verified == true"><a href="./create"><span class="glyphicon glyphicon-plus"></span> CREATE A BRACKET</a></li>
-          <li *ngIf="verified == true"><a href="./profile"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
+          <li *ngIf="verified == true"><a href="./profile"><span class="glyphicon glyphicon-user"></span> {{username}} </a></li>
+          <li *ngIf="verified == true"><a href="./login?callback=logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
       </ul>
 
     </div>

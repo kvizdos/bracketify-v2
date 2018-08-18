@@ -22,6 +22,8 @@ import { OverlayBracketComponent } from './pages/bracket/overlay-bracket/bracket
 import { BracketService } from './pages/bracket/bracket.service';
 
 import { NavComponent } from './modules/navbar/nav.component';
+import { NewNavComponent } from './modules/navbar-new/newnav.component';
+
 import { FooterComponent } from './modules/footer/footer.component';
 import { ModalComponent } from './modules/modal/modal.component';
 import { PreloadComponent } from './modules/preload/preload.component';
@@ -92,6 +94,7 @@ RouterModule.forRoot(routes, {useHash: false});
     AppComponent,
     HomeComponent,
     NavComponent,
+    NewNavComponent,
     FooterComponent,
     LoginComponent,
     VerifyComponent,

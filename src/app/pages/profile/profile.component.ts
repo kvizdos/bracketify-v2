@@ -164,7 +164,7 @@ export class ProfileComponent {
       }
     }
   }
- 
+  
   constructor(private http: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.name = localStorage.getItem("username");
     let ids = [];
