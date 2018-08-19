@@ -71,7 +71,7 @@ export class HomeComponent {
   explore(type: String, term: String) {
     switch(type) { 
       case "user":
-        window.location.href = "/profile?user=" + term;
+        window.location.href = "/profile?user=" + term.toLowerCase();
         break;
       default: 
         this.modal('norm', 'Thank\'s for taking interest, but..', "Sadly, due to time constraints, we are unable to provide you with the explore page. We are working hard on getting this page published and as soon as we have it done it will be live (and the update will be sent in the weekly update email)")
