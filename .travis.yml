@@ -9,7 +9,6 @@ branches:
   - master
 
 before_script:
- - echo $GITHUB_TOKEN
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0
  - sh -e /etc/init.d/xvfb start
@@ -19,6 +18,7 @@ before_script:
  - sudo dpkg -i google-chrome*.deb
 
 script: 
+  - mv ./src/assets/config.prod.js ./src/assets/config.js
   - ng build --base-href https://bracketify.com/
 
 deploy:
