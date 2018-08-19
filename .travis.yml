@@ -19,7 +19,7 @@ before_script:
 
 script: 
   - mv ./src/assets/config.prod.js ./src/assets/config.js
-  - ng build --base-href https://bracketify.com/
+  - ng build --prod --base-href https://bracketify.com/
 
 deploy:
   provider: pages
