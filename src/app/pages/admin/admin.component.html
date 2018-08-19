@@ -2,24 +2,32 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Users</h1>
+            <p>Showing {{foundTotal}} results (max {{userTotal}})</p>
             <div class="table-responsive">
                 <table class="table table-sm">
                     <thead>
                         <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Coins</th>
-                        <th scope="col">Last Login</th>
+                        <th scope="col">Brackets</th>
+                        <th scope="col">Last Login (Y/M/D)</th>
                         <th scope="col">Verified</th>
+                        <th scope="col">Membership</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td scope="row">kvizdos</td>
-                            <td>kvizdos@gmail.com</td>
-                            <td>1000</td>
-                            <td>8/19/2018</td>
-                            <td>Yes</td>
+                        <tr *ngFor="let user of users; let i = index;">
+                            <td scope="row">{{i + 1}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.coins}}</td>
+                            <td>{{user.brackets.length}}</td>
+                            <td>{{user.lastlogin}}</td>
+                            <td>{{user.verified}}</td>
+                            <td>{{user.membership}}</td>
                         </tr>
                     </tbody>
                 </table>

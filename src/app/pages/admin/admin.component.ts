@@ -15,7 +15,9 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 export class AdminComponent {
   title = 'Bracketify Admin';
 
-  users: any[];
+  users: {};
+  userTotal: any;
+  foundTotal: any;
 
   modalType = "";
   modalHeader = "";
@@ -29,19 +31,49 @@ export class AdminComponent {
     this.showModal = true;  
   }
 
-  async getAdminInfo(data: object, type: string) {
+  async getAdminInfo(data: object) {
     let id;
     let tempid = this.route.params.subscribe(paramsId => {
       id = paramsId.id;
     });
 
-    var url = config.urls.current + "/updatebracket"
-    let ret = await this.http.get(url + "/?id=" + id + "&data=" + JSON.stringify(data) + "&type=" + type + "&modid=" + localStorage.getItem("modid") + "&user=" + localStorage.getItem("username")).toPromise();
+    var url = config.urls.current + "/admin"
+    let ret = await this.http.get(`${url}?user=${localStorage.getItem('username')}&session=${localStorage.getItem('sessionid')}&action=${data['action']}&max=${data['max']}`).toPromise();
     return ret
   }
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
-    
+    let getInfo = this.getAdminInfo({action: "users", max: 100}).then((response) => {
+      this.userTotal = "100";
+      this.foundTotal = Object.keys(response).length;
+      for(let key in response) {
+        if(response[key]['verified'] == null) response[key]['verified'] = "false";
+        if(response[key]['lastlogin'] == null) response[key]['lastlogin'] = "Never";
+        if(response[key]['brackets'] == undefined) response[key]['brackets'] = [];
+
+        if(response[key]['membership'] == undefined) {
+        } else {
+          switch (response[key]['membership']) {
+            case 0:
+              response[key]['membership'] = "Free";
+              break;
+            case 1:
+              response[key]['membership'] = "Supporter";
+              break;
+            case 2:
+              response[key]['membership'] = "Exclusive Partner";
+              break;
+            case 4:
+              response[key]['membership'] = "Admin";
+              break;
+          }
+        }
+      }
+
+      this.users = response;
+
+      
+    });
   }
 
 }
