@@ -21,7 +21,7 @@ export class ProfileService implements CanActivate {
   constructor(public router: Router, private http: HttpClient) {}
   canActivate(route: ActivatedRouteSnapshot): boolean {
       if(this.getUrlParameter('user') !== undefined && this.getUrlParameter('user')[0] === 'user') {
-        let user = this.getUrlParameter('user')[1];
+        let user = this.getUrlParameter('user')[1].toLowerCase();
         if(user == localStorage.getItem('username')) {
           console.log("personal");
         } else {

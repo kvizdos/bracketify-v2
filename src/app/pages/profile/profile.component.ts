@@ -175,7 +175,7 @@ export class ProfileComponent {
 
   cacheUserData(cache: Boolean) {
     if(cache && localStorage.getItem('usercache') !== null) {this.loaded = true} else {this.loaded = false};
-    let bracketsearch = this.getUserInfo(this.name).then((response) => {
+    let bracketsearch = this.getUserInfo(this.name.toLowerCase()).then((response) => {
       let ids = [];
 
       if(response['status'] !== "fail") {
@@ -252,7 +252,7 @@ export class ProfileComponent {
   };
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
-    this.name = this.getUrlParameter('user')[1];
+    this.name = this.getUrlParameter('user')[1].toLowerCase();
     if(this.name == localStorage.getItem('username')) this.isPersonal = true;
 
     if(localStorage.getItem('usercache') !== null) {
