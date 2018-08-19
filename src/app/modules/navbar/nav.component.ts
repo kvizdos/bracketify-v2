@@ -23,6 +23,11 @@ export class NavComponent {
     return ret
   }
 
+  logout() {
+    localStorage.clear();
+    window.location.href = "/home";
+  }
+
   constructor(private http: HttpClient) {
 
     //if(window.location.pathname == "/home") this.show = false;

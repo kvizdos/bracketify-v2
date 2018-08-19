@@ -174,6 +174,7 @@ export class ProfileComponent {
   }
 
   cacheUserData(cache: Boolean) {
+    if(cache && localStorage.getItem('usercache') !== null) {this.loaded = true} else {this.loaded = false};
     let bracketsearch = this.getUserInfo(this.name).then((response) => {
       let ids = [];
 
@@ -218,8 +219,6 @@ export class ProfileComponent {
                 });
               }; 
               
-              console.log("New brackets:");
-              console.log(nb);
             }
             
             
@@ -241,7 +240,7 @@ export class ProfileComponent {
           }
 
         } else {
-          window.location.href = "./home";
+          window.location.href = "./home?error=unf";
         }
     });
   }

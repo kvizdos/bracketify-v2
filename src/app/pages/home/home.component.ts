@@ -68,11 +68,15 @@ export class HomeComponent {
     this.showModal = true;  
   }
 
-  explore() {
-    //type = type != undefined ? type : '';
-    //term = term != undefined ? term : '';
-
-    this.modal('norm', 'Thank\'s for taking interest, but..', "Sadly, due to time constraints, we are unable to provide you with the explore page. We are working hard on getting this page published and as soon as we have it done it will be live (and the update will be sent in the weekly update email)")
+  explore(type: String, term: String) {
+    switch(type) { 
+      case "user":
+        window.location.href = "/profile?user=" + term;
+        break;
+      default: 
+        this.modal('norm', 'Thank\'s for taking interest, but..', "Sadly, due to time constraints, we are unable to provide you with the explore page. We are working hard on getting this page published and as soon as we have it done it will be live (and the update will be sent in the weekly update email)")
+        break;
+    }
   }
 
   prepSearchTerm(termString: string) {
@@ -142,8 +146,20 @@ export class HomeComponent {
     }
   }
 
+  private getUrlParameter(sParam) {
+    return decodeURIComponent(window.location.search.substring(1)).split('&')
+     .map((v) => { return v.split("=") })
+     .filter((v) => { return (v[0] === sParam) ? true : false })[0]
+  };
+
   constructor(private http: HttpClient,private sanitizer: DomSanitizer) {
-    
+    if(this.getUrlParameter('error') !== undefined && this.getUrlParameter('error')[0] === 'error') {
+      let error = this.getUrlParameter('error')[1]
+
+      if(error == "unf") {
+        this.modal("error", "User not found!", "That user was not found");
+      }
+    }
     this.retExplore();
   }
 }
