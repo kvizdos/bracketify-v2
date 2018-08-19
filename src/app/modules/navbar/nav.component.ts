@@ -41,12 +41,6 @@ export class NavComponent {
           this.username = localStorage.getItem('username').toUpperCase();
           this.coins = response['coins'].toString();
           localStorage.setItem('coins', this.coins.toString());
-          if(localStorage.getItem('usercache') !== (undefined || null)) {
-            let cache = JSON.parse(localStorage.getItem('usercache'));
-            cache['lazy'] = response['encodedimage'];
-            console.log(cache);
-            localStorage.setItem('usercache', JSON.stringify(cache));
-          }
         }
       });
     }
