@@ -175,7 +175,7 @@ export class ProfileComponent {
 
   cacheUserData(cache: Boolean) {
     if(cache && localStorage.getItem('usercache') !== null) {this.loaded = true} else {this.loaded = false};
-    let bracketsearch = this.getUserInfo(this.name.toLowerCase()).then((response) => {
+    let bracketsearch = this.getUserInfo(this.name).then((response) => {
       let ids = [];
 
       if(response['status'] !== "fail") {
@@ -256,7 +256,6 @@ export class ProfileComponent {
     if(this.name == localStorage.getItem('username')) this.isPersonal = true;
 
     if(localStorage.getItem('usercache') !== null) {
-      console.log("ReCaching");
       let cache = JSON.parse(localStorage.getItem('usercache'));
       this.gravatar = cache.lazy
       this.brackets = cache.brackets;
@@ -264,14 +263,12 @@ export class ProfileComponent {
       if(this.isPersonal) {
         this.cacheUserData(true);
       } else {
-        console.log("Not personal cache");
         this.cacheUserData(false);
       }
     } else {
       if(this.isPersonal) {
         this.cacheUserData(true);
       } else {
-        console.log("Not personal cache");
         this.cacheUserData(false);
       }
     }

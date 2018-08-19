@@ -11,6 +11,8 @@ import { VerifyComponent } from './pages/verifyemail/verify.component';
 
 import { CreateComponent } from './pages/create/create.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AdminComponent } from './pages/admin/admin.component';
+
 import { ShopComponent } from './pages/shop/shop.component';
 
 import { WatchComponent } from './pages/bracket/watch/watch.component';
@@ -29,6 +31,8 @@ import { ModalComponent } from './modules/modal/modal.component';
 import { PreloadComponent } from './modules/preload/preload.component';
 
 import { AuthGuardService } from './auth/auth-guard.service';
+import { AdminGuardService } from './auth/admin-guard.service';
+
 import { ProfileService } from './auth/profile-guard.service';
 import { BracketGuardService } from './auth/bracket-guard.service';
 import { OverlayGuardService } from './auth/overlay-guard.service';
@@ -84,6 +88,11 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [ProfileService]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AdminGuardService]
   }
 ];
 
@@ -107,6 +116,7 @@ RouterModule.forRoot(routes, {useHash: false});
     ModalComponent,
     PreloadComponent,
     BracketComponent,
+    AdminComponent,
     OverlayBracketComponent,
     ShopComponent,
     SafeHtmlPipe
@@ -122,6 +132,7 @@ RouterModule.forRoot(routes, {useHash: false});
   providers: [
     NavComponent, 
     AuthGuardService, 
+    AdminGuardService,
     ProfileService,
     BracketGuardService, 
     BracketModGuardService, 

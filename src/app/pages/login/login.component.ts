@@ -70,7 +70,7 @@ export class LoginComponent {
           this.loggedIn = true;
         }
         this.hideLoggingIn = true;
-        localStorage.setItem("username", value['username']);
+        localStorage.setItem("username", value['username'].toLowerCase());
 
         localStorage.setItem("sessionid", response['sessionid']);
         localStorage.setItem("coins", response['coins']);
@@ -78,7 +78,12 @@ export class LoginComponent {
         if(this.callback !== undefined) {
           window.location.href = "/" + this.callback;
         } else {
-          window.location.href = "/profile";
+          if(response['verified'] == "true") {
+            window.location.href = "/profile";
+          } else {
+            window.location.href = "/verifyemail";
+
+          }
 
         }
       } else {

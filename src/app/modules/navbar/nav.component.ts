@@ -12,6 +12,7 @@ export class NavComponent {
 
   verified = false;
   username;
+  normUsername;
   coins;
 
   show = true;
@@ -35,6 +36,9 @@ export class NavComponent {
     if(localStorage.getItem("sessionid") !== null) {
       this.verified = true;
       this.username = localStorage.getItem('username').toUpperCase();
+      this.normUsername = localStorage.getItem('username');
+    
+
       this.coins = localStorage.getItem('coins').toUpperCase();
       let verify = this.verifySession().then((response) => {
         if(response['verified'] == "false") {
@@ -44,6 +48,7 @@ export class NavComponent {
         } else if(response['verified'] == "true") {
           this.verified = true;
           this.username = localStorage.getItem('username').toUpperCase();
+          this.normUsername = localStorage.getItem('username');
           this.coins = response['coins'].toString();
           localStorage.setItem('coins', this.coins.toString());
         }
