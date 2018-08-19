@@ -9,18 +9,18 @@
       <div id="userSection">
         <img [src]="gravatar" class="icon" />
         <p class="name">{{name}}</p>
-        <a href="https://en.gravatar.com/emails/"><button>Click here to change your icon</button></a>
+        <a href="https://en.gravatar.com/emails/" [hidden]="!isPersonal"><button>Click here to change your icon</button></a>
       </div>
 
       <a href="#"><div id="adSection">
         <p>Want to get upgrades & coins? Check out the shop for upgrades and other cool things by clicking here!</p>
       </div></a>
       <input type="password" name="prompt" [hidden]="true" />
-      <button id="resetPassword" (click)="resetPassword()" [hidden]="resetPasswordProcessing">Click here to change your password</button>
-      <button id="resetPasswordProcessing" disabled [hidden]="!resetPasswordProcessing">Changing..</button>
+      <button id="resetPassword" (click)="resetPassword()" [hidden]="resetPasswordProcessing || !isPersonal">Click here to change your password</button>
+      <button id="resetPasswordProcessing" disabled [hidden]="!resetPasswordProcessing || !isPersonal">Changing..</button>
 
-      <button id="deleteAccount" (click)="deleteAccount()" [hidden]="deletingAccount">Click here to delete your account</button>
-      <button id="deleteProcessing" disabled [hidden]="!deletingAccount">Deleting..</button>
+      <button id="deleteAccount" (click)="deleteAccount()" [hidden]="deletingAccount || !isPersonal">Click here to delete your account</button>
+      <button id="deleteProcessing" disabled [hidden]="!deletingAccount || !isPersonal">Deleting..</button>
 
     </div>
     <div class="col-sm-6">
@@ -30,10 +30,10 @@
       <div class="alert alert-danger" role="alert" [hidden]="status != 'fail'">
         <strong>Uh oh!</strong> {{statusMsg}}
       </div>
-      <h2>Brackets <a href="/create"><button class="btn btn-sm btn-success"><span class="color-success glyphicon glyphicon-plus"></span></button></a></h2>
+      <h2>Brackets <a href="./create" [hidden]="!isPersonal"><button class="btn btn-sm btn-success"><span class="color-success glyphicon glyphicon-plus"></span></button></a></h2>
       <p style="font-style: italic">Click to view</p>
       <div class="list-group">
-        <span class="list-group-item" *ngFor="let bracket of brackets.slice().reverse()"><a href="{{bracket.link}}"><span style="font-weight: bold;">{{bracket.name}}</span> </a> - {{bracket.description}}<span style="float: right;" [hidden]="bracket.id == '#'"><button class="btn btn-sm btn-danger" (click)="deleteBracket(bracket.id)"><span class="color-success glyphicon glyphicon-minus"></span></button></span></span>
+        <span class="list-group-item" *ngFor="let bracket of brackets.slice().reverse()"><a href="{{bracket.link}}"><span style="font-weight: bold;">{{bracket.name}}</span> </a> - {{bracket.description}}<span style="float: right;" [hidden]="bracket.id == '#' || !isPersonal"><button class="btn btn-sm btn-danger" (click)="deleteBracket(bracket.id)"><span class="color-success glyphicon glyphicon-minus"></span></button></span></span>
       </div>
     </div>
     <div class="col-sm-2"></div>

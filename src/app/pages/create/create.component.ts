@@ -74,6 +74,15 @@ export class CreateComponent {
       let owner = localStorage.getItem('username');
       let bracket = this.getCreateBracket({date: value['date'], name: value['name'], description: value['description'], live: value['live'], game: value['game'], owner: owner, addons: value['addons'], pubreg: value['pubReg'], pubview: value['pubView']}).then((response) => {
         if(response['createStatus'] == "complete") {
+          let cache = JSON.parse(localStorage.getItem('usercache'));
+          let cachedBrackets = cache.brackets;
+
+          cachedBrackets.push({name: value['name'], description: value['description'], link: "/moderate/" + response['id'], id: response['id']});
+
+          cache.brackets = cachedBrackets;
+
+          localStorage.setItem('usercache', JSON.stringify(cache));
+
           this.router.navigate(['/watch/' + response['id']]);
 
           this.clicked = true;

@@ -29,6 +29,7 @@ import { ModalComponent } from './modules/modal/modal.component';
 import { PreloadComponent } from './modules/preload/preload.component';
 
 import { AuthGuardService } from './auth/auth-guard.service';
+import { ProfileService } from './auth/profile-guard.service';
 import { BracketGuardService } from './auth/bracket-guard.service';
 import { OverlayGuardService } from './auth/overlay-guard.service';
 import { BracketModGuardService } from './auth/bracket-mod-guard.service';
@@ -82,7 +83,7 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [ProfileService]
   }
 ];
 
@@ -121,6 +122,7 @@ RouterModule.forRoot(routes, {useHash: false});
   providers: [
     NavComponent, 
     AuthGuardService, 
+    ProfileService,
     BracketGuardService, 
     BracketModGuardService, 
     OverlayGuardService,

@@ -16,12 +16,14 @@ export class ProfileComponent {
   title = 'Bracketify Profile';
 
   name = "Loading..";
+  isPersonal = false;
   brackets: any = [];
 
   status = "";
   statusMsg = "";
 
   gravatar: SafeUrl;
+  lazyGrav: any;
 
   deletingAccount = false;
   loaded = false;
@@ -159,38 +161,122 @@ export class ProfileComponent {
           } else {
             this.status = "success";
             this.statusMsg = "Successfully deleted " + value;
+            
+            localStorage.setItem('usercache', JSON.stringify({
+              gravatar: this.gravatar,
+              brackets: this.brackets,
+              lazy: this.lazyGrav
+            }));
           }
         });
       }
     }
   }
-  
-  constructor(private http: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
-    this.name = localStorage.getItem("username");
-    let ids = [];
+
+  cacheUserData(cache: Boolean) {
     let bracketsearch = this.getUserInfo(this.name).then((response) => {
-      ids = response['brackets']
+      let ids = [];
 
+      if(response['status'] !== "fail") {
+        ids = response['brackets']
+        this.lazyGrav = response['lazy'];
 
-      this.gravatar = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.gravatar.com/avatar/" + response['emailhash'] + "?d=identicon");
-      let i;
-      
-        if(ids !== undefined && ids.length !== 0) {
-          for (i = 0; i < ids.length; i++) {
-            let cId = ids[i];
-            let tbrackets = this.getBracketInfo(ids[i]).then((response) => {
-              this.brackets.push({name: response['info']['name'], description: response['info']['description'], link: "/moderate/" + cId, id: cId});
-              this.loaded = true;
-            });
-          };
+        this.gravatar = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.gravatar.com/avatar/" + response['emailhash'] + "?d=identicon");
+        let i;
+          let cont = false;
+          if(ids !== undefined && ids.length !== 0) {
+            if(this.brackets.length !== ids.length) {
+              cont = true;
+            } 
+            if(cont) {
+              let remove = false;
+              let nb = [];
+
+              for (i = 0; i < ids.length; i++) {
+                console.log(i)
+                let x = i;
+                let cId = ids[i];
+                let tbrackets = this.getBracketInfo(ids[i]).then((response) => {
+                  console.log(this.brackets[x]);
+                  if(this.brackets[x] !== undefined) {
+                    console.log("Overriding " + x);
+                    this.brackets[x] = {name: response['info']['name'], description: response['info']['description'], link: "/moderate/" + cId, id: cId};
+                  } else {
+                    console.log("Pushing new " + x)
+                    this.brackets.push({name: response['info']['name'], description: response['info']['description'], link: "/moderate/" + cId, id: cId})
+                  }
+                  this.loaded = true;
+                  if(cache) {
+                    console.log(this.brackets);
+                    localStorage.setItem('usercache', JSON.stringify({
+                      gravatar: this.gravatar,
+                      brackets: this.brackets,
+                      lazy: this.lazyGrav
+                    }));
+                    
+                  }
+                });
+              }; 
+              
+              console.log("New brackets:");
+              console.log(nb);
+            }
+            
+            
+
+          } else {
+            this.brackets = [];
+
+            this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
+            
+            this.loaded = true;
+            if(cache) {
+              localStorage.setItem('usercache', JSON.stringify({
+                gravatar: this.gravatar,
+                brackets: [{"name":"No brackets! Please make one!","description":"Click the '+' to make a bracket!","link":"#","id":"#"}],
+                lazy: this.lazyGrav
+              }));
+
+            }
+          }
 
         } else {
-          this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
-          this.loaded = true;
+          window.location.href = "./home";
         }
-
-      
     });
+  }
+  
+  private getUrlParameter(sParam) {
+    return decodeURIComponent(window.location.search.substring(1)).split('&')
+     .map((v) => { return v.split("=") })
+     .filter((v) => { return (v[0] === sParam) ? true : false })[0]
+  };
+
+  constructor(private http: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+    this.name = this.getUrlParameter('user')[1];
+    if(this.name == localStorage.getItem('username')) this.isPersonal = true;
+
+    if(localStorage.getItem('usercache') !== null) {
+      console.log("ReCaching");
+      let cache = JSON.parse(localStorage.getItem('usercache'));
+      this.gravatar = cache.lazy
+      this.brackets = cache.brackets;
+      this.loaded = true;
+      if(this.isPersonal) {
+        this.cacheUserData(true);
+      } else {
+        console.log("Not personal cache");
+        this.cacheUserData(false);
+      }
+    } else {
+      if(this.isPersonal) {
+        this.cacheUserData(true);
+      } else {
+        console.log("Not personal cache");
+        this.cacheUserData(false);
+      }
+    }
+    
   }
 
 }
