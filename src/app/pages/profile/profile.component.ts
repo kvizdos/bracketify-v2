@@ -151,7 +151,7 @@ export class ProfileComponent {
       if(this.brackets[i]['id'] == value) {
         this.brackets.splice(i,1);
         if(this.brackets.length == 0) {
-          this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
+          this.brackets.push({name: "No brackets!", description: "Click to create an amazing bracket!", link: "/create", id: "#"})
         }
         
         let del = this.fullyDeleteBracket({id: value, sessionid: localStorage.getItem('sessionid'), username: localStorage.getItem('username')}).then((response) => {
@@ -226,13 +226,13 @@ export class ProfileComponent {
           } else {
             this.brackets = [];
 
-            this.brackets.push({name: "No brackets! Please make one!", description: "Click the '+' to make a bracket!", link: "#", id: "#"})
+            this.brackets.push({name: "No brackets!", description: "Click to create an amazing bracket!", link: "/create", id: "#"})
             
             this.loaded = true;
             if(cache) {
               localStorage.setItem('usercache', JSON.stringify({
                 gravatar: this.gravatar,
-                brackets: [{"name":"No brackets! Please make one!","description":"Click the '+' to make a bracket!","link":"#","id":"#"}],
+                brackets: [{name: "No brackets!", description: "Click to create an amazing bracket!", link: "/create", id: "#"}],
                 lazy: this.lazyGrav
               }));
 
