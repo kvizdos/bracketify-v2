@@ -35,15 +35,17 @@
       <div class="list-group">
         <span class="list-group-item" *ngFor="let bracket of brackets.slice().reverse()"><a href="{{bracket.link}}"><span style="font-weight: bold;">{{bracket.name}}</span> </a> - {{bracket.description}}<span style="float: right;" [hidden]="bracket.id == '#' || !isPersonal"><button class="btn btn-sm btn-danger" (click)="deleteBracket(bracket.id)"><span class="color-success glyphicon glyphicon-minus"></span></button></span></span>
       </div>
-
+      <hr>
       <h2>Profile Info</h2>
       <h3>Description</h3>
-      <p style="font-style: italic">Click to change</p>
+      <p style="font-style: italic" *ngIf="isPersonal == true">Click to change</p>
       <div class="panel panel-default" *ngIf="changingDescription != true">
-        <div class="panel-body" (click)="changingDescription = true">{{description}}</div>
+        <div class="panel-body" *ngIf="isPersonal == true" (click)="changingDescription = true">{{description}}</div>
+        <div class="panel-body" *ngIf="isPersonal == false" >{{description}}</div>
       </div>
-      <div class="form-group" *ngIf="changingDescription == true">
-        <textarea class="form-control" rows="3" #newDesc>{{description}}</textarea>
+      
+      <div class="form-group" *ngIf="changingDescription == true && isPersonal == true">
+        <textarea class="form-control" rows="3" #newDesc style="resize: vertical;">{{description}}</textarea>
         <br>
         <button (click)="changeDescription(newDesc.value)" class="btn btn-md btn-info" *ngIf="descChange == false">Change</button>&nbsp;
         <button (click)="changingDescription = false" class="btn btn-md btn-danger" *ngIf="descChange == false">Cancel</button>
