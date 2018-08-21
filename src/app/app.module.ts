@@ -41,6 +41,8 @@ import { SafeHtmlPipe } from './auth/sanitize';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { AdsenseModule } from 'ng2-adsense';
+
 const routes: Routes = [
   
   {
@@ -124,7 +126,12 @@ RouterModule.forRoot(routes, {useHash: false});
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-4499070912220787',
+      adSlot: 5110340545,
+      adtest: "true",
+    }),
   ],
   exports: [
     RouterModule

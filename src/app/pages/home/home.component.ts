@@ -41,10 +41,14 @@ export class HomeComponent {
   typingTimer: any;
 
   retExplore() {
+    if(localStorage.getItem('newcache') !== null) this.newBrackets = JSON.parse(localStorage.getItem('newcache'))['new'];
     let newbracs = this.getExplore("new").then((resp) => {
       this.newBrackets = [resp];
       this.newBrackets = this.newBrackets[0];
       console.log(this.newBrackets);
+
+      localStorage.setItem('newcache', JSON.stringify({new: this.newBrackets}));
+
     });
   }
 
