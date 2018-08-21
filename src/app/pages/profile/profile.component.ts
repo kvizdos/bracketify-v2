@@ -22,11 +22,16 @@ export class ProfileComponent {
   status = "";
   statusMsg = "";
 
+  changingDescription = false;
+
   gravatar: SafeUrl;
   lazyGrav: any;
 
   deletingAccount = false;
   loaded = false;
+
+  description: string = localStorage.getItem('description') !== null ? localStorage.getItem('description') : "Click to change me!";
+  descChange = false;
 
   modalType = "";
   modalHeader = "";
@@ -73,6 +78,37 @@ export class ProfileComponent {
     var url = config.urls.current + "/resetpassword"
     let ret = await this.http.get(url + "?session=" + value['sessionid'] + "&user=" + value['user'] + "&newpass=" + value['newpass'] + "&oldpass=" + value['oldpass']).toPromise();
     return ret
+  }
+
+  async setInfo(desc: String, type: String) {
+    var dat;
+    var url = config.urls.current + "/setinfo"
+    let ret = await this.http.get(url + "?session=" + localStorage.getItem('sessionid') + "&user=" + localStorage.getItem('username') + "&new=" + desc + "&type=" + type).toPromise();
+    return ret
+  }
+
+  changeDescription(desc: string) {
+    let currDesc = this.description;
+    this.descChange = true;
+    let newDesc = desc;
+
+    if(newDesc !== null) {
+      if(currDesc !== newDesc) {
+        let desc = this.setInfo(newDesc, "description").then((response) => {
+          if(response['status'] == "complete") {
+            this.modal("norm", "Success!", "You've officially changed your description.");
+            localStorage.setItem('description', newDesc);
+            this.description = newDesc;
+            this.descChange = false;
+            this.changingDescription = false;
+          }
+        })
+      } else {
+        this.modal("error", "Theres a problem!", "That is already your description");
+        this.descChange = false;
+      }
+    }
+
   }
 
   resetPassword() {
@@ -179,6 +215,8 @@ export class ProfileComponent {
       let ids = [];
 
       if(response['status'] !== "fail") {
+        this.description = response['description'];
+        localStorage.setItem('description', this.description);
         ids = response['brackets']
         this.lazyGrav = response['lazy'];
 

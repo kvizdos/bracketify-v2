@@ -469,6 +469,7 @@ export class ModComponent implements OnInit {
       case "pubreg":
         this.pubRegEdit = true;
         this.hasPublicJoins = !this.hasPublicJoins;
+        console.log("CHANGING TO " + this.hasPublicJoins);
         let changeReg = this.getUpdateBracket({register: this.hasPublicJoins}, "pubregister").then((response) => {
           if(response['updateStatus'] == "complete") {
             this.pubRegEdit = false;

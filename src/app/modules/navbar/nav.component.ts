@@ -25,7 +25,11 @@ export class NavComponent {
   }
 
   logout() {
-    localStorage.clear();
+    localStorage.removeItem('sessionid');
+    localStorage.removeItem('username');
+    localStorage.removeItem('usercache');
+    localStorage.removeItem('coins');
+    if(localStorage.getItem('modid') !== null) localStorage.removeItem('modid');
     window.location.href = "/home";
   }
 

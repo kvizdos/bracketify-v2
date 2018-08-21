@@ -170,16 +170,15 @@ export class BracketComponent implements OnChanges, OnInit {
 //              this.teamPositions = [];
               for(let i = 0; i < teams.length; i++) {
                 let positions = this.teams[i]['positions'];
-               for(let position = 0; position < positions.length; position++) {
-                  for (let i = 0; i < positions[position]['pos'] + 1; i++) {
-                    this.teamPositions.push([]);
-                    if(positions[position]['pos'] != this.teamPositions[i].length) {
-                    }
+                for(let position = 0; position < positions.length; position++) {
+                  this.teamPositions.push([]);
+                  if(teams[i]['name'] != undefined) {
+                    this.teamPositions[positions[position]['col']][positions[position]['pos'] - 1] = teams[i]['name'];
+                  } else {
+                    this.teamPositions[positions[position]['col']][positions[position]['pos'] - 1] = " ";
                   }
-                 this.teamPositions[positions[position]['col']][positions[position]['pos'] - 1] = teams[i]['name'];
-               }
+                }
               }
-
  
               if(teams[teams.length - 1]['name'] == "") {
                 teams.pop();

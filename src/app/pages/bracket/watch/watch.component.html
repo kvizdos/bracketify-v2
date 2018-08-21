@@ -5,7 +5,15 @@
 <div class="row" *ngIf="loaded">
 
     <div class="col-md-2" id="sidebar">
-        <h2>Teams</h2>
+        <h2 class="teamsHead">Teams</h2>
+        
+        <div *ngIf="regProcessing == false">
+          <button class="register" *ngIf="hasPublicJoins == 'true' && registered == false" (click)="register()">Register</button>
+          <button class="register" *ngIf="hasPublicJoins == 'true' && registered == true" (click)="register()">Leave</button>
+        </div>
+        <div *ngIf="regProcessing == true">
+          <button class="register">Processing</button>
+        </div>
         <ul id="teamList">
           <li *ngFor="let team of teams;">
               {{team.name}}

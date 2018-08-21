@@ -1,9 +1,17 @@
 .register {
-    padding: 10px;
+    padding: 5px;
     margin: 0;
-    width: 100%;
     border: 0;
-    background-color: #64C6EB;
+    background-color: #26B6EC;
+    font-size: 16pt;
+    margin-bottom: 15px;
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;    
+}
+.teamsHead {
+    margin-bottom: 0;
 }
 .row {
     height: calc(100vh - 52px);
@@ -47,7 +55,7 @@
     background-color: #D53535;
 }
 hr {
-    border: 1px solid #64C6EB;
+    border: 1px solid #26B6EC;
 }
 
 #sidebar h2 {
@@ -184,6 +192,9 @@ li {
 ::-webkit-scrollbar { 
     display: none; 
 }
+::-moz-scrollbar {
+    display: none;
+}
 .actioncontent {
     padding: 0px;
     margin-top: 15px;
@@ -224,10 +235,11 @@ li {
 }
 #teamList {
     max-height: calc(100vh * .35);
-    background-color: #26B6EC;
     margin-left: 10px;
-    height: auto;
+    height: 250px;
     overflow: scroll;
+    overflow-x: hidden;
+    border: 3px solid #26B6EC;
 }
 .teamInput input {
     padding: 5px;

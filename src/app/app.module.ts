@@ -145,7 +145,7 @@ RouterModule.forRoot(routes, {useHash: false});
     BracketModGuardService, 
     OverlayGuardService,
     BracketComponent, 
-    BracketService],
+    BracketService],    
   bootstrap: [AppComponent]
 })
 export class AppModule { }

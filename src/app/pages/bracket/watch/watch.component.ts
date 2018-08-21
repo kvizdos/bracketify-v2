@@ -41,6 +41,10 @@ export class WatchComponent {
   isPublic = false;
   hasPublicJoins = false;
 
+  registered = false;
+
+  regProcessing = false;
+
   date;
 
   modalType = "";
@@ -69,12 +73,74 @@ export class WatchComponent {
       id = paramsId.id;
     });
 
-    console.log("Here: " + id);
-    console.log(value['rating']);
     var dat;
     var url = config.urls.current + "/addrating"
     let ret = await this.http.get(url + "/?id=" + id + "&rating=" + value['rating'] + "&user=" + localStorage.getItem('username')).toPromise();
     return ret
+  }
+
+  async registerTourney(value: object) {
+    console.log(value);
+    let username    = value['username'];
+    let sessionid   = value['sessionid'];
+    let id          = value['id'];
+    let registering = value['registering'];
+    let description = value['description'];
+
+    console.log(`${username} - ${sessionid} - ${id}`);
+
+    var dat;
+    var url = config.urls.current + "/rft"
+    let ret = await this.http.get(url + "/?id=" + id + "&username=" + username + "&sessionid=" + sessionid + "&registering=" + registering + "&description=" + description).toPromise();
+    return ret
+  }
+
+  register(registering: boolean) {
+    let username  = localStorage.getItem('username');
+    let sessionid = localStorage.getItem('sessionid');
+    let hasPJ     = this.hasPublicJoins;
+    let name      = this.name;
+    let bracketid = this.id;
+    let description = localStorage.getItem('description');
+    this.regProcessing = true;
+
+    if((username && sessionid) !== null) {
+      if(hasPJ) {
+        let reg = this.registerTourney({
+          username: username,
+          sessionid: sessionid,
+          id: bracketid,
+          description: description
+        }).then((response) => {
+          if(response['status'] == "complete") {
+            if(response['type'] == 'register') {
+              this.teams.push({name: username, description: description, positions: [{col: 0, pos: this.teams.length + 1}]});
+              this.teams = this.teams.slice();
+
+              this.modal("norm", "Congrats!", "You've officially signed up to be in the '" + name + "' tournament! ");
+            } else {
+              let teamNames = [];
+              for(let i = 0; i < this.teams.length; i++) {
+                teamNames.push(this.teams[i].name);
+              }
+
+              let teamPos = teamNames.indexOf(username);
+              this.teams.splice(teamPos, 1);
+              this.teams = this.teams.slice();
+
+              this.modal("norm", "All done.", "You've officially left the tournament, '" + name + "'");
+            }
+
+            this.registered = !this.registered;
+            this.regProcessing = false;
+          }
+        })
+      } else {
+        this.modal("error", "Awww, shucks!", "This tournament does not have public registration.");
+      }
+    } else {
+      window.location.href = "/login";
+    }
   }
 
   showLivestream() {
@@ -87,29 +153,21 @@ export class WatchComponent {
   }
 
   addRating(value: object) {
-    console.log("Clicked!");
-    console.log(value);
-    
     let rate = value['rating'];
-
-    console.log(rate + " - ");
 
     if(rate == "like") {
       this.ratings.likes.push(localStorage.getItem("username"));
-      console.log(this.ratings.likes.length);
     } else {
       this.ratings.dislikes.push(localStorage.getItem('username'));
     }
 
     let rating = this.getAddRating({rating: rate}).then((response) => {
-      console.log(response);
       if(response['rateStatus'] == "complete") {
         this.rateStatus = rate;
         
       } else {
         if(rate == "like") {
           this.ratings.likes.pop();
-          console.log(this.ratings.likes.length);
         } else {
           this.ratings.dislikes.pop();
         }
@@ -137,21 +195,30 @@ export class WatchComponent {
       this.owner = response['info']['owner'];
       this.teams = response['info']['teams'];
       this.isPublic = response['info']['public'];
-      this.hasPublicJoins = response['info']['pubreg'];
+      this.hasPublicJoins = response['info']['pubreg'].toString();
       this.date = response['info']['date'];
+      let teamnames = [];
+      for(let i = 0; i < this.teams.length; i++) {
+        teamnames.push(this.teams[i]['name']);
+      }
+      this.registered = teamnames.indexOf(localStorage.getItem('username')) > 0 ? true : false;
+      console.log(this.hasPublicJoins);
       this.loaded = true;
+
+      console.log(this.hasPublicJoins);
     });
   }
 
+  id;
+
   ngOnInit() {
-    let id;
     let yote = this.route.params.subscribe(paramsId => {
-      id = paramsId.id;
+      this.id = paramsId.id;
     });
 
     this._bracketService.on('syncteams', (data: any) => {
       console.log("Sync request..");
-      if(data['id'] == id) {
+      if(data['id'] == this.id) {
         console.log("Syncing teams..");
 
         this.teams = data['teams'];
