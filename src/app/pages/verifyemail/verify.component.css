@@ -3,6 +3,12 @@ h1 {
     text-align: center;
     font-weight: 800;
 }
+.blue {
+    color: #26B6EC;
+}
+.red {
+    color: rgb(221, 24, 24);
+}
 
 p {
     text-align: center;
@@ -12,4 +18,17 @@ p {
 p.tip {
     font-style: italic;
     font-size: 16pt;
+}
+
+.code {
+    display: table;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 18pt;
+    width: calc(18pt * 5);
+    border: 2px solid #26B6EC;
+    color: #26B6EC;
+    border-radius: 8px;
+    text-align: center;
+    text-transform: uppercase;
 }

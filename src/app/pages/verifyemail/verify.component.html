@@ -2,7 +2,13 @@
   <div class="col-sm-2"></div>
   <div class="col-sm-8">
     <h1>Please verify your email!</h1>
-    <p>To use Bracketify, you need to confirm your email. We sent you a verification email when you signed up.</p>
+    <input class="code" maxlength="5" placeholder="Code" #code (input)="checkCode(code.value)" [attr.disabled]="verifying == true ? '' : null">
+    <p class="blue" [hidden]="!verifying">Verifying..</p>
+    <p class="green" [hidden]="!success">Successfully Verified! You will be redirected in a moment..</p>
+
+    <p class="red" [hidden]="!error">{{errorTxt}}</p>
+
+    <p>To use Bracketify, you need to confirm your email. We sent you a verification email with a code when you signed up.</p>
     <p class="tip">Make sure to check your spam if you haven't recieved it! If you never recieve a confirmation email, please contact bugs@bracketify.com</p>
   </div>
   <div class="col-sm-2"></div>

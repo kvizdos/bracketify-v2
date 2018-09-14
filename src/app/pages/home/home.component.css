@@ -37,6 +37,7 @@
 }
 
 ul.searchResults {
+    z-index: 100;
     list-style-type: none !important;
     padding:5px;
     margin: 0;
@@ -46,6 +47,7 @@ ul.searchResults {
 }
 
 .sr {
+    z-index: 100;
     text-align: left;
     background-color: #26B6EC;
     height: 100%;
