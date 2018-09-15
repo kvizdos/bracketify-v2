@@ -39,6 +39,15 @@ export class BracketComponent implements OnChanges, OnInit {
   Math = Math;
 
   highlightedTeams = [];
+
+  showModal = false;
+  modalHeader = "Modal Header";
+  modalContent = "<p>Modal Content</p>";
+  modalType = "norm";
+
+  isAddingTeam = false;
+
+  canRemoveTeams = true;
   
   async getBracketInfo(value: string) {
     var dat;
@@ -51,9 +60,156 @@ export class BracketComponent implements OnChanges, OnInit {
     return v1 + "-" + v2;
   }
 
-  addTeam(team: string) {
-    this.teamPositions.push(team);
+  removeTeam(team: string) {
+    console.log("CLICKED");
+    if(team != 'Please create a team!') {
+    let teams = this.teams;
 
+    let invalidPositions = false;
+    for (let team = 0; team < teams.length; team++) {
+      if(teams[team]['positions'].length > 1 && !invalidPositions) {
+        invalidPositions = true;
+      }
+    }
+
+    if(!invalidPositions) {
+      let c = confirm("Are you sure you want to delete " + team + "?");
+      if (c) {
+        let teamNames = [];
+        for(let i = 0; i < this.teams.length; i++) {
+          teamNames.push(this.teams[i].name);
+        }
+
+        let teamPos = teamNames.indexOf(team);
+        console.log(teamPos);
+        if(teamPos >= 0) {
+          this.getUpdateBracket({name: team}, "removeteam").then((response) => {
+            if(response['updateStatus'] != "complete") {
+              switch(response['code']) {
+                case "noTeam":
+                  this.modalType = "error";
+                  this.modalHeader = "Error!";
+                  this.modalContent = "That team doesn't exist!";
+                  this.showModal = true;
+                  break;
+                case "teamsCantAdvance":
+                  this.modalType = "error";
+                  this.modalHeader = "Error!";
+                  this.modalContent = "No team can be advanced to remove teams.";
+                  this.showModal = true;
+                  break;
+                case "invalidBracketToken":
+                  this.modalType = "error";
+                  this.modalHeader = "Error!";
+                  this.modalContent = "You have an invalid bracket token. Please reload this page to fix.";
+                  this.showModal = true;
+                  break;
+              }
+            } else {
+              alert("Removed " + team);
+              // TOOD: Replace w/ small alert (COMPLETE)
+              this.teams.splice(teamPos, 1);
+
+              let start = teamPos;
+              console.log(this.teams);
+              for(let x = start; x < this.teams.length; x++) {
+                  for(let p = 0; p < this.teams[x]['positions'].length; p++) {
+                    this.teams[x]['positions'][p]['pos'] = this.teams[x]['positions'][p]['pos'] - 1;
+                      console.log(this.teams[x]['positions']);
+                  }
+                  
+              }            
+              this.teams = this.teams.slice(); 
+
+              let id;
+              let yote = this.route.params.subscribe(paramsId => {
+                id = paramsId.id;
+              });
+
+              this._bracketService.emit("teamsync", {teams: this.teams, id: id, modid: localStorage.getItem("modid")});
+            }
+          });
+        } else {
+          this.modalType = "error";
+          this.modalHeader = "Error!";
+          this.modalContent = "That team doesn't exist!";
+          this.showModal = true;
+        }
+      }
+    } else {
+      this.modalType = "error";
+      this.modalHeader = "Error!";
+      this.modalContent = "No team can be advanced while trying to remove teams.";
+      this.showModal = true;
+    } 
+    
+      
+    } else {
+      this.modalType = "norm";
+      this.modalHeader = "Wait a sec!";
+      this.modalContent = "To get rid of this, please make sure you have a team added, after you confirm you have finished that step, please reload.";
+      this.showModal = true;  
+    }
+  }
+
+  addTeam(team: string) {
+    this.isAddingTeam = true;
+    if(team == 'Please create a team!') {
+      this.isAddingTeam = false;
+      this.modalType = "error";
+      this.modalHeader = "Error!";
+      this.modalContent = "Please do not set the team name to that!";
+      this.showModal = true;  
+    } else {
+      if(team.length > 0) {
+        let addingTeam = this.getUpdateBracket({name: team}, "addteam").then((response) => {
+          if(response['updateStatus'] != "complete") {
+            this.isAddingTeam = false;
+            switch(response['code']) {
+              case "invalidBracket":
+                this.modalType = "error";
+                this.modalHeader = "Error!";
+                this.modalContent = "That bracket is not found. Please reload.";
+                this.showModal = true;
+                break;
+              case "alreadyTeam":
+                this.modalType = "error";
+                this.modalHeader = "Error!";
+                this.modalContent = "That is already a team!";
+                this.showModal = true;
+                break;
+              case "reload":
+                alert("Something went wrong. We are most likely seeing this, but please report it to us @bracketify on twitter or bugs@bracketify.com");
+                break;
+              case "invalidBracketToken":
+                this.modalType = "error";
+                this.modalHeader = "Error!";
+                this.modalContent = "You have an invalid bracket token. Please reload to fix.";
+                this.showModal = true;
+              case "complete":
+                break;
+              default:
+                alert("We have no clue what went wrong - if you see this message: we're sending help. Please contact us @bracketify on twitter or bugs@bracketify.com");
+            }
+          } else {
+            this.isAddingTeam = false;
+            this.teams.push({name: team, description: "This is a basic description!", positions: [{col: 0, pos: this.teams.length + 1}]});
+            this.teams = this.teams.slice();
+            let id;
+            let yote = this.route.params.subscribe(paramsId => {
+              id = paramsId.id;
+            });
+
+            this._bracketService.emit("teamsync", {teams: this.teams, id: id, modid: localStorage.getItem("modid")});
+          }
+        });
+      } else {
+        this.modalType = "error";
+        this.modalHeader = "Error!";
+        this.modalContent = "You need to enter a team name!";
+        this.showModal = true;
+      }
+    }
   }
 
   async getUpdateBracket(data: object, type: string) {
@@ -100,6 +256,14 @@ export class BracketComponent implements OnChanges, OnInit {
       teamNames.push(this.teams[i]['name']);
     }
 
+    
+    for (let team = 0; team < this.teams.length; team++) {
+      if(this.teams[team]['positions'].length > 1 && this.canRemoveTeams) {
+        this.canRemoveTeams = false;
+      }
+      console.log(this.teams[team]['positions'].length);
+    }
+
     this.teams[teamNames.indexOf(team)]['positions'].push({col: newCol, pos: newPos + 1});
     this.getUpdateBracket({team: team}, "setwinner").then((response) => {
       this.isBeingEdited = false;
@@ -125,6 +289,15 @@ export class BracketComponent implements OnChanges, OnInit {
     }
 
     this.teams[teamNames.indexOf(team)]['positions'].pop();
+
+    
+    for (let team = 0; team < this.teams.length; team++) {
+      if(this.teams[team]['positions'].length > 1 && this.canRemoveTeams) {
+        this.canRemoveTeams = false;
+      }
+      console.log(this.teams[team]['positions'].length);
+    }
+
     this.getUpdateBracket({team: team}, "removewinner").then((response) => {
       this.isBeingEdited = false;
 
@@ -140,6 +313,14 @@ export class BracketComponent implements OnChanges, OnInit {
                   
     if(teams.length <= 0) {
       teams.push({name: "Please create a team!", description: "No teams added. Please add one.", positions: [{col: 0, pos: 1}]})
+    }
+
+    
+    for (let team = 0; team < teams.length; team++) {
+      if(teams[team]['positions'].length > 1 && this.canRemoveTeams) {
+        this.canRemoveTeams = false;
+      }
+      console.log(teams[team]['positions'].length);
     }
 
     let teamCount = teams.length;
@@ -186,11 +367,14 @@ export class BracketComponent implements OnChanges, OnInit {
 
               this.showBrack = true;  
 
+              
+
               break;
             }
           
           
         }
+        
       }
   }
 

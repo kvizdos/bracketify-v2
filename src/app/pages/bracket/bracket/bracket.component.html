@@ -1,9 +1,18 @@
 <div class="wrapper">
+    <app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
   <div class="bracket">
       <ul [hidden]="showError" class="brackets" *ngFor="let column of grid; let amt = index" [id]="amt">
         <!--class="bracketPos"-->
         <li [ngClass]="(highlightedTeams.indexOf(teamPositions[amt][i]) >= 0) ? 'highlight bracketPos' : 'bracketPos'" *ngFor="let row of column; let i = index" [id]="concat(amt, i)" (mouseenter)="highlightTeam(teamPositions[amt][i])">
           <!--teamPositions[amt + 1][Math.ceil(i / 2) - 1] !== teamPositions[amt][i] &&-->
+          <span *ngIf="(
+            isAdmin == true &&
+            isBeingEdited == false &&
+            amt == 0
+          )">
+           <span (click)="removeTeam(teamPositions[amt][i])" id="teamRemover" class="glyphicon glyphicon-remove"></span>
+          </span>
+          &nbsp;
           <span (click)="removeWinner(amt, i, teamPositions[amt][i])" 
             [hidden]="!isAdmin" 
             class="glyphicon glyphicon-arrow-left removeWinnerSelect" 
@@ -46,6 +55,14 @@
                   )
                 )"
           ></span>
+
+        </li>
+
+        <li class="bracketPos" id="newTeam" *ngIf="(isAdmin == true)">
+          <input *ngIf="amt == 0" #newTeamName placeholder="Hit enter to add" (keyup.enter)="addTeam(newTeamName.value)" [hidden]="isAddingTeam" />
+          <input *ngIf="amt == 0" value="Adding..." (keyup.enter)="addTeam(newTeamName.value)" disabled [hidden]="!isAddingTeam" />
+
+          <span *ngIf="amt > 0">&nbsp;</span>
 
         </li>
 

@@ -3,6 +3,7 @@
 <app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
 
 <div class="row" *ngIf="loaded">
+  <!--
     <div class="col-md-2" id="sidebar">
         <h2>Teams</h2>
         <div class="teamInput">
@@ -20,7 +21,7 @@
           </li>
 
         </ul>
-        <!--<button (click)="modify('randomizeTeams')" class="scramble"><span class="glyphicon glyphicon-random"></span> Scramble</button>-->
+        <button (click)="modify('randomizeTeams')" class="scramble"><span class="glyphicon glyphicon-random"></span> Scramble</button>
 
         <div style="text-align: center;">
           <p style="color: rgb(206, 27, 27); text-align: center; font-size: 14pt;">Click the team name to delete.</p>
@@ -31,7 +32,8 @@
             <button class="live" (click)="setLive('live')"><span class="glyphicon glyphicon-facetime-video"></span> Set Live Link</button>
           </div>        
     </div> 
-    <div class="col-md-10 bracket">
+  -->
+    <div class="col-md-12 bracket">
 
       <div class="bracketArea">
         <bracket [teams]="teams"></bracket>

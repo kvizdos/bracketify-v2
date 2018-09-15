@@ -63,6 +63,17 @@
     background-color: #26B6EC;
 }
 
+
+#newTeam {
+    color: black;
+    background-color: rgb(83, 195, 236);
+}
+
+#teamRemover:hover {
+    cursor: pointer;
+    color: rgb(235, 43, 43);
+}
+
 @media only screen and (max-width: 720px) {
     .wrapper {
         overflow: scroll;
