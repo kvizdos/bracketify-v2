@@ -3,7 +3,7 @@
 <app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
 
 <div class="row" *ngIf="loaded">
-
+<!--
     <div class="col-md-2" id="sidebar">
         <h2 class="teamsHead">Teams</h2>
         
@@ -19,11 +19,11 @@
               {{team.name}}
               <hr>
           </li>
-      <!-- TODO: Add registering!
+     TODO: Add registering!
           <li>
               <button class="register" *ngIf="hasPublicJoins == true">Register</button>
           </li>
-        -->
+        
         </ul>
 
         <div class="bottom">
@@ -32,7 +32,8 @@
             <button class="live" (click)="showLivestream()"><span class="glyphicon glyphicon-facetime-video"></span> Watch live</button>
           </div>        
     </div> 
-    <div class="col-md-10 bracket">
+  -->
+    <div class="col-md-12 bracket">
 
       <div class="bracketArea">
         <bracket [teams]="teams"></bracket>
