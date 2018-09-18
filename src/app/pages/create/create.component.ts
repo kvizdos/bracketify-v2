@@ -16,6 +16,11 @@ export class CreateComponent {
   verified;
   clicked;
 
+  creatingBracket = false;
+  creatingLeaderboard = false;
+
+  activeInstruction = 0;
+
   nameError = false;
   descError = false;
   gameError = false;
@@ -35,17 +40,11 @@ export class CreateComponent {
   async getCreateBracket(value: object) {
     var dat;
     var url = config.urls.current + "/createbracket"
-    let ret = await this.http.get(url + `/?name=${value['name']}&description=${value['description']}&live=${value['live']}&game=${value['game']}&owner=${value['owner']}&addons=${value['addons']}&pubreg=${value['pubreg']}&pubview=${value['pubview']}&date=${value['date']}`).toPromise();
+    let ret = await this.http.get(url + `/?name=${value['name']}&description=${value['description']}&live=${value['live']}&game=${value['game']}&owner=${value['owner']}&addons=${value['addons']}&pubreg=${value['pubreg']}&pubview=${value['pubview']}`).toPromise();
     return ret
   }
 
   createBracket(value: object) {
-    console.log(value['pubView']);
-    if(value['date'].length < 10) {
-      this.dateError = true;
-    } else {
-      this.dateError = false;
-    }
     if(value['name'].length == 0) {
       this.nameError = true;
     } else {

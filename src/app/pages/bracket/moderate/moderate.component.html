@@ -41,7 +41,7 @@
 
       <div id="actionbar" *ngIf="!viewMore">
         <ul>
-          <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
+          <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}}</span></span></li><br>
           <li class="viewmore" (click)="viewMore = true"><button>view more</button></li>
         </ul>
         <ul class="right">
@@ -63,7 +63,7 @@
       <div id="actionbar" class="top" *ngIf="viewMore">
         <div id="actionhead">
           <ul>
-            <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
+            <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}}</span></span></li><br>
             <li class="viewmore" (click)="viewMore = false"><button>view less</button></li>
           </ul>
           <ul class="right">
@@ -100,8 +100,6 @@
             <hr>
             <h2>Advanced</h2>
             <div style="display: inline;">
-              <h2>Date:</h2>
-              <input #newdate type="date" [value]="date"/><span *ngIf="dateEdit == true">Changing..</span><span *ngIf="dateEdit == false" class="glyphicon glyphicon-pencil" (click)='modify("date", newdate.value)'></span>
               <h2>Visibility Settings:</h2>
               <p>Click true/false to toggle</p>
               <p>Publicily viewable: <span [hidden]="pubViewEdit" class="visSetting" (click)='modify("pubview")'>{{isPublic}}</span><span [hidden]="!pubViewEdit">Changing...</span></p>

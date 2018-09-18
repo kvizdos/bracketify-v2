@@ -33,6 +33,8 @@ export class ProfileComponent {
   description: string = localStorage.getItem('description') !== null ? localStorage.getItem('description') : "Click to change me!";
   descChange = false;
 
+  
+
   modalType = "";
   modalHeader = "";
   modalContent = "";
@@ -43,6 +45,84 @@ export class ProfileComponent {
     this.modalContent = content;
     this.showModal = true;  
   }
+
+  // DEVELOPER STUFF
+  developerKeys;
+  hasKeys = false;
+  devRemoveThinking = false;
+
+  async getKeys() {
+    var url = config.urls.current + "/v1/auth/keys/" + localStorage.getItem("username");
+
+    let ret = await this.http.get(url, { headers: { Authorization: JSON.stringify({origin: window.location.origin, session: localStorage.getItem('sessionid')}) }}).toPromise();
+    return ret;
+  }
+
+  async removeClaimedKey() {
+    var url = config.urls.current + "/v1/auth/unclaim/" + localStorage.getItem("username");
+
+    let ret = await this.http.get(url, { headers: { Authorization: JSON.stringify({origin: window.location.origin, session: localStorage.getItem('sessionid')}) }}).toPromise();
+    return ret;
+  }
+
+  async getClaimKey(value: Object) {
+    var url = config.urls.current + "/v1/auth/claim/" + value['username'] + "?name="+value['name']+"&origin=" + value['origin'];
+
+    let ret = await this.http.get(url, { headers: { Authorization: JSON.stringify({domain: window.location.origin}) }}).toPromise();
+    return ret;
+  }
+
+  claimKey(origins: string, name: string) {
+    this.devRemoveThinking = true;
+    this.hasKeys = true;
+
+    let claim = this.getClaimKey({username: localStorage.getItem("username"), name: name, origin: origins}).then((resp) => {
+      if(resp['code'] == undefined) {
+        localStorage.setItem("developercache", JSON.stringify({name: name, key: resp['key'], origins: origins.split(', ')}));
+
+        this.developerKeys = {name: name, key: resp['key'], origins: origins.split(', ')};
+        this.devRemoveThinking = false;
+
+      } else {
+        this.hasKeys = false;
+        this.devRemoveThinking = false;
+        localStorage.removeItem('developercache');
+        this.modal('error', "Uh oh!", "Something went wrong. Please try again.");
+      }
+    })
+  }
+
+  removeKey() {
+    let name = prompt("Please confirm this IRREVERSIBLE action by typing the name of the token (THIS ACTION CANNOT BE UNDONE): ");
+    this.devRemoveThinking = true;
+    let cur = JSON.parse(localStorage.getItem('developercache'));
+    if(name == cur['name']) {
+      let remove = this.removeClaimedKey().then((response) => {
+        console.log(response);
+        if(response['code'] == undefined) {
+          localStorage.removeItem('developercache');
+          this.hasKeys = false;
+          this.modal("norm", "Successfully deleted.", "Your key is no longer activated, you can make a new random key at any time.");
+          this.devRemoveThinking = false;
+
+        } else {
+          this.modal("error", "uh oh", "Something went wrong. Please try again");
+          this.devRemoveThinking = false;
+        }
+      })
+    } else {
+      this.modal("error", "Not gonna happen!", "You've incorrectly typed the name. Please try again.");
+      this.devRemoveThinking = false;
+
+    }
+  }
+
+  showKeyInfo() {
+    let keyInfo = JSON.parse(localStorage.getItem("developercache"));
+    this.modal("norm", keyInfo['name'], "Key: " + keyInfo['key'] + "\n\n\nOrigins: " + keyInfo['origins'])
+  }
+
+  // END DEVELOPER STUFF
 
 
   async getUserInfo(value: string) {
@@ -210,7 +290,7 @@ export class ProfileComponent {
   }
 
   cacheUserData(cache: Boolean) {
-    if(cache && localStorage.getItem('usercache') !== null) {this.loaded = true} else {this.loaded = false};
+    this.loaded = true;
     let bracketsearch = this.getUserInfo(this.name).then((response) => {
       let ids = [];
 
@@ -289,6 +369,7 @@ export class ProfileComponent {
      .filter((v) => { return (v[0] === sParam) ? true : false })[0]
   };
 
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.name = this.getUrlParameter('user')[1].toLowerCase();
     if(this.name == localStorage.getItem('username')) this.isPersonal = true;
@@ -309,6 +390,26 @@ export class ProfileComponent {
       } else {
         this.cacheUserData(false);
       }
+    }
+
+    if(localStorage.getItem("developercache") !== null) {
+      let cache = JSON.parse(localStorage.getItem('developercache'));
+      this.developerKeys = cache;
+      this.hasKeys = true;
+      console.log(this.hasKeys);
+    } else {
+      let waiting = this.getKeys().then((response) => {
+        if(response['code'] == undefined) {
+          localStorage.setItem('developercache', JSON.stringify(response));
+          this.developerKeys = response;
+          this.hasKeys = true;
+        } else {
+          if(response['code'] == "noKeys") {
+            localStorage.removeItem('developercache');
+            this.hasKeys = false;
+          }
+        }
+      });
     }
     
   }

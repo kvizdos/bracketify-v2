@@ -1,7 +1,102 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-modal [(visible)]="showModal" [header]="modalHeader" [type]="modalType">{{modalContent}}</app-modal>
+<div class="container-fluid">
+    <h1 style="text-align: center;">What would you like to create?</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <a class="selectCat" href="javascript:void()" (click)="makeLeaderboard = false; makeBracket = true; activeInstruction = 1;">
+                    <svg [ngClass]="makeBracket == true ? 'category active' : 'category'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 724 276.8"><style type="text/css">  
+                        .st0{fill:#E6E6E6;}
+                        .st1{font-family:&#39;ProductSans-Bold&#39;font-weight: bold;}
+                        .st2{font-size:80px;}
+                        .st3{letter-spacing:-1;}
+                    </style><rect class="st0" width="352" height="69"/><rect y="97" class="st0" width="352" height="69"/><rect x="372" y="46" class="st0" width="352" height="69"/><text transform="matrix(1 0 0 1 176 254)"><tspan class="st0 st1 st2">BRACKET</tspan></text></svg>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a class="selectCat" href="javascript:void()"  (click)="makeLeaderboard = true; makeBracket = false; activeInstruction = 1;">
+                <svg [ngClass]="makeLeaderboard == true ? 'category active lbCat' : 'category lbCat'" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 578.47 293.79"><defs><style>.cls-1{font-size:80px;font-family:ProductSans-Bold, Product Sans;font-weight:700;}.cls-1,.cls-14,.cls-3{fill:#e6e6e6;}.cls-2{letter-spacing:-0.02em;}.cls-3{font-size:39px;}.cls-14,.cls-3{font-family:ProductSans-Regular, Product Sans;}.cls-4{letter-spacing:-0.01em;}.cls-5{letter-spacing:-0.02em;}.cls-6{letter-spacing:0em;}.cls-7{letter-spacing:0em;}.cls-8{letter-spacing:0em;}.cls-9{letter-spacing:0em;}.cls-10{letter-spacing:-0.03em;}.cls-11{letter-spacing:0em;}.cls-12{letter-spacing:-0.04em;}.cls-13{letter-spacing:-0.03em;}.cls-14{font-size:25px;}.cls-15{letter-spacing:-0.03em;}.cls-16{letter-spacing:-0.07em;}.cls-17{letter-spacing:0em;}</style></defs><title>leaderboard</title><text class="cls-1" transform="translate(0 256.13)">LEADERBOARD</text><text class="cls-3" transform="translate(105.65 33.46)">1. First place name<tspan x="0" y="46.8">2.</tspan><tspan class="cls-10" x="29.33" y="46.8"> </tspan><tspan x="36.74" y="46.8">Second place name</tspan><tspan class="cls-4" x="0" y="93.6">3</tspan><tspan x="20.32" y="93.6">.</tspan><tspan class="cls-12" x="29.37" y="93.6"> </tspan><tspan class="cls-9" x="36.39" y="93.6">Third place name</tspan><tspan x="0" y="140.4">4. </tspan><tspan class="cls-13" x="40.6" y="140.4">Fourth place name</tspan></text><text class="cls-14" transform="translate(207.71 287.46)">API<tspan class="cls-15" x="36.7" y="0"> </tspan><tspan class="cls-16" x="41.45" y="0">AV</tspan><tspan class="cls-17" x="70.45" y="0">AILABLE</tspan></text></svg>
+            </a>
+        </div>
+    </div>
+    <!-- MAKE BRACKET SECTION -->
+    <div [ngClass]="makeBracket == true ? 'row fadeBracketIn' : 'row'">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" *ngIf="makeBracket == true">
 
-<div style="text-align:center shell">
+            <div [ngClass]="activeInstruction >= 1 ? 'section activeSection' : 'section'">
+                <h2>What would you like your bracket to be called?</h2>
+                <input (keydown)="activeInstruction == 1 ? activeInstruction = 2 : null" type="text" #name placeholder="My awesome Bracket" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+            </div>
+
+            <div [ngClass]="activeInstruction >= 2 ? 'section activeSection' : 'section'">
+                <h2>What would you like the description to be?</h2>
+                <textarea (keydown)="activeInstruction == 2 ? activeInstruction = 3 : null" #description placeholder="blah bliddy bloo bla blah" maxlength="200" rows="10" [ngClass]="descError == true ? 'inpError' : undefined"></textarea>
+            </div>
+
+            <div [ngClass]="activeInstruction >= 3 ? 'section activeSection' : 'section'">
+                <h2>Game/Subject</h2>
+                <input (keydown)="activeInstruction == 3 ? activeInstruction = 4 : null" #game placeholder="Rocket League" [ngClass]="gameError == true ? 'inpError' : undefined"/>
+            </div>
+
+            <div [ngClass]="activeInstruction >= 4 ? 'section activeSection' : 'section'">
+                <h2>Bracket Livestream Link</h2>
+                <p>If none, put NA</p>
+                <input (keydown)="activeInstruction == 4 ? activeInstruction = 5 : null" #live placeholder="service.extension/yourchannel"/>
+            </div>
+            <div [ngClass]="activeInstruction >= 5 ? 'section activeSection' : 'section'">
+                <h1>Unrequired fields:</h1>
+                <h2>Visibility Settings</h2>
+                <div class="inline-field">
+                    <label for="checkbox"><input type="checkbox" id="checkbox" checked #pubView> Publicly viewable</label>
+                </div>
+                <br>
+                <div class="inline-field">
+                    <label><input type="checkbox" id="checkbox" #pubReg> Public registration</label>
+                </div>
+
+                <button (click)="createBracket({pubView: pubView.checked, pubReg: pubReg.checked, name: name.value, description: description.value, live: live.value, game: game.value, addons: []})" [hidden]="clicked">Create</button>
+                <button disabled class="clicked" [hidden]="!clicked">Creating..</button>
+            </div>
+            <br><br>
+        </div>
+        <div class="col-sm-3"></div>
+        
+    </div>
+    <!-- MAKE LEADERBOARD SECTION -->
+    <div class="row" *ngIf="makeLeaderboard == true">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" *ngIf="makeLeaderboard == true">
+            <div [ngClass]="activeInstruction >= 1 ? 'section activeSection' : 'section'">
+                <h2>What would you like your leaderboard to be called?</h2>
+                <input (keydown)="activeInstruction == 1 ? activeInstruction = 2 : null" type="text" #name placeholder="My awesome Leaderboard" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+            </div>
+
+            <div [ngClass]="activeInstruction >= 2 ? 'section activeSection' : 'section'">
+                <h2>What is this for? (Game name?)</h2>
+                <input (keydown)="activeInstruction == 2 ? activeInstruction = 3 : null" type="text" #name placeholder="<Game> public leaderboard // Leaderboard name" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+            </div>
+
+            <div [ngClass]="activeInstruction >= 3 ? 'section activeSection' : 'section'">
+                <h2>Set your fields</h2>
+
+                <input (keydown)="activeInstruction == 3 ? activeInstruction = 4 : null" type="text" #name placeholder="<Game> public leaderboard // Leaderboard name" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+            </div>
+
+            <div [ngClass]="activeInstruction >= 4 ? 'section activeSection' : 'section'">
+                <h1>Unrequired fields:</h1>
+                <h2>More info on the game</h2>
+                <p>If this is your own game, or a game you would like to add to our game search engine, please add a valid twitter account/website/facebook and the game will become searchable after review. This information will be publicly viewable when someone views the games explore page. <strong>If the game is a valid game we will give you 10 free coins when we accept it! ALSO, please put 'I own this game' if you would like us to contact you to get special, custom graphics on the explore page for your game</strong></p>
+                <input (keydown)="activeInstruction == 4 ? activeInstruction = 5 : null" type="text" #name placeholder="Twitter @<name> // www.gamesite.extension // FB: <name>" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    
+</div>
+
+<!--
+<div style="text-align:center shell" *ngIf="creatingBracket == true">
  <div class="row padding">
      <div class="col-sm-1"></div>
      <div class="col-sm-5">
@@ -95,3 +190,5 @@
 
  </div>
 </div>
+
+-->

@@ -41,7 +41,7 @@
 
       <div id="actionbar" *ngIf="!viewMore">
         <ul>
-          <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
+          <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}}</span></span></li><br>
           <li class="viewmore" (click)="viewMore = true"><button>view more</button></li>
         </ul>
         <ul class="right">
@@ -63,7 +63,7 @@
       <div id="actionbar" class="top" *ngIf="viewMore">
         <div id="actionhead">
           <ul>
-            <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}} - {{date}}</span></span></li><br>
+            <li class="name">{{name}} <span class="darker"><span class="basicInfo">- {{game}}</span></span></li><br>
             <li class="viewmore" (click)="viewMore = false"><button>view less</button></li>
           </ul>
           <ul class="right">

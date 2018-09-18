@@ -18,14 +18,16 @@ export class ProfileService implements CanActivate {
      .filter((v) => { return (v[0] === sParam) ? true : false })[0]
   };
 
+  isPersonal = false;
+
   constructor(public router: Router, private http: HttpClient) {}
   canActivate(route: ActivatedRouteSnapshot): boolean {
       if(this.getUrlParameter('user') !== undefined && this.getUrlParameter('user')[0] === 'user') {
         let user = this.getUrlParameter('user')[1].toLowerCase();
         if(user == localStorage.getItem('username')) {
-          console.log("personal");
+          this.isPersonal = true;
         } else {
-          console.log("Non-personal");
+          this.isPersonal = false;
         }
       } else {
         if(localStorage.getItem("username") !== undefined) {
@@ -35,20 +37,21 @@ export class ProfileService implements CanActivate {
         }
       }
 
-      if((localStorage.getItem("username") && localStorage.getItem("sessionid")) !== null) {
-        let choice = this.verifySession().then((response) => {
-            if(response['verified'] == "false") {
-                window.location.href = "/login?callback=" + window.location.pathname.substring(1);
-              return false
-            } else if(response['email'] == "false") {
-              window.location.href = "/verifyemail";
-              return false;
-            };
-        });
-      } else {
-            window.location.href = "/login?callback=" + window.location.pathname.substring(1);
-          return false;
-      }
+        if((localStorage.getItem("username") && localStorage.getItem("sessionid")) !== null) {
+          let choice = this.verifySession().then((response) => {
+              if(response['verified'] == "false") {
+                  window.location.href = "/login?callback=" + window.location.pathname.substring(1);
+                return false
+              } else if(response['email'] == "false") {
+                window.location.href = "/verifyemail";
+                return false;
+              };
+          });
+        } else {
+              window.location.href = "/login?callback=" + window.location.pathname.substring(1);
+            return false;
+        }
+      
     
     return true;
     /*if (!this.auth.isAuthenticated()) {

@@ -50,8 +50,34 @@
         <button (click)="changeDescription(newDesc.value)" class="btn btn-md btn-info" *ngIf="descChange == false">Change</button>&nbsp;
         <button (click)="changingDescription = false" class="btn btn-md btn-danger" *ngIf="descChange == false">Cancel</button>
         <button class="btn btn-md btn-warning" *ngIf="descChange == true">Changing...</button>
+      </div>
+      <div *ngIf="isPersonal == true">
+        <hr>
 
+        <h2>Developer Options</h2>
+        <div *ngIf="devRemoveThinking == false">
+          <div class="col-sm-6">
+            <p>Click name to see more info</p>
+            <div class="list-group">
+              <span class="list-group-item" *ngIf="hasKeys == false">No keys!</span>
+              <span class="list-group-item" *ngIf="hasKeys == true"><strong (click)="showKeyInfo()">{{developerKeys.name}}</strong><span (click)="removeKey()" style="float: right; color: rgb(236, 25, 25)" class="glyphicon glyphicon-minus"></span></span>
 
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="devclaim" *ngIf="hasKeys == false">
+              <input class="" #keyname placeholder="Key name">
+              <input class="" #origins placeholder="Origins (Split with ', ')">
+              <button (click)="claimKey(origins.value, keyname.value)">Get key</button>
+            </div>
+            <p *ngIf="hasKeys == false">The Origins MUST contain the protocol, extension, and port if required.</p>
+            <i *ngIf="hasKeys == false">Example: "https://bracketify.com,&nbsp;http://localhost:4200"</i>
+            <h2 *ngIf="hasKeys == true">Sorry, you can only have one key at a time. </h2>
+          </div>
+        </div>
+        <div *ngIf="devRemoveThinking == true">
+          <h2>We are processing your request..</h2>
+        </div>
       </div>
     </div>
     <div class="col-sm-2"></div>

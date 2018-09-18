@@ -138,3 +138,31 @@ span.list-group-item:hover {
     width: 100%;
     cursor: not-allowed;
 }
+
+.devclaim {
+    float: left;
+    margin-bottom: 25px;
+}
+
+.devclaim input, .devclaim button {
+    padding: 3px;
+    font-size: 12pt;
+    border: 2px solid #26B6EC;
+    border-bottom: 0;
+    width: 100%;
+}
+
+.devclaim input:first-of-type {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+}
+
+.devclaim button {
+    background-color: #64C6EB;
+    color: white;
+    border-bottom: 2px solid #26B6EC;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+}
