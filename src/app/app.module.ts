@@ -21,6 +21,8 @@ import { BracketComponent } from './pages/bracket/bracket/bracket.component';
 import { OverlayComponent } from './pages/bracket/overlay/overlay.component';
 import { OverlayBracketComponent } from './pages/bracket/overlay-bracket/bracket.component';
 
+import { LbWatchComponent } from './pages/leaderboard/watch/lbwatch.component';
+
 import { BracketService } from './pages/bracket/bracket.service';
 
 import { NavComponent } from './modules/navbar/nav.component';
@@ -87,6 +89,10 @@ const routes: Routes = [
     canActivate: [BracketModGuardService, AuthGuardService]
   },
   {
+    path: 'leaderboard/:id',
+    component: LbWatchComponent
+  },
+  {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [ProfileService]
@@ -121,7 +127,8 @@ RouterModule.forRoot(routes, {useHash: false});
     AdminComponent,
     OverlayBracketComponent,
     ShopComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    LbWatchComponent
   ],
   imports: [
     BrowserModule,

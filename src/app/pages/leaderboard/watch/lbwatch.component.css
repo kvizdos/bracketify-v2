@@ -1,0 +1,23 @@
+.table-responsive {
+    max-height: calc(100vh - 52px);
+    height: 100%;
+    overflow: scroll;
+}
+
+h1 {
+    font-weight: bold;
+    color: #26B6EC;
+}
+
+.gameBtn {
+    border: 0;
+    background-color: #26B6EC;
+    color: white;
+    font-size: 14pt;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+p {
+    font-size: 12pt;
+}
