@@ -13,48 +13,18 @@ import { JsonPipe } from '@angular/common';
 export class LbWatchComponent {
   title = 'Bracketify Leaderboard';
 
+  id;
+
   name = "Lasers! Leaderboard";
   description = "This is a leaderboard for the mobile app 'Lasers!'";
 
-  game = "Lasers!";
-  gameLink = "https://lasersgame.com";
-  gameWording = "Play"; // Play || Check out 
+  game = "Loading..";
+  gameLink = "Loading..";
+  gameWording = "Loading.."; // Play || Check out 
 
-  allFields = ["Pos", "Name", "Score"];
+  allFields = [];
 
-  allPlayers = [
-    {pos: 1, name: 'kento', score: 1204},
-    {pos: 2, name: 'Bob', score: 1100},
-    {pos: 3, name: 'jake', score: 948},
-    {pos: 4, name: 'james', score: 857},
-    {pos: 5, name: 'leo', score: 725},
-    {pos: 6, name: 'chad', score: 721},
-    {pos: 7, name: 'mark', score: 638},
-    {pos: 8, name: 'player', score: 581},
-    {pos: 9, name: 'Idk what to name this one', score: 345},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-    {pos: 10, name: 'last player', score: 121},
-
-  ];
+  allPlayers = [];
 
   modalType = "";
   modalHeader = "";
@@ -67,6 +37,27 @@ export class LbWatchComponent {
     this.modalContent = content;
     this.showModal = true;  
   }
+
+  async makePost(value: object, params: String) {
+    var dat;
+    var url = config.urls.current + "/v1/lb/"
+    let ret = await this.http.post(url + params, 
+      {
+        lbid: this.id
+      }
+      ).toPromise();
+    return ret
+  }
+
+  async makeGet(params: String) {
+    var dat;
+    var url = config.urls.current + "/v1/lb/"
+    let ret = await this.http.get(url + params).toPromise();
+    return ret
+  }
+
+
+
   private getUrlParameter(sParam) {
     return decodeURIComponent(window.location.search.substring(1)).split('&')
      .map((v) => { return v.split("=") })
@@ -74,16 +65,18 @@ export class LbWatchComponent {
   };
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
-    /*
-    if(this.getUrlParameter('callback') !== undefined && this.getUrlParameter('callback')[0] === 'callback') {
-      this.callback = this.getUrlParameter('callback')[1]
+    let yote = this.route.params.subscribe(paramsId => {
+      this.id = paramsId.id;
+    });
 
-      if(this.callback == "logout") {
-        localStorage.clear();
-        window.location.href = "./home";
+    this.makeGet("get/" + this.id).then((response) => {
+      if(response['code'] !== undefined) {
+        
+      } else {
+        console.log("NOT FOUND!");
+        //window.location.href = "/home";
       }
-    }
-    */
+    });
   }
 
 }

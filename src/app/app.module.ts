@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 
 import { LoginComponent } from './pages/login/login.component';
+
+import { AuthenticateComponent } from './pages/login/authenticate/authenticate.component';
+
 import { VerifyComponent } from './pages/verifyemail/verify.component';
 
 import { CreateComponent } from './pages/create/create.component';
@@ -59,6 +62,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'login/authenticate',
+    component: AuthenticateComponent
   },
   {
     path: 'verifyemail',
@@ -128,7 +135,8 @@ RouterModule.forRoot(routes, {useHash: false});
     OverlayBracketComponent,
     ShopComponent,
     SafeHtmlPipe,
-    LbWatchComponent
+    LbWatchComponent,
+    AuthenticateComponent
   ],
   imports: [
     BrowserModule,

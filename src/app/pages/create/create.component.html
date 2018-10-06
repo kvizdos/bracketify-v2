@@ -78,16 +78,30 @@
             </div>
 
             <div [ngClass]="activeInstruction >= 3 ? 'section activeSection' : 'section'">
-                <h2>Set your fields</h2>
-
-                <input (keydown)="activeInstruction == 3 ? activeInstruction = 4 : null" type="text" #name placeholder="<Game> public leaderboard // Leaderboard name" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+                <h2>Description:</h2>
+                <p>Max length 400 characters</p>
+                <textarea (keydown)="activeInstruction == 3 ? activeInstruction = 4 : null" #description placeholder="blah bliddy bloo bla blah" maxlength="400" rows="10" [ngClass]="descError == true ? 'inpError' : undefined"></textarea>
             </div>
 
+
             <div [ngClass]="activeInstruction >= 4 ? 'section activeSection' : 'section'">
+                <h2>Set your fields</h2>
+                <p>SEPARATE WITH '|' WITHOUT A SPACE</p>
+                <strong>Defaults are: pos and name! You don't need to add these yourself!</strong>
+                <input (keydown)="activeInstruction == 4 ? activeInstruction = 5 : null" type="text" #name placeholder="Field 1|Field 2|Field 3" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+            </div>
+
+            <div [ngClass]="activeInstruction >= 5 ? 'section activeSection' : 'section'">
                 <h1>Unrequired fields:</h1>
-                <h2>More info on the game</h2>
-                <p>If this is your own game, or a game you would like to add to our game search engine, please add a valid twitter account/website/facebook and the game will become searchable after review. This information will be publicly viewable when someone views the games explore page. <strong>If the game is a valid game we will give you 10 free coins when we accept it! ALSO, please put 'I own this game' if you would like us to contact you to get special, custom graphics on the explore page for your game</strong></p>
-                <input (keydown)="activeInstruction == 4 ? activeInstruction = 5 : null" type="text" #name placeholder="Twitter @<name> // www.gamesite.extension // FB: <name>" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+                <h2>Where can viewers play / find more info? Website? Twitter?</h2>
+                <input (keydown)="activeInstruction == 5 ? activeInstruction = 6 : null" type="text" #name placeholder="www.url.extension" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+                <div *ngIf="activeInstruction == 6">
+                    <p>What would you like the visit/view/play button to say? *THE GAME NAME WILL ALWAYS COME AFTER THIS TEXT. A space at the end NOT required</p>
+                    <input type="text" #name placeholder="Check out" [ngClass]="nameError == true ? 'inpError' : 'undefined'"/>
+                </div>
+                <br><br>
+                <button (click)="createBracket({})" [hidden]="clicked">Create</button>
+                <button disabled class="clicked" [hidden]="!clicked">Creating..</button>
             </div>
         </div>
         <div class="col-sm-3"></div>

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { config } from "../../../assets/config.js"
+
+import * as CookieMonster from "../../../assets/cookiemonster";
+
 @Component({
   selector: 'navbar',
   templateUrl: './nav.component.html',
@@ -29,6 +32,7 @@ export class NavComponent {
     localStorage.removeItem('username');
     localStorage.removeItem('usercache');
     localStorage.removeItem('coins');
+    CookieMonster.eatCookie('act');
     if(localStorage.getItem('modid') !== null) localStorage.removeItem('modid');
     window.location.href = "/home";
   }
